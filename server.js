@@ -2,10 +2,10 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 const server = http.createServer((req, res) => {
-  const filePath = path.join(
+  let filePath = path.join(
     __dirname,
     req.url === "/" ? "roadmap.html" : req.url,
   );
