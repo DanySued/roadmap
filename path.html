@@ -1,0 +1,1734 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FitPath.dev — Fitness Training Paths</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Geist+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script
+      src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+      integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+      integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+      integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #1a1714;
+        --bg2: #211c18;
+        --bg3: #2a2420;
+        --bg4: #302a25;
+        --border: #3d3028;
+        --border2: #4a3a2e;
+        --text: #d4ccc4;
+        --text2: #8a7f76;
+        --text-head: #ede8e2;
+        --accent: #cf7b4b;
+        --accent2: #8a5230;
+        --green: #9dc499;
+        --purple: #bc8cff;
+        --orange: #cf7b4b;
+        --red: #f85149;
+        --font: "Lora", Georgia, serif;
+        --mono: "Geist Mono", monospace;
+      }
+      html {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--text);
+        scroll-behavior: smooth;
+        font-size: 15px;
+        line-height: 1.75;
+      }
+      body {
+        min-height: 100vh;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button {
+        cursor: pointer;
+        font-family: var(--font);
+      }
+
+      /* Material Symbols */
+      .material-symbols-outlined {
+        font-family: 'Material Symbols Outlined';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        display: inline-block;
+        line-height: 1;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--bg4);
+        border-radius: 3px;
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: -200% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState, useEffect, useRef, useMemo } = React;
+
+      /* ── DATA ─────────────────────────────────────────────────── */
+      const PATHS = {
+        role: [
+          {
+            id: "strength-training",
+            title: "Strength Training",
+            href: "path-detail.html?id=strength-training",
+            icon: "💪",
+            color: "#CF7B4B",
+            desc: "Build muscle and progressive strength through resistance training",
+            popular: true,
+          },
+          {
+            id: "running",
+            href: "path-detail.html?id=running",
+            title: "Running",
+            icon: "🏃",
+            color: "#9DC499",
+            desc: "Training progression from beginner to marathon runner",
+            popular: true,
+          },
+          {
+            id: "yoga",
+            href: "path-detail.html?id=yoga",
+            title: "Yoga",
+            icon: "🧘",
+            color: "#CF7B4B",
+            desc: "Yoga journey from basics to advanced asanas and mindfulness",
+            popular: true,
+          },
+          {
+            id: "cycling",
+            href: "path-detail.html?id=cycling",
+            title: "Cycling",
+            icon: "🚴",
+            color: "#D4CCC4",
+            desc: "Path to becoming a strong, efficient cyclist",
+          },
+          {
+            id: "nutrition",
+            href: "path-detail.html?id=nutrition",
+            title: "Nutrition Coaching",
+            icon: "🥗",
+            color: "#9DC499",
+            desc: "Master nutrition science and meal planning",
+          },
+          {
+            id: "crossfit",
+            href: "path-detail.html?id=crossfit",
+            title: "CrossFit",
+            icon: "⛹️",
+            color: "#8A7F76",
+            desc: "Training foundation for functional fitness and competition",
+          },
+          {
+            id: "pilates",
+            href: "path-detail.html?id=pilates",
+            title: "Pilates",
+            icon: "🤸",
+            color: "#CF7B4B",
+            desc: "Core strength and body control through pilates",
+          },
+          {
+            id: "swimming",
+            href: "path-detail.html?id=swimming",
+            title: "Swimming",
+            icon: "🏊",
+            color: "#8A5230",
+            desc: "Learn proper technique and endurance for swimming",
+          },
+          {
+            id: "boxing",
+            href: "path-detail.html?id=boxing",
+            title: "Boxing",
+            icon: "🥊",
+            color: "#9DC499",
+            desc: "Master stance, technique, and boxing fundamentals",
+          },
+          {
+            id: "martial-arts",
+            href: "path-detail.html?id=martial-arts",
+            title: "Martial Arts",
+            icon: "🥋",
+            color: "#D4CCC4",
+            desc: "Progress through belts and master martial arts discipline",
+          },
+          {
+            id: "pt-certification",
+            href: "path-detail.html?id=pt-certification",
+            title: "Personal Training Cert",
+            icon: "📋",
+            color: "#CF7B4B",
+            desc: "Become a certified personal trainer and coach",
+          },
+          {
+            id: "rehab-therapy",
+            href: "path-detail.html?id=rehab-therapy",
+            title: "Rehab & Recovery",
+            icon: "⚕️",
+            color: "#8A7F76",
+            desc: "Learn injury recovery and rehabilitation techniques",
+          },
+        ],
+        skill: [
+          {
+            id: "strength-building",
+            href: "path-detail.html?id=strength-building",
+            title: "Strength Building",
+            icon: "🦵",
+            color: "#CF7B4B",
+            desc: "Programs to build muscle and increase max strength",
+            popular: true,
+          },
+          {
+            id: "cardio-endurance",
+            href: "path-detail.html?id=cardio-endurance",
+            title: "Cardio Endurance",
+            icon: "❤️",
+            color: "#9DC499",
+            desc: "Build cardiovascular health and aerobic capacity",
+          },
+          {
+            id: "flexibility",
+            href: "path-detail.html?id=flexibility",
+            title: "Flexibility & Mobility",
+            icon: "🤲",
+            color: "#8A5230",
+            desc: "Increase range of motion and prevent injuries",
+          },
+          {
+            id: "weight-loss",
+            href: "path-detail.html?id=weight-loss",
+            title: "Weight Loss",
+            icon: "⚖️",
+            color: "#9DC499",
+            desc: "Science-backed program for sustainable weight loss",
+            popular: true,
+          },
+          {
+            id: "muscle-building",
+            href: "path-detail.html?id=muscle-building",
+            title: "Muscle Building",
+            icon: "💪",
+            color: "#CF7B4B",
+            desc: "Hypertrophy training to maximize muscle growth",
+          },
+          {
+            id: "nutrition-basics",
+            href: "path-detail.html?id=nutrition-basics",
+            title: "Nutrition Fundamentals",
+            icon: "🥬",
+            color: "#D4CCC4",
+            desc: "Learn macros, calories, and nutrition science",
+            popular: true,
+          },
+          {
+            id: "5k-training",
+            href: "path-detail.html?id=5k-training",
+            title: "5K Training",
+            icon: "🏅",
+            color: "#CF7B4B",
+            desc: "8-week program to run a strong 5K",
+          },
+          {
+            id: "marathon-training",
+            href: "path-detail.html?id=marathon-training",
+            title: "Marathon Training",
+            icon: "🏆",
+            color: "#8A7F76",
+            desc: "16-week program to complete your first marathon",
+          },
+          {
+            id: "core-strength",
+            href: "path-detail.html?id=core-strength",
+            title: "Core Strength",
+            icon: "🎯",
+            color: "#D4CCC4",
+            desc: "Build a stronger, more stable core",
+          },
+          {
+            id: "athletic-performance",
+            href: "path-detail.html?id=athletic-performance",
+            title: "Athletic Performance",
+            icon: "🚀",
+            color: "#CF7B4B",
+            desc: "Enhance speed, power, and athletic ability",
+          },
+          {
+            id: "recovery-protocols",
+            href: "path-detail.html?id=recovery-protocols",
+            title: "Recovery Protocols",
+            icon: "😴",
+            color: "#8A5230",
+            desc: "Optimize recovery with sleep, stretching, and nutrition",
+          },
+          {
+            id: "injury-prevention",
+            href: "path-detail.html?id=injury-prevention",
+            title: "Injury Prevention",
+            icon: "🛡️",
+            color: "#9DC499",
+            desc: "Prevent common injuries through smart training",
+          },
+        ],
+        bestpractices: [
+          {
+            id: "recovery-techniques",
+            href: "path-detail.html?id=recovery-techniques&type=practice",
+            title: "Recovery Techniques",
+            icon: "🧖",
+            color: "#CF7B4B",
+            desc: "Best practices for active and passive recovery",
+          },
+          {
+            id: "nutrition-strategy",
+            href: "path-detail.html?id=nutrition-strategy&type=practice",
+            title: "Nutrition Strategy",
+            icon: "🍎",
+            color: "#9DC499",
+            desc: "Best practices for sports nutrition and meal timing",
+          },
+          {
+            id: "training-programming",
+            href: "path-detail.html?id=training-programming&type=practice",
+            title: "Training Programming",
+            icon: "📅",
+            color: "#D4CCC4",
+            desc: "Best practices for periodization and program design",
+          },
+          {
+            id: "sleep-wellness",
+            href: "path-detail.html?id=sleep-wellness&type=practice",
+            title: "Sleep & Wellness",
+            icon: "🌙",
+            color: "#CF7B4B",
+            desc: "Best practices for sleep quality and recovery",
+          },
+        ],
+      };
+
+      const STATS = [
+        { value: "500K+", label: "Active Fitness Users", color: "#CF7B4B" },
+        { value: "800K+", label: "Monthly Sessions", color: "#9DC499" },
+        { value: "150+", label: "Training Programs", color: "#D4CCC4" },
+        { value: "2.5M+", label: "Workouts Logged", color: "#8A5230" },
+      ];
+
+      /* ── COMPONENTS ──────────────────────────────────────────── */
+
+      function NavBar({ searchOpen, setSearchOpen, query, setQuery }) {
+        const [mobileOpen, setMobileOpen] = useState(false);
+        const navLinks = [
+          { label: "Paths", href: "path.html" },
+          { label: "Best Practices", href: "best-practices.html" },
+          { label: "Guides", href: "guides.html" },
+          { label: "Videos", href: "videos.html" },
+        ];
+
+        return (
+          <nav
+            style={{
+              position: "sticky",
+              top: 0,
+              zIndex: 100,
+              background: "rgba(15,17,23,0.85)",
+              backdropFilter: "blur(12px)",
+              borderBottom: "1px solid var(--border)",
+            }}
+          >
+            <div
+              style={{
+                maxWidth: 1200,
+                margin: "0 auto",
+                padding: "0 24px",
+                height: 56,
+                display: "flex",
+                alignItems: "center",
+                gap: 32,
+              }}
+            >
+              {/* Logo */}
+              <a
+                href="path.html"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  flexShrink: 0,
+                }}
+              >
+                <div
+                  style={{
+                    width: 32,
+                    height: 32,
+                    background: "var(--accent)",
+                    borderRadius: 8,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 16,
+                    fontWeight: 800,
+                    color: "#0f1117",
+                  }}
+                >
+                  💪
+                </div>
+                <span
+                  style={{
+                    fontWeight: 700,
+                    fontSize: 17,
+                    letterSpacing: "-0.3px",
+                  }}
+                >
+                  FitPath.dev
+                </span>
+              </a>
+
+              {/* Nav Links */}
+              <div style={{ display: "flex", gap: 2, flex: 1 }}>
+                {navLinks.map((l) => (
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    style={{
+                      padding: "6px 12px",
+                      borderRadius: 6,
+                      fontSize: 13.5,
+                      fontWeight: 500,
+                      color: "var(--text2)",
+                      transition: "all .15s",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.color = "var(--text)";
+                      e.target.style.background = "var(--bg2)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.color = "var(--text2)";
+                      e.target.style.background = "transparent";
+                    }}
+                  >
+                    {l.label}
+                  </a>
+                ))}
+              </div>
+
+              {/* Right side */}
+              <div
+                style={{
+                  display: "flex",
+                  gap: 8,
+                  alignItems: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <button
+                  onClick={() => setSearchOpen(true)}
+                  style={{
+                    background: "var(--bg2)",
+                    border: "1px solid var(--border)",
+                    borderRadius: 8,
+                    padding: "6px 12px",
+                    color: "var(--text2)",
+                    fontSize: 13,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    transition: "all .15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = "var(--border2)";
+                    e.currentTarget.style.color = "var(--text)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = "var(--border)";
+                    e.currentTarget.style.color = "var(--text2)";
+                  }}
+                >
+                  <span>⌕</span>
+                  <span>Search</span>
+                  <span
+                    style={{
+                      fontFamily: "var(--mono)",
+                      fontSize: 11,
+                      background: "var(--bg3)",
+                      padding: "2px 6px",
+                      borderRadius: 4,
+                      color: "var(--text2)",
+                    }}
+                  >
+                    ⌘K
+                  </span>
+                </button>
+                <button
+                  style={{
+                    background: "transparent",
+                    border: "1px solid var(--border2)",
+                    borderRadius: 8,
+                    padding: "6px 14px",
+                    color: "var(--text)",
+                    fontSize: 13.5,
+                    fontWeight: 500,
+                    transition: "all .15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = "var(--accent)";
+                    e.currentTarget.style.color = "var(--accent)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = "var(--border2)";
+                    e.currentTarget.style.color = "var(--text)";
+                  }}
+                  onClick={() => (window.location.href = "auth.html")}
+                >
+                  Login
+                </button>
+                <button
+                  style={{
+                    background: "var(--accent)",
+                    border: "none",
+                    borderRadius: 8,
+                    padding: "6px 14px",
+                    color: "#0f1117",
+                    fontSize: 13.5,
+                    fontWeight: 600,
+                    transition: "all .15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "#d98a5e";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "var(--accent)";
+                  }}
+                  onClick={() =>
+                    (window.location.href = "auth.html?mode=signup")
+                  }
+                >
+                  Sign up
+                </button>
+              </div>
+            </div>
+          </nav>
+        );
+      }
+
+      function SearchModal({ open, onClose }) {
+        const [q, setQ] = useState("");
+        const inputRef = useRef(null);
+        const allPaths = [...PATHS.role, ...PATHS.skill];
+        const results = q.trim()
+          ? allPaths.filter(
+              (r) =>
+                r.title.toLowerCase().includes(q.toLowerCase()) ||
+                r.desc.toLowerCase().includes(q.toLowerCase()),
+            )
+          : allPaths.slice(0, 6);
+
+        useEffect(() => {
+          if (open) {
+            setQ("");
+            setTimeout(() => inputRef.current?.focus(), 50);
+          }
+        }, [open]);
+
+        useEffect(() => {
+          const handler = (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+              e.preventDefault();
+            }
+            if (e.key === "Escape") onClose();
+          };
+          window.addEventListener("keydown", handler);
+          return () => window.removeEventListener("keydown", handler);
+        }, [onClose]);
+
+        if (!open) return null;
+        return (
+          <div
+            onClick={onClose}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 200,
+              background: "rgba(0,0,0,0.7)",
+              backdropFilter: "blur(4px)",
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "center",
+              paddingTop: 80,
+            }}
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                width: "100%",
+                maxWidth: 560,
+                background: "var(--bg2)",
+                border: "1px solid var(--border2)",
+                borderRadius: 14,
+                overflow: "hidden",
+                boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
+                animation: "fadeInUp .18s ease",
+              }}
+            >
+              <div
+                style={{
+                  padding: "12px 16px",
+                  borderBottom: "1px solid var(--border)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+              >
+                <span style={{ fontSize: 18, color: "var(--text2)" }}>⌕</span>
+                <input
+                  ref={inputRef}
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                  placeholder="Search fitness paths, guides..."
+                  style={{
+                    flex: 1,
+                    background: "none",
+                    border: "none",
+                    outline: "none",
+                    color: "var(--text)",
+                    fontSize: 16,
+                    fontFamily: "var(--font)",
+                  }}
+                />
+                <kbd
+                  style={{
+                    fontFamily: "var(--mono)",
+                    fontSize: 12,
+                    color: "var(--text2)",
+                    background: "var(--bg3)",
+                    padding: "2px 8px",
+                    borderRadius: 5,
+                  }}
+                >
+                  ESC
+                </kbd>
+              </div>
+              <div style={{ maxHeight: 400, overflowY: "auto" }}>
+                {results.length === 0 && (
+                  <div
+                    style={{
+                      padding: 32,
+                      textAlign: "center",
+                      color: "var(--text2)",
+                      fontSize: 14,
+                    }}
+                  >
+                    No results found
+                  </div>
+                )}
+                {results.map((r, i) => (
+                  <a
+                    key={r.id}
+                    href={`path-detail.html?id=${r.id}`}
+                    onClick={onClose}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 12,
+                      padding: "10px 16px",
+                      borderBottom: "1px solid var(--border)",
+                      transition: "background .1s",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.background = "var(--bg3)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.background = "transparent")
+                    }
+                  >
+                    <span
+                      style={{
+                        fontSize: 18,
+                        color: r.color,
+                        width: 24,
+                        textAlign: "center",
+                      }}
+                    >
+                      {r.icon}
+                    </span>
+                    <div>
+                      <div style={{ fontWeight: 500, fontSize: 14 }}>
+                        {r.title}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: 12,
+                          color: "var(--text2)",
+                          marginTop: 2,
+                        }}
+                      >
+                        {r.desc}
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      function Hero({ onSearch }) {
+        const [q, setQ] = useState("");
+        const words = ["Strength", "Flexibility", "Endurance", "Performance", "Wellness"];
+        const [wordIdx, setWordIdx] = useState(0);
+        useEffect(() => {
+          const t = setInterval(
+            () => setWordIdx((i) => (i + 1) % words.length),
+            2200,
+          );
+          return () => clearInterval(t);
+        }, []);
+
+        return (
+          <section
+            style={{
+              padding: "80px 24px 60px",
+              background:
+                "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(207,123,75,0.08) 0%, transparent 70%)",
+              textAlign: "center",
+              animation: "fadeInUp .4s ease",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                marginBottom: 24,
+                background: "rgba(207,123,75,0.08)",
+                border: "1px solid rgba(207,123,75,0.2)",
+                borderRadius: 100,
+                padding: "6px 16px",
+                fontSize: 12.5,
+                color: "var(--accent)",
+                fontWeight: 500,
+              }}
+            >
+              <span
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  background: "var(--accent)",
+                  display: "inline-block",
+                  animation: "pulse 2s infinite",
+                }}
+              ></span>
+              Community-driven fitness training paths
+            </div>
+
+            <h1
+              style={{
+                fontSize: "clamp(36px, 5vw, 64px)",
+                fontWeight: 700,
+                lineHeight: 1.1,
+                letterSpacing: "-1px",
+                color: "var(--text-head)",
+                marginBottom: 20,
+                maxWidth: 720,
+                margin: "0 auto 20px",
+              }}
+            >
+              Fitness Training Paths
+              <br />
+              Build <span style={{ color: "var(--accent)" }}>{words[wordIdx]}</span>
+            </h1>
+
+            <p
+              style={{
+                fontSize: 17,
+                color: "var(--text2)",
+                maxWidth: 520,
+                margin: "0 auto 36px",
+                lineHeight: 1.7,
+                fontWeight: 400,
+              }}
+            >
+              Structured training paths from yoga to marathons. Progress from beginner to advanced with expert guidance and community support.
+            </p>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                onSearch(q);
+              }}
+              style={{
+                display: "flex",
+                gap: 8,
+                maxWidth: 440,
+                margin: "0 auto 48px",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  background: "var(--bg2)",
+                  border: "1px solid var(--border2)",
+                  borderRadius: 10,
+                  padding: "0 14px",
+                }}
+              >
+                <span style={{ color: "var(--text2)" }}>⌕</span>
+                <input
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                  placeholder="Search fitness paths..."
+                  style={{
+                    flex: 1,
+                    background: "none",
+                    border: "none",
+                    outline: "none",
+                    color: "var(--text)",
+                    fontSize: 14.5,
+                    padding: "11px 0",
+                    fontFamily: "var(--font)",
+                  }}
+                />
+              </div>
+              <button
+                type="submit"
+                style={{
+                  background: "var(--accent)",
+                  color: "#0f1117",
+                  fontWeight: 600,
+                  fontSize: 14,
+                  padding: "0 20px",
+                  border: "none",
+                  borderRadius: 10,
+                  transition: "background .15s",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background = "#d98a5e")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background = "var(--accent)")
+                }
+              >
+                Search
+              </button>
+            </form>
+
+            {/* Stats */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: 40,
+                flexWrap: "wrap",
+              }}
+            >
+              {STATS.map((s) => (
+                <div key={s.label} style={{ textAlign: "center" }}>
+                  <div
+                    style={{
+                      fontSize: 26,
+                      fontWeight: 800,
+                      color: s.color,
+                      letterSpacing: "-1px",
+                    }}
+                  >
+                    {s.value}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 12,
+                      color: "var(--text2)",
+                      marginTop: 2,
+                    }}
+                  >
+                    {s.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      }
+
+      // Bento span patterns — 3 items per visual row, always sum to 4 cols
+      // [colSpan, rowSpan]
+      const BENTO_PATTERNS = [
+        [2, 1],
+        [1, 1],
+        [1, 1], // row A: wide | normal | normal
+        [1, 1],
+        [2, 1],
+        [1, 1], // row B: normal | wide | normal
+        [1, 1],
+        [1, 1],
+        [2, 1], // row C: normal | normal | wide
+        [2, 1],
+        [1, 1],
+        [1, 1], // row D: wide | normal | normal
+      ];
+
+      function PathCard({ item, colSpan = 1, rowSpan = 1 }) {
+        const [hovered, setHovered] = useState(false);
+        const isWide = colSpan >= 2 && rowSpan === 1; // horizontal card
+        const isTall = rowSpan >= 2 && colSpan === 1; // tall card
+        const isFeatured = colSpan >= 2 && rowSpan >= 2; // big card
+
+        const iconSize = isFeatured ? 52 : isWide ? 44 : 40;
+        const fontSize = isFeatured ? 26 : isWide ? 22 : 14;
+        const pad = isFeatured || isTall ? 24 : isWide ? 20 : 18;
+
+        return (
+          <a
+            href={item.href || "#"}
+            style={{
+              gridColumn: `span ${colSpan}`,
+              gridRow: `span ${rowSpan}`,
+              display: "flex",
+              flexDirection: isWide ? "row" : "column",
+              alignItems: isWide ? "center" : "flex-start",
+              justifyContent: "flex-start",
+              gap: isWide ? 20 : 0,
+              padding: pad,
+              background: hovered
+                ? `linear-gradient(135deg, ${item.color}12 0%, var(--bg3) 100%)`
+                : "var(--bg2)",
+              border: `1px solid ${hovered ? item.color + "55" : "var(--border)"}`,
+              borderRadius: 14,
+              transition: "all .22s",
+              boxShadow: hovered ? `0 4px 32px ${item.color}18` : "none",
+              position: "relative",
+              overflow: "hidden",
+            }}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+          >
+            {/* Watermark */}
+            <span
+              style={{
+                position: "absolute",
+                right: 12,
+                bottom: 8,
+                fontSize: isFeatured ? 88 : isWide ? 64 : 52,
+                color: item.color,
+                opacity: hovered ? 0.1 : 0.06,
+                lineHeight: 1,
+                userSelect: "none",
+                transition: "opacity .22s",
+                pointerEvents: "none",
+              }}
+            >
+              {item.icon}
+            </span>
+
+            {/* Icon badge */}
+            <span
+              style={{
+                flexShrink: 0,
+                width: iconSize,
+                height: iconSize,
+                background: `${item.color}18`,
+                borderRadius: 11,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: isFeatured ? 28 : isWide ? 22 : 20,
+                color: item.color,
+                marginBottom: isWide ? 0 : isTall || isFeatured ? 16 : 12,
+              }}
+            >
+              {item.icon}
+            </span>
+
+            {/* Content */}
+            <div
+              style={{
+                flex: 1,
+                minWidth: 0,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              {/* Title + badge row */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  justifyContent: "space-between",
+                  gap: 8,
+                  marginBottom: 8,
+                }}
+              >
+                <div
+                  style={{
+                    fontWeight: 700,
+                    fontSize: isFeatured ? 20 : isWide ? 16 : 14.5,
+                    color: "var(--text-head)",
+                    lineHeight: 1.3,
+                  }}
+                >
+                  {item.title}
+                </div>
+                {item.popular && (
+                  <span
+                    style={{
+                      flexShrink: 0,
+                      fontSize: 10,
+                      background: `${item.color}18`,
+                      color: item.color,
+                      padding: "3px 8px",
+                      borderRadius: 20,
+                      fontWeight: 600,
+                      border: `1px solid ${item.color}33`,
+                    }}
+                  >
+                    ★ Popular
+                  </span>
+                )}
+              </div>
+
+              {/* Description — shown on wide, tall and featured */}
+              {(isWide || isTall || isFeatured) && (
+                <div
+                  style={{
+                    fontSize: 12.5,
+                    color: "var(--text2)",
+                    lineHeight: 1.65,
+                    display: "-webkit-box",
+                    WebkitLineClamp: isWide ? 2 : 3,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                  }}
+                >
+                  {item.desc}
+                </div>
+              )}
+
+              {/* Hover CTA */}
+              {!isWide && (
+                <div
+                  style={{
+                    marginTop: "auto",
+                    paddingTop: 10,
+                    fontSize: 12,
+                    color: item.color,
+                    fontWeight: 500,
+                    opacity: hovered ? 1 : 0,
+                    transition: "opacity .18s",
+                  }}
+                >
+                  View Path →
+                </div>
+              )}
+            </div>
+          </a>
+        );
+      }
+
+      function Section({ title, items, filterQuery }) {
+        const filtered = filterQuery
+          ? items.filter(
+              (r) =>
+                r.title.toLowerCase().includes(filterQuery.toLowerCase()) ||
+                r.desc.toLowerCase().includes(filterQuery.toLowerCase()),
+            )
+          : items;
+        if (filtered.length === 0) return null;
+
+        // Best Practices gets a fixed tight 4-card layout: big left + 2 stacked right top + 1 wide bottom right
+        const isBestPractices = filtered.length <= 4;
+        if (isBestPractices && !filterQuery) {
+          const patterns = [
+            [1, 2],
+            [1, 1],
+            [1, 1],
+            [2, 1],
+          ]; // 3-col grid
+          return (
+            <section style={{ marginBottom: 56 }}>
+              <h2
+                style={{
+                  fontSize: 19,
+                  fontWeight: 700,
+                  marginBottom: 18,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  color: "var(--text-head)",
+                }}
+              >
+                {title}
+                <span
+                  style={{
+                    fontSize: 11.5,
+                    background: "var(--bg2)",
+                    border: "1px solid var(--border)",
+                    color: "var(--text2)",
+                    padding: "2px 8px",
+                    borderRadius: 20,
+                  }}
+                >
+                  {filtered.length}
+                </span>
+              </h2>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                  gridAutoRows: "150px",
+                  gap: 12,
+                }}
+              >
+                {filtered.map((item, i) => {
+                  const [cs, rs] = patterns[i] || [1, 1];
+                  return (
+                    <PathCard
+                      key={item.id}
+                      item={item}
+                      colSpan={cs}
+                      rowSpan={rs}
+                    />
+                  );
+                })}
+              </div>
+            </section>
+          );
+        }
+
+        return (
+          <section style={{ marginBottom: 56 }}>
+            <h2
+              style={{
+                fontSize: 19,
+                fontWeight: 700,
+                marginBottom: 18,
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                color: "var(--text-head)",
+              }}
+            >
+              {title}
+              <span
+                style={{
+                  fontSize: 11.5,
+                  background: "var(--bg2)",
+                  border: "1px solid var(--border)",
+                  color: "var(--text2)",
+                  padding: "2px 8px",
+                  borderRadius: 20,
+                }}
+              >
+                {filtered.length}
+              </span>
+            </h2>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(4, 1fr)",
+                gridAutoRows: "150px",
+                gap: 12,
+              }}
+            >
+              {filtered.map((item, i) => {
+                const [cs, rs] = BENTO_PATTERNS[i % BENTO_PATTERNS.length];
+                const safeCs = Math.min(cs, 4);
+                return (
+                  <PathCard
+                    key={item.id}
+                    item={item}
+                    colSpan={safeCs}
+                    rowSpan={rs}
+                  />
+                );
+              })}
+            </div>
+          </section>
+        );
+      }
+
+      function Banner() {
+        return (
+          <div
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(207,123,75,0.08) 0%, rgba(138,82,48,0.08) 100%)",
+              border: "1px solid var(--border2)",
+              borderRadius: 14,
+              padding: "28px 32px",
+              marginBottom: 48,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 20,
+              flexWrap: "wrap",
+            }}
+          >
+            <div>
+              <div style={{ fontSize: 19, fontWeight: 700, marginBottom: 6 }}>
+                Create your own training path
+              </div>
+              <div
+                style={{ fontSize: 13.5, color: "var(--text2)", maxWidth: 400 }}
+              >
+                Build custom fitness paths for yourself or your team. Track your progress and share your journey.
+              </div>
+            </div>
+            <button
+              style={{
+                background: "var(--accent)",
+                color: "#0f1117",
+                fontWeight: 700,
+                fontSize: 14,
+                padding: "10px 22px",
+                border: "none",
+                borderRadius: 9,
+                flexShrink: 0,
+                transition: "background .15s",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.background = "#d98a5e")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.background = "var(--accent)")
+              }
+              onClick={() => (window.location.href = "create-roadmap.html")}
+            >
+              Create Path →
+            </button>
+          </div>
+        );
+      }
+
+      function Footer() {
+        const links = [
+          ["About", "Changelog", "YouTube", "Discord"],
+          ["Paths", "Best Practices", "Guides", "Videos"],
+          ["GitHub", "Twitter", "LinkedIn", "RSS"],
+        ];
+        return (
+          <footer
+            style={{
+              borderTop: "1px solid var(--border)",
+              marginTop: 60,
+              padding: "40px 24px",
+            }}
+          >
+            <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  gap: 32,
+                  marginBottom: 32,
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 10,
+                      marginBottom: 12,
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 28,
+                        height: 28,
+                        background: "var(--accent)",
+                        borderRadius: 7,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 14,
+                        fontWeight: 800,
+                        color: "#0f1117",
+                      }}
+                    >
+                      💪
+                    </div>
+                    <span style={{ fontWeight: 700, fontSize: 16 }}>
+                      FitPath.dev
+                    </span>
+                  </div>
+                  <p
+                    style={{
+                      fontSize: 13,
+                      color: "var(--text2)",
+                      maxWidth: 260,
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    Community-driven fitness training paths, articles and resources to help you achieve your fitness goals.
+                  </p>
+                </div>
+                {links.map((group, i) => {
+                  const linkMap = {
+                    About: "about.html",
+                    Changelog: "changelog.html",
+                    YouTube: "https://youtube.com",
+                    Discord: "https://discord.com",
+                    Paths: "path.html",
+                    "Best Practices": "best-practices.html",
+                    Guides: "guides.html",
+                    Videos: "videos.html",
+                    GitHub: "https://github.com",
+                    Twitter: "https://twitter.com",
+                    LinkedIn: "https://linkedin.com",
+                    RSS: "#",
+                  };
+                  return (
+                    <div
+                      key={i}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 8,
+                      }}
+                    >
+                      {group.map((l) => (
+                        <a
+                          key={l}
+                          href={linkMap[l] || "#"}
+                          target={
+                            linkMap[l]?.startsWith("http")
+                              ? "_blank"
+                              : undefined
+                          }
+                          rel={
+                            linkMap[l]?.startsWith("http")
+                              ? "noopener noreferrer"
+                              : undefined
+                          }
+                          style={{
+                            fontSize: 13.5,
+                            color: "var(--text2)",
+                            transition: "color .12s",
+                          }}
+                          onMouseEnter={(e) =>
+                            (e.target.style.color = "var(--text)")
+                          }
+                          onMouseLeave={(e) =>
+                            (e.target.style.color = "var(--text2)")
+                          }
+                        >
+                          {l}
+                        </a>
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
+              <div
+                style={{
+                  borderTop: "1px solid var(--border)",
+                  paddingTop: 20,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  gap: 10,
+                }}
+              >
+                <span style={{ fontSize: 12.5, color: "var(--text2)" }}>
+                  © 2024 FitPath.dev — All rights reserved
+                </span>
+                <span style={{ fontSize: 12.5, color: "var(--text2)" }}>
+                  Made with ♥ by the community
+                </span>
+              </div>
+            </div>
+          </footer>
+        );
+      }
+
+      /* Tweaks Panel */
+      const TWEAK_DEFAULTS = {
+        accentColor: "#CF7B4B",
+        viewMode: "list",
+        showPopularBadges: true,
+        darkBg: "#1A1714",
+      };
+
+      function TweaksPanel({ visible, tweaks, onChange }) {
+        if (!visible) return null;
+        return (
+          <div
+            style={{
+              position: "fixed",
+              bottom: 24,
+              right: 24,
+              zIndex: 300,
+              background: "var(--bg2)",
+              border: "1px solid var(--border2)",
+              borderRadius: 14,
+              padding: 20,
+              width: 240,
+              boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+              animation: "fadeInUp .2s ease",
+            }}
+          >
+            <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 16 }}>
+              Tweaks
+            </div>
+
+            <div style={{ marginBottom: 12 }}>
+              <label
+                style={{
+                  fontSize: 12,
+                  color: "var(--text2)",
+                  display: "block",
+                  marginBottom: 4,
+                }}
+              >
+                Accent Color
+              </label>
+              <div style={{ display: "flex", gap: 8 }}>
+                {["#CF7B4B", "#8A5230", "#9DC499", "#D4CCC4", "#8A7F76"].map(
+                  (c) => (
+                    <button
+                      key={c}
+                      onClick={() => onChange("accentColor", c)}
+                      style={{
+                        width: 24,
+                        height: 24,
+                        borderRadius: "50%",
+                        background: c,
+                        border: "none",
+                        outline:
+                          tweaks.accentColor === c ? `2px solid white` : "none",
+                        outlineOffset: 2,
+                        cursor: "pointer",
+                      }}
+                    />
+                  ),
+                )}
+              </div>
+            </div>
+
+            <div>
+              <label
+                style={{
+                  fontSize: 12,
+                  color: "var(--text2)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  cursor: "pointer",
+                }}
+              >
+                Popular badges
+                <div
+                  onClick={() =>
+                    onChange("showPopularBadges", !tweaks.showPopularBadges)
+                  }
+                  style={{
+                    width: 36,
+                    height: 20,
+                    borderRadius: 10,
+                    background: tweaks.showPopularBadges
+                      ? "var(--accent)"
+                      : "var(--border2)",
+                    position: "relative",
+                    transition: "background .2s",
+                    cursor: "pointer",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 14,
+                      height: 14,
+                      borderRadius: "50%",
+                      background: "white",
+                      position: "absolute",
+                      top: 3,
+                      left: tweaks.showPopularBadges ? 18 : 3,
+                      transition: "left .2s",
+                    }}
+                  />
+                </div>
+              </label>
+            </div>
+          </div>
+        );
+      }
+
+      /* ── APP ─────────────────────────────────────────────────── */
+      function useCustomPaths() {
+        const [custom, setCustom] = useState(() =>
+          JSON.parse(localStorage.getItem("custom_paths") || "[]"),
+        );
+        useEffect(() => {
+          const onStorage = () =>
+            setCustom(
+              JSON.parse(localStorage.getItem("custom_paths") || "[]"),
+            );
+          window.addEventListener("storage", onStorage);
+          const onFocus = () =>
+            setCustom(
+              JSON.parse(localStorage.getItem("custom_paths") || "[]"),
+            );
+          window.addEventListener("focus", onFocus);
+          return () => {
+            window.removeEventListener("storage", onStorage);
+            window.removeEventListener("focus", onFocus);
+          };
+        }, []);
+        return custom;
+      }
+
+      function App() {
+        const [searchOpen, setSearchOpen] = useState(false);
+        const [filterQuery, setFilterQuery] = useState("");
+        const customPaths = useCustomPaths();
+        const [tweaks, setTweaks] = useState(() => {
+          const saved = localStorage.getItem("path_tweaks");
+          return saved
+            ? { ...TWEAK_DEFAULTS, ...JSON.parse(saved) }
+            : TWEAK_DEFAULTS;
+        });
+        const [tweaksVisible, setTweaksVisible] = useState(false);
+
+        // Apply accent color
+        useEffect(() => {
+          document.documentElement.style.setProperty(
+            "--accent",
+            tweaks.accentColor,
+          );
+          document.documentElement.style.setProperty("--bg", tweaks.darkBg);
+          localStorage.setItem("path_tweaks", JSON.stringify(tweaks));
+        }, [tweaks]);
+
+        const handleTweak = (key, val) => {
+          const next = { ...tweaks, [key]: val };
+          setTweaks(next);
+          window.parent.postMessage(
+            { type: "__edit_mode_set_keys", edits: { [key]: val } },
+            "*",
+          );
+        };
+
+        // Tweaks host communication
+        useEffect(() => {
+          const handler = (e) => {
+            if (e.data?.type === "__activate_edit_mode") setTweaksVisible(true);
+            if (e.data?.type === "__deactivate_edit_mode")
+              setTweaksVisible(false);
+          };
+          window.addEventListener("message", handler);
+          window.parent.postMessage({ type: "__edit_mode_available" }, "*");
+          return () => window.removeEventListener("message", handler);
+        }, []);
+
+        const viewMode = tweaks.viewMode;
+
+        return (
+          <>
+            <NavBar
+              searchOpen={searchOpen}
+              setSearchOpen={setSearchOpen}
+              query={filterQuery}
+              setQuery={setFilterQuery}
+            />
+            <SearchModal
+              open={searchOpen}
+              onClose={() => setSearchOpen(false)}
+            />
+
+            <main
+              style={{
+                maxWidth: 1200,
+                margin: "0 auto",
+                padding: "0 24px 40px",
+              }}
+            >
+              <Hero onSearch={(q) => setFilterQuery(q)} />
+
+              {filterQuery && (
+                <div
+                  style={{
+                    marginBottom: 24,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                  }}
+                >
+                  <span style={{ fontSize: 14, color: "var(--text2)" }}>
+                    Results for:
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 600,
+                      color: "var(--accent)",
+                    }}
+                  >
+                    "{filterQuery}"
+                  </span>
+                  <button
+                    onClick={() => setFilterQuery("")}
+                    style={{
+                      background: "none",
+                      border: "1px solid var(--border)",
+                      borderRadius: 6,
+                      color: "var(--text2)",
+                      fontSize: 12,
+                      padding: "2px 8px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    ✕ Clear
+                  </button>
+                </div>
+              )}
+
+              {!filterQuery && <Banner />}
+
+              {(() => {
+                const merged = {
+                  "Role-based Paths": [...PATHS.role],
+                  "Skill-based Paths": [...PATHS.skill],
+                  "Best Practices": [...PATHS.bestpractices],
+                };
+                const customCats = {};
+                customPaths.forEach((r) => {
+                  const cat = r.category || "My Paths";
+                  const card = {
+                    id: r.id,
+                    title: r.title,
+                    desc: r.desc,
+                    icon: r.icon,
+                    color: r.color,
+                    href: `path-detail.html?id=${r.id}`,
+                  };
+                  if (merged[cat]) merged[cat].push(card);
+                  else {
+                    if (!customCats[cat]) customCats[cat] = [];
+                    customCats[cat].push(card);
+                  }
+                });
+                return (
+                  <>
+                    <Section
+                      title="Role-based Paths"
+                      items={merged["Role-based Paths"]}
+                      filterQuery={filterQuery}
+                    />
+                    <Section
+                      title="Skill-based Paths"
+                      items={merged["Skill-based Paths"]}
+                      filterQuery={filterQuery}
+                    />
+                    {!filterQuery && (
+                      <Section
+                        title="Best Practices"
+                        items={merged["Best Practices"]}
+                        filterQuery={filterQuery}
+                      />
+                    )}
+                    {Object.entries(customCats).map(([cat, items]) => (
+                      <Section
+                        key={cat}
+                        title={cat}
+                        items={items}
+                        filterQuery={filterQuery}
+                      />
+                    ))}
+                  </>
+                );
+              })()}
+            </main>
+
+            <Footer />
+            <TweaksPanel
+              visible={tweaksVisible}
+              tweaks={tweaks}
+              onChange={handleTweak}
+            />
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

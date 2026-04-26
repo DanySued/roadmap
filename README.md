@@ -1,21 +1,18 @@
 # FitPath.dev
 
-**Browse structured fitness training paths and goal-based programs.** Dark editorial design with real-time search, custom workout planning, and a customizable accent color system.
-
----
-
-## Screenshot
-
-![FitPath.dev interface](https://via.placeholder.com/1200x600?text=FitPath.dev+Dark+Editorial+Design)
+**Structured fitness training paths from yoga to marathons.** Dark editorial design with real-time search, fitness-specific progression tasks, and task completion tracking with celebration animations.
 
 ---
 
 ## Features
 
-- **12+ Training Specialties** — Strength training, running, yoga, cycling, nutrition, CrossFit, pilates, swimming, boxing, martial arts, personal training certification, and rehab programs.
-- **Real-Time Search** — ⌘K shortcut to find fitness programs across 100+ curated paths instantly.
-- **Create & Save** — Build custom fitness plans and persist them to browser localStorage.
-- **Live Color Customization** — Adjust accent colors in the tweaks panel; changes apply across all pages.
+- **12+ Training Paths** — Strength training, running, yoga, cycling, nutrition, CrossFit, pilates, swimming, boxing, martial arts, personal training certification, and rehab programs.
+- **Progressive Task Lists** — Each path contains beginner-to-advanced tasks that build progressively and are preparatory for the next.
+- **Fitness Icons** — Sports and fitness emojis throughout instead of generic shapes.
+- **Task Completion** — Mark tasks as complete and get confetti animations + encouragement messages.
+- **Real-Time Search** — ⌘K shortcut to find fitness programs instantly.
+- **Progress Tracking** — Track your completion percentage for each training path.
+- **Live Color Customization** — Adjust accent colors; changes apply across all pages.
 - **Editorial Design** — Dark warm palette (Lora serif, orange accents) optimized for long-form reading.
 
 ---
@@ -23,14 +20,14 @@
 ## Quick Start
 
 ```bash
-# Start the server
+# Start the server (for local development)
 node server.js
 
 # Open your browser
 http://localhost:8000
 ```
 
-Navigate the site using the top navigation bar. All links work across pages (roadmap.html, auth.html, best-practices.html, guides.html, videos.html, create-roadmap.html, roadmap-detail.html, frontend-roadmap.html).
+Or visit the live Vercel deployment at https://fitpath-dev.vercel.app
 
 ---
 
@@ -71,14 +68,16 @@ For the full design system, see `DESIGN_SYSTEM.md`.
 
 ```
 Roadmap/
-├── roadmap.html              # Main hub (all fitness programs)
-├── roadmap-detail.html       # Individual program view
-├── frontend-roadmap.html     # Focused fitness path
-├── create-roadmap.html       # Custom program builder
+├── path.html                 # Main hub (all fitness training paths)
+├── path-detail.html          # Individual path view with task completion
 ├── auth.html                 # Login / signup
 ├── guides.html, videos.html  # Navigation destinations
+├── best-practices.html       # Best practices resources
+├── create-roadmap.html       # Custom program builder
 ├── DESIGN_SYSTEM.md          # Color tokens & component specs
-└── server.js                 # Node.js HTTP server
+├── server.js                 # Node.js HTTP server
+├── package.json              # Node.js dependencies
+└── vercel.json              # Vercel deployment configuration
 ```
 
 ---
