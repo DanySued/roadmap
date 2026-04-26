@@ -1,20 +1,20 @@
-# Roadmap.dev
+# FitPath.dev
 
-**Browse role-based and skill-based learning paths for developers.** Dark editorial design with real-time search, custom roadmap creation, and a customizable accent color system.
+**Browse structured fitness training paths and goal-based programs.** Dark editorial design with real-time search, custom workout planning, and a customizable accent color system.
 
 ---
 
 ## Screenshot
 
-![Roadmap.dev interface](https://via.placeholder.com/1200x600?text=Roadmap.dev+Dark+Editorial+Design)
+![FitPath.dev interface](https://via.placeholder.com/1200x600?text=FitPath.dev+Dark+Editorial+Design)
 
 ---
 
 ## Features
 
-- **12+ Role-Based Roadmaps** — Frontend, Backend, DevOps, and more. Each path shows a structured learning progression.
-- **Real-Time Search** — ⌘K shortcut to find roadmaps across 24+ curated paths instantly.
-- **Create & Save** — Build custom roadmaps and persist them to browser localStorage.
+- **12+ Training Specialties** — Strength training, running, yoga, cycling, nutrition, CrossFit, pilates, swimming, boxing, martial arts, personal training certification, and rehab programs.
+- **Real-Time Search** — ⌘K shortcut to find fitness programs across 100+ curated paths instantly.
+- **Create & Save** — Build custom fitness plans and persist them to browser localStorage.
 - **Live Color Customization** — Adjust accent colors in the tweaks panel; changes apply across all pages.
 - **Editorial Design** — Dark warm palette (Lora serif, orange accents) optimized for long-form reading.
 
@@ -62,7 +62,7 @@ For the full design system, see `DESIGN_SYSTEM.md`.
 ### Important Notes
 
 - **React via CDN** — Requires internet for the first load. React and Babel are loaded from unpkg.
-- **No Backend** — Fully static frontend. Custom roadmaps are stored in localStorage only.
+- **No Backend** — Fully static frontend. Custom fitness plans are stored in localStorage only.
 - **Embedded JSX** — All React code lives in the HTML files. Edit directly; no compilation needed.
 
 ---
@@ -71,10 +71,10 @@ For the full design system, see `DESIGN_SYSTEM.md`.
 
 ```
 Roadmap/
-├── roadmap.html              # Main hub (all roadmaps)
-├── roadmap-detail.html       # Individual roadmap view
-├── frontend-roadmap.html     # Focused frontend path
-├── create-roadmap.html       # Custom roadmap editor
+├── roadmap.html              # Main hub (all fitness programs)
+├── roadmap-detail.html       # Individual program view
+├── frontend-roadmap.html     # Focused fitness path
+├── create-roadmap.html       # Custom program builder
 ├── auth.html                 # Login / signup
 ├── guides.html, videos.html  # Navigation destinations
 ├── DESIGN_SYSTEM.md          # Color tokens & component specs
