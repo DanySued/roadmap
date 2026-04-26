@@ -1,117 +1,66 @@
-# Design System Documentation
+# Design System
 
-## Overview
-
-A dark, warm-toned editorial design system built around serif typography and amber/orange accents. Designed for long-form reading experiences.
+Dark, warm-toned editorial design built around serif typography and amber/orange accents. Optimized for long-form reading.
 
 ---
 
-## Color Palette
+## CSS Tokens (`:root`)
 
-### CSS Custom Properties (`:root`)
+These are the actual tokens used in every HTML file. Do not use hex values directly — always reference tokens.
 
 | Token | Value | Usage |
 |---|---|---|
 | `--bg` | `#1A1714` | Primary background |
-| `--bg2` | `#211C18` | Secondary background |
-| `--bg3` | `#2A2420` | Tertiary background |
-| `--bg4` | `#302A25` | Quaternary background / scrollbar thumb |
-| `--orange` | `#CF7B4B` | Primary accent, tip borders |
-| `--orange-dim` | `#8A5230` | Dimmed accent |
-| `--text` | `#D4CCC4` | Primary body text |
-| `--text-dim` | `#8A7F76` | Subdued / secondary text |
+| `--bg2` | `#211C18` | Secondary background (cards, panels) |
+| `--bg3` | `#2A2420` | Tertiary background (inputs, code) |
+| `--bg4` | `#302A25` | Quaternary background (scrollbar thumb) |
+| `--border` | `#3D3028` | Primary borders and dividers |
+| `--border2` | `#4A3A2E` | Secondary borders (inputs, subtle rules) |
+| `--text` | `#D4CCC4` | Body text |
+| `--text2` | `#8A7F76` | Secondary / muted text |
 | `--text-head` | `#EDE8E2` | Headings and emphasized text |
-| `--rule` | `#3D3028` | Dividers and borders |
-| `--code-bg` | `#13110F` | Code block background |
-| `--code-text` | `#9DC499` | Code block text (green) |
-| `--tip-bg` | `#231D18` | Tip/callout block background |
-| `--tip-border` | `#CF7B4B` | Tip/callout block border (same as `--orange`) |
+| `--accent` | `#CF7B4B` | Primary accent — interactive elements, highlights |
+| `--green` | `#9DC499` | Success states, completion indicators |
+| `--font` | `'Lora', Georgia, serif` | Primary typeface |
+| `--mono` | `'Geist Mono', monospace` | Monospace / data text |
 
 ---
 
 ## Typography
 
-### Font Family
+**Primary:** Lora (Google Fonts) — serif, optimized for reading-heavy interfaces.
 
-**Primary:** `'Lora'`, Georgia, serif
+**Monospace:** Geist Mono (Google Fonts) — used for labels, tags, and code-adjacent UI.
 
-- A serif font optimized for reading-heavy interfaces.
-- Loaded via Google Fonts (`woff2` format with `font-display: swap`).
-
-### Font Variants Loaded
-
-| Style | Weight | Unicode Range |
-|---|---|---|
-| Italic | 400 | Cyrillic Extended, Ukrainian, Latin Extended |
-
-> Additional weights/styles (normal 400, bold, etc.) are assumed to be loaded — document additional `@font-face` blocks as they are added.
-
-### Base Typography (`body`)
+### Base styles
 
 | Property | Value |
 |---|---|
-| `font-family` | `'Lora', Georgia, serif` |
+| `font-family` | `var(--font)` |
 | `font-size` | `15px` |
 | `line-height` | `1.75` |
-| `color` | `var(--text)` → `#D4CCC4` |
-| `background` | `var(--bg)` → `#1A1714` |
-
-### Paragraph (`p`)
-
-| Property | Value |
-|---|---|
-| `font-size` | `15px` |
 | `color` | `var(--text)` |
-| `line-height` | `1.8` |
-| `margin-bottom` | `16px` |
+| `background` | `var(--bg)` |
 
 ---
 
-## Components
+## Accent color usage
 
-### Cover Subtitle (`.cover-sub`)
+`--accent` (#CF7B4B) is used sparingly:
+- CTA buttons and primary actions
+- Active/selected state borders
+- Link hover states
+- Icon backgrounds on the nav logo
 
-Used for introductory or hero section subheadings beneath a main cover title.
+Never use it for body text. Never use it decoratively.
 
-| Property | Value |
-|---|---|
-| `font-size` | `18px` |
-| `color` | `var(--text-dim)` → `#8A7F76` |
-| `font-style` | `italic` |
-| `margin-bottom` | `40px` |
-| `max-width` | `520px` |
-| `line-height` | `1.5` |
-
-```html
-<p class="cover-sub">A short, elegant subtitle rendered in muted italic.</p>
-```
+`--green` (#9DC499) is reserved for:
+- Completion states (checkmarks, progress fills)
+- Success messages after publishing/saving
 
 ---
 
-## Global Reset (`*`)
-
-Applied universally to all elements.
-
-```css
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-```
-
----
-
-## Scrollbar Styling
-
-Custom scrollbar for webkit browsers.
-
-| Part | Property | Value |
-|---|---|---|
-| Track | `background` | `var(--bg)` → `#1A1714` |
-| Thumb | `background` | `var(--bg4)` → `#302A25` |
-| Thumb | `border-radius` | `3px` |
-| Width | `width` | `6px` |
+## Scrollbar
 
 ```css
 ::-webkit-scrollbar { width: 6px; }
@@ -121,10 +70,22 @@ Custom scrollbar for webkit browsers.
 
 ---
 
-## Design Principles
+## Design principles
 
-1. **Dark warmth** — Backgrounds use warm near-blacks (`#1A1714`) rather than cold grays, creating a candlelit editorial atmosphere.
-2. **Layered depth** — Four background levels (`--bg` through `--bg4`) allow subtle surface differentiation without harsh contrast.
-3. **Readable serif** — Lora at 15px/1.75 line-height prioritizes comfort for long-form content.
-4. **Restrained accent** — Orange (`#CF7B4B`) is used sparingly for interactive elements, borders, and emphasis — never for body text.
-5. **Muted hierarchy** — Text ranges from `--text-head` (brightest) to `--text-dim` (subtlest), guiding attention without stark white.
+1. **Dark warmth** — `#1A1714` is a warm near-black, not a cold gray. The whole palette leans amber/brown, not blue.
+2. **Layered depth** — Four background levels (`--bg` through `--bg4`) create surface hierarchy without harsh contrast.
+3. **Readable serif** — Lora at 15px/1.75 line-height. Don't tighten line-height on body copy.
+4. **Restrained accent** — Orange is an accent, not a background. Keep it rare so it reads as signal.
+5. **Muted text hierarchy** — `--text-head` → `--text` → `--text2`. Three levels. Use them consistently.
+
+---
+
+## Global reset
+
+```css
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+```

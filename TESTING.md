@@ -1,112 +1,88 @@
-# 🧪 Complete Button Testing Guide
+# Testing Guide
 
-## Quick Test Flow
-
-### 1. **Main Page (roadmap.html)**
-   - Click logo → Returns to home ✓
-   - Click "Best Practices" → Loads best-practices.html ✓
-   - Click search box → Opens search modal ✓
-   - Click "Create Roadmap" banner → Goes to create-roadmap.html ✓
-   - Click any roadmap card → Opens detail view ✓
-
-### 2. **Create Roadmap Flow**
-   ```
-   roadmap.html → Click "Create Roadmap" banner
-   → create-roadmap.html (Step 1)
-   → Fill title & description
-   → Click "Continue" → Step 2 (Category selection)
-   → Pick category or create new one
-   → Click "Continue" → Step 3 (Add topics)
-   → Add sections & topics
-   → Click "Continue" → Step 4 (Preview)
-   → Click "Publish" → Success screen
-   → Click "View on Home Page" → Returns to roadmap.html
-   → Your custom roadmap appears in "My Roadmaps" section
-   ```
-
-### 3. **Auth Flow**
-   ```
-   roadmap.html → Click "Sign up" button
-   → auth.html (signup mode)
-   → Fill form (name, email, password)
-   → Click "Create account"
-   → Success screen → Click "Go to Roadmaps"
-   ```
-
-### 4. **Roadmap Detail View**
-   ```
-   roadmap.html → Click any roadmap card
-   → roadmap-detail.html
-   → Click section tabs to switch
-   → Click checkboxes to mark items done
-   → Click back button to return
-   ```
-
-### 5. **Search Feature**
-   ```
-   roadmap.html
-   → Press ⌘K or click search button
-   → Type "React" or "Backend"
-   → Click result or press Enter
-   → Roadmaps filter by query
-   ```
-
-## 🎯 All Functional Buttons
-
-### Navigation (All Pages)
-- [x] Logo → home
-- [x] Roadmaps link
-- [x] Best Practices link
-- [x] Guides link
-- [x] Videos link
-- [x] Teams link
-- [x] Login button
-- [x] Sign up button
-
-### Form Buttons
-- [x] Form submit (auth)
-- [x] Form validation with errors
-- [x] Continue/Next in multi-step forms
-- [x] Back/Cancel buttons
-- [x] Publish/Submit buttons
-
-### Interactive Elements
-- [x] Icon picker (create-roadmap)
-- [x] Color picker (create-roadmap)
-- [x] Category selector
-- [x] Checkbox toggles (detail view)
-- [x] Tab switching (sections)
-
-### State Persistence
-- [x] Custom roadmaps save to localStorage
-- [x] Progress tracking (checked items)
-- [x] Preferences (accent color)
-- [x] Form data preserved between steps
-
-## ✅ Verification Steps
-
-1. **Navigation**: All links work without 404s
-2. **Forms**: Submit buttons validate and process
-3. **State**: Custom roadmaps appear after creation
-4. **Search**: Filters work in real-time
-5. **Persistence**: Refresh page - state is preserved
-6. **Responsive**: Hover states and animations work
-7. **Mobile**: All interactive elements are accessible
-
-## 📊 Statistics
-
-- **Total Pages**: 9 (roadmap, auth, best-practices, guides, videos, teams, create-roadmap, roadmap-detail, frontend-roadmap)
-- **Total Buttons**: 50+
-- **Interactive Elements**: 100+
-- **Form Fields**: 25+
-- **Navigation Links**: 15+
-- **All functional**: ✅ YES
+Start the server: `node server.js` → open `http://localhost:8000/path.html`
 
 ---
 
-## Live Testing
+## Core flows
 
-**Server**: http://localhost:8000
-**Browser**: Chrome (should be open)
+### Browse and track a path
+```
+path.html → click any path card
+→ path-detail.html
+→ click section tabs to switch
+→ click checkboxes to mark stages done
+→ click back → path.html
+→ return to same path — progress is preserved
+```
 
-Start from the home page and work through each section above!
+### Create a custom path
+```
+path.html → click "Create Path" banner
+→ create-path.html
+→ Step 1: enter title + description, pick icon + color
+→ Continue → Step 2: select or create a category
+→ Continue → Step 3: add sections + topics (optional)
+→ Continue → Step 4: preview → click "Publish Path"
+→ Success screen → "View on Home Page"
+→ path.html — custom path appears in its category section
+```
+
+### Auth flow
+```
+path.html → Sign up
+→ auth.html
+→ fill name, email, password
+→ submit → success screen
+→ "Go to Paths" → path.html
+```
+
+### Search
+```
+path.html → press ⌘K or click search
+→ type a fitness keyword (e.g. "strength", "yoga")
+→ cards filter in real time
+→ click result → path-detail.html
+```
+
+---
+
+## Checklist
+
+### Navigation
+- [ ] Logo → path.html from every page
+- [ ] Best Practices, Guides, Videos nav links
+- [ ] Login / Sign up buttons
+- [ ] All "← Back" links return to correct page
+
+### path-detail.html
+- [ ] Correct path loads for each `?id=` value
+- [ ] Section tabs switch content
+- [ ] Checking a box persists after page refresh
+- [ ] Progress percentage updates correctly
+
+### create-path.html
+- [ ] Step 0 Continue disabled until title + desc filled
+- [ ] Step 1 Continue disabled until category selected
+- [ ] New category flow: type name → Set → selected
+- [ ] Sections and topics can be added and removed
+- [ ] Publish saves to localStorage as `custom_paths`
+- [ ] Custom path appears on path.html after publish
+
+### auth.html
+- [ ] Toggle between login and signup
+- [ ] Email validation triggers on bad input
+- [ ] Password length check (8+ chars)
+- [ ] Signup: password confirmation match check
+- [ ] Success screen shows after valid submit
+- [ ] Forgot password → forgot-password.html
+
+### Redirects (confirm these don't 404)
+- [ ] `roadmap.html` → redirects to `path.html`
+- [ ] `roadmap-detail.html?id=running` → `path-detail.html?id=running`
+- [ ] `create-roadmap.html` → `create-path.html`
+- [ ] `frontend-roadmap.html` → `path-detail.html?id=strength-training`
+
+---
+
+## Pages: 15 real + 4 redirects = 19 HTML files

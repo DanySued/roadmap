@@ -1,226 +1,100 @@
-# Complete Page Map — Every Button Works
+# Page Map
 
-## ✅ ALL 17 PAGES CREATED
+Current state of all pages and their navigation targets.
 
-### Core Pages (9 original)
-1. **roadmap.html** — Main dashboard with 24+ roadmaps
-   - Search button → Search modal (working)
-   - Nav links → All pages (working)
-   - Roadmap cards → roadmap-detail.html (working)
-   - Create Roadmap banner → create-roadmap.html (working)
-   - Footer links → All linked pages (working)
+---
 
-2. **auth.html** — Login/Signup authentication
-   - Form submit → Success screen (working)
-   - Mode toggle → Login/Signup switch (working)
-   - Forgot password link → forgot-password.html (working)
-   - Terms link → terms.html (working)
-   - Privacy link → privacy.html (working)
+## Pages with content (15)
 
-3. **create-roadmap.html** — 4-step custom roadmap creator
-   - All form buttons → Multi-step navigation (working)
-   - Icon picker → 10 options (working)
-   - Color picker → 5 options (working)
-   - Category selector → working
-   - Publish button → Saves to localStorage (working)
-   - Success buttons → Home & Create Another (working)
+| File | Purpose |
+|---|---|
+| `path.html` | Main hub — browse all 24+ fitness training paths |
+| `path-detail.html` | Individual path view with task tracking and progress |
+| `create-path.html` | 4-step custom path builder |
+| `auth.html` | Login / signup (UI only, no backend) |
+| `best-practices.html` | Best practices resource hub |
+| `guides.html` | Written guide listing |
+| `guide-detail.html` | Individual guide article |
+| `videos.html` | Video resource listing |
+| `video-detail.html` | Individual video view |
+| `about.html` | About the project |
+| `changelog.html` | Release history |
+| `forgot-password.html` | Password reset flow (UI only) |
+| `terms.html` | Terms of service |
+| `privacy.html` | Privacy policy |
+| `test-buttons.html` | Navigation smoke test |
 
-4. **roadmap-detail.html** — Individual roadmap view
-   - Checkboxes → Track progress (working)
-   - Tab switching → Section navigation (working)
-   - Back button → Returns to source (working)
+## Redirect files (4)
 
-5. **best-practices.html** — Best practices guide
-   - Practice cards → roadmap-detail.html?type=practice (working)
-   - All nav links → working
+These exist only to preserve old URLs. They immediately redirect to the correct page.
 
-6. **guides.html** — Developer guides
-   - Guide cards → guide-detail.html (working)
-   - All nav links → working
+| File | Redirects to |
+|---|---|
+| `roadmap.html` | `path.html` |
+| `roadmap-detail.html` | `path-detail.html` + original query string |
+| `create-roadmap.html` | `create-path.html` |
+| `frontend-roadmap.html` | `path-detail.html?id=strength-training` |
 
-7. **videos.html** — Video tutorials
-   - Video cards → video-detail.html (working)
-   - All nav links → working
+---
 
-8. **teams.html** — Team features
-   - All nav links → working
-
-9. **frontend-roadmap.html** — Frontend-focused learning path
-   - All nav links → working
-
-### New Pages Created (8 new)
-
-10. **forgot-password.html** — Password reset flow
-    - Email form → Shows confirmation
-    - Back to sign in → auth.html (working)
-
-11. **terms.html** — Terms of Service
-    - Back to home → roadmap.html (working)
-
-12. **privacy.html** — Privacy Policy
-    - Back to home → roadmap.html (working)
-
-13. **about.html** — About the platform
-    - GitHub link → External (working)
-    - Back to home → roadmap.html (working)
-
-14. **changelog.html** — Release history
-    - Back to home → roadmap.html (working)
-
-15. **guide-detail.html** — Individual guide view
-    - Back to guides → guides.html (working)
-
-16. **video-detail.html** — Individual video view
-    - Back to videos → videos.html (working)
-    - GitHub link → External (working)
-
-17. **test-buttons.html** — Interactive button test page
-    - All buttons → Test navigation (working)
-
-## 🔗 Complete Navigation Map
+## Navigation map
 
 ```
-roadmap.html (home)
-├── Search modal
-│   └── Roadmap results → roadmap-detail.html?id=xxx
-├── Navigation bar
-│   ├── Logo → roadmap.html
-│   ├── Roadmaps → roadmap.html
+path.html (home)
+├── Search (⌘K)
+│   └── Results → path-detail.html?id=xxx
+├── Nav bar
+│   ├── Logo → path.html
 │   ├── Best Practices → best-practices.html
 │   ├── Guides → guides.html
 │   ├── Videos → videos.html
-│   ├── Teams → teams.html
 │   ├── Login → auth.html
 │   └── Sign up → auth.html?mode=signup
-├── Hero section
-│   └── Create Roadmap banner → create-roadmap.html
-├── Roadmap cards
-│   └── Click any card → roadmap-detail.html?id=xxx
+├── Create Path button → create-path.html
+├── Path cards → path-detail.html?id=xxx
 └── Footer
     ├── About → about.html
     ├── Changelog → changelog.html
-    ├── YouTube → https://youtube.com (external)
-    ├── Discord → https://discord.com (external)
-    ├── GitHub → https://github.com (external)
-    ├── Twitter → https://twitter.com (external)
-    ├── LinkedIn → https://linkedin.com (external)
-    ├── RSS → # (placeholder)
-    └── Roadmaps/Guides/Videos links → respective pages
+    └── Social links (GitHub, YouTube, Discord, Twitter, LinkedIn)
 
-auth.html (authentication)
-├── Toggle login/signup → Mode switch
-├── Form submit → Success page
-├── Forgot password → forgot-password.html
-├── Terms link → terms.html
-├── Privacy link → privacy.html
-├── GitHub button → Social auth (UI)
-├── Google button → Social auth (UI)
-└── Success: Go to Roadmaps → roadmap.html
-
-create-roadmap.html (custom roadmap creator)
-├── Step 1: Basic Info
-│   └── Continue → Step 2 (validation: title & desc)
-├── Step 2: Category
-│   ├── Select existing → Continue
-│   └── Create new → Set button (validation: category name)
-├── Step 3: Topics
-│   ├── Add section → Section management
-│   ├── Add topics → Topic management
-│   └── Continue → Step 4
-├── Step 4: Preview
-│   └── Publish → Success page
-├── Back/Cancel → Previous step or home
-└── Success page
-    ├── View on Home Page → roadmap.html (with custom roadmap)
-    └── Create Another → Reset form
-
-roadmap-detail.html (roadmap detail view)
-├── Back button → Previous page
+path-detail.html
+├── Back button → path.html
 ├── Section tabs → Switch sections
-├── Item checkboxes → Mark complete (persist in localStorage)
-└── Status toggles → Cycle through statuses
+└── Checkboxes → Mark stages complete (localStorage)
+
+create-path.html
+├── Step 1: Title + description + icon + color
+├── Step 2: Category (existing or new)
+├── Step 3: Add sections + topics
+├── Step 4: Preview + publish → saves to localStorage
+└── Success: View on Home Page → path.html
+
+auth.html
+├── Toggle login/signup
+├── Submit → Success screen → path.html
+├── Forgot password → forgot-password.html
+├── Terms → terms.html
+└── Privacy → privacy.html
 
 best-practices.html
-├── Practice cards → roadmap-detail.html?id=xxx&type=practice
-└── All nav links → working pages
+└── Practice cards → path-detail.html?id=xxx&type=practice
 
-guides.html
-├── Guide cards → guide-detail.html
-└── All nav links → working pages
+guides.html → guide-detail.html
+videos.html → video-detail.html
 
-guide-detail.html
-├── Full article content → Readable on page
-└── Back to Guides → guides.html
-
-videos.html
-├── Video cards → video-detail.html
-└── All nav links → working pages
-
-video-detail.html
-├── Video player (stub)
-├── Full content → Readable on page
-├── GitHub link → External (working)
-└── Back to Videos → videos.html
-
-forgot-password.html
-├── Email form → Confirm email
-└── Back to sign in → auth.html
-
-terms.html
-├── Full ToS content → Readable on page
-└── Back to Home → roadmap.html
-
-privacy.html
-├── Full privacy content → Readable on page
-└── Back to Home → roadmap.html
-
-about.html
-├── About content → Readable on page
-├── GitHub link → External (working)
-└── Back to Home → roadmap.html
-
-changelog.html
-├── Full changelog → Readable on page
-└── Back to Home → roadmap.html
+forgot-password.html → back → auth.html
+terms.html → back → path.html
+privacy.html → back → path.html
+about.html → back → path.html
+changelog.html → back → path.html
 ```
 
-## 📊 Statistics
+---
 
-- **Total Pages:** 17
-- **Total Buttons:** 100+
-- **Interactive Elements:** 150+
-- **Stub Links Remaining:** 0 ✅
-- **All Buttons Working:** YES ✅
+## localStorage keys
 
-## ✨ Button Categories
-
-- **Navigation:** 8 (logo, nav links, login, signup)
-- **Form Controls:** 20+ (submit, continue, back, cancel, etc)
-- **Interactive:** 30+ (checkboxes, toggles, pickers, cards)
-- **External Links:** 5 (GitHub, YouTube, Discord, Twitter, LinkedIn)
-- **Cross-Page Navigation:** 40+ (all links between pages)
-
-## 🎯 Testing Checklist
-
-- [x] Navigation works between all pages
-- [x] Form submission and validation
-- [x] Custom roadmap creation flow
-- [x] Progress tracking persists
-- [x] Search modal works
-- [x] Footer links functional
-- [x] Auth flow complete
-- [x] Password reset flow
-- [x] Terms/Privacy accessible
-- [x] About page functional
-- [x] Changelog displays
-- [x] Guide detail page works
-- [x] Video detail page works
-- [x] External links open correctly
-- [x] All buttons have destinations
-
-## 🚀 Ready to Use
-
-Every single button on the website has a working destination. No more dead links!
-
-Server: http://localhost:8000
-All pages load cleanly. Click around and test everything!
+| Key | Stores |
+|---|---|
+| `custom_paths` | Custom paths created via the builder |
+| `fe_roadmap_statuses` | Task completion state for the frontend path |
+| Per-path keys | Completion state per individual path |
