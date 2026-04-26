@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Videos — roadmap.dev</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Geist+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+      integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+      integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+      integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #1a1714;
+        --bg2: #211c18;
+        --bg3: #2a2420;
+        --bg4: #302a25;
+        --border: #3d3028;
+        --border2: #4a3a2e;
+        --text: #d4ccc4;
+        --text2: #8a7f76;
+        --text-head: #ede8e2;
+        --accent: #cf7b4b;
+        --green: #9dc499;
+        --font: "Lora", Georgia, serif;
+        --mono: "Geist Mono", monospace;
+      }
+      html {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.75;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--bg4);
+        border-radius: 3px;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState } = React;
+
+      const VIDEOS = [
+        {
+          id: 1,
+          title: "Complete Frontend Developer Roadmap 2024",
+          duration: "42:18",
+          views: "284K",
+          color: "#CF7B4B",
+          cat: "Frontend",
+          thumb: "◈",
+          new: true,
+        },
+        {
+          id: 2,
+          title: "Backend Developer Roadmap Explained",
+          duration: "38:55",
+          views: "196K",
+          color: "#9DC499",
+          cat: "Backend",
+          thumb: "◉",
+        },
+        {
+          id: 3,
+          title: "DevOps Roadmap — From Zero to Engineer",
+          duration: "51:22",
+          views: "312K",
+          color: "#CF7B4B",
+          cat: "DevOps",
+          thumb: "⬡",
+          new: true,
+        },
+        {
+          id: 4,
+          title: "How to Learn React in 2024",
+          duration: "28:47",
+          views: "145K",
+          color: "#CF7B4B",
+          cat: "Frontend",
+          thumb: "◉",
+        },
+        {
+          id: 5,
+          title: "Docker & Kubernetes for Developers",
+          duration: "1:04:10",
+          views: "220K",
+          color: "#9DC499",
+          cat: "DevOps",
+          thumb: "⬡",
+        },
+        {
+          id: 6,
+          title: "SQL Database Design Full Course",
+          duration: "1:12:33",
+          views: "98K",
+          color: "#D4CCC4",
+          cat: "Backend",
+          thumb: "◆",
+        },
+        {
+          id: 7,
+          title: "TypeScript Full Course — Beginner to Advanced",
+          duration: "56:48",
+          views: "173K",
+          color: "#CF7B4B",
+          cat: "Frontend",
+          thumb: "◈",
+        },
+        {
+          id: 8,
+          title: "System Design Interview Prep",
+          duration: "47:20",
+          views: "251K",
+          color: "#8A5230",
+          cat: "Backend",
+          thumb: "◆",
+          new: true,
+        },
+        {
+          id: 9,
+          title: "Git & GitHub for Beginners",
+          duration: "22:15",
+          views: "389K",
+          color: "#9DC499",
+          cat: "Tools",
+          thumb: "◉",
+        },
+        {
+          id: 10,
+          title: "AWS for Developers — Core Services",
+          duration: "1:08:44",
+          views: "134K",
+          color: "#CF7B4B",
+          cat: "DevOps",
+          thumb: "⬡",
+        },
+        {
+          id: 11,
+          title: "Python Full Course 2024",
+          duration: "1:24:00",
+          views: "445K",
+          color: "#D4CCC4",
+          cat: "Backend",
+          thumb: "◆",
+        },
+        {
+          id: 12,
+          title: "How to Land Your First Dev Job",
+          duration: "19:32",
+          views: "88K",
+          color: "#9DC499",
+          cat: "Career",
+          thumb: "◈",
+        },
+      ];
+
+      const CATS = ["All", "Frontend", "Backend", "DevOps", "Tools", "Career"];
+      const NAV = [
+        { label: "Roadmaps", href: "roadmap.html" },
+        { label: "Best Practices", href: "best-practices.html" },
+        { label: "Guides", href: "guides.html" },
+        { label: "Videos", href: "videos.html" },
+      ];
+
+      function NavBar() {
+        return (
+          <nav
+            style={{
+              position: "sticky",
+              top: 0,
+              zIndex: 100,
+              background: "rgba(26,23,20,0.9)",
+              backdropFilter: "blur(12px)",
+              borderBottom: "1px solid var(--border)",
+            }}
+          >
+            <div
+              style={{
+                maxWidth: 1100,
+                margin: "0 auto",
+                padding: "0 24px",
+                height: 56,
+                display: "flex",
+                alignItems: "center",
+                gap: 4,
+              }}
+            >
+              <a
+                href="roadmap.html"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  marginRight: 20,
+                  flexShrink: 0,
+                }}
+              >
+                <div
+                  style={{
+                    width: 30,
+                    height: 30,
+                    background: "var(--accent)",
+                    borderRadius: 7,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 14,
+                    fontWeight: 800,
+                    color: "#1A1714",
+                  }}
+                >
+                  R
+                </div>
+                <span
+                  style={{
+                    fontWeight: 700,
+                    fontSize: 16,
+                    color: "var(--text-head)",
+                  }}
+                >
+                  roadmap.dev
+                </span>
+              </a>
+              {NAV.map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  style={{
+                    padding: "6px 12px",
+                    borderRadius: 6,
+                    fontSize: 13.5,
+                    fontWeight: 500,
+                    color:
+                      l.href === "videos.html"
+                        ? "var(--accent)"
+                        : "var(--text2)",
+                    background:
+                      l.href === "videos.html"
+                        ? "rgba(207,123,75,0.1)"
+                        : "transparent",
+                    transition: "all .15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (l.href !== "videos.html") {
+                      e.target.style.color = "var(--text)";
+                      e.target.style.background = "var(--bg2)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (l.href !== "videos.html") {
+                      e.target.style.color = "var(--text2)";
+                      e.target.style.background = "transparent";
+                    }
+                  }}
+                >
+                  {l.label}
+                </a>
+              ))}
+              <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
+                <a
+                  href="auth.html"
+                  style={{
+                    padding: "6px 14px",
+                    borderRadius: 8,
+                    fontSize: 13,
+                    border: "1px solid var(--border)",
+                    color: "var(--text2)",
+                    background: "var(--bg2)",
+                  }}
+                >
+                  Login
+                </a>
+                <a
+                  href="auth.html?mode=signup"
+                  style={{
+                    padding: "6px 14px",
+                    borderRadius: 8,
+                    fontSize: 13,
+                    background: "var(--accent)",
+                    color: "#1A1714",
+                    fontWeight: 700,
+                  }}
+                >
+                  Sign up
+                </a>
+              </div>
+            </div>
+          </nav>
+        );
+      }
+
+      function VideoCard({ v }) {
+        const [hov, setHov] = useState(false);
+        return (
+          <a
+            href="video-detail.html"
+            onMouseEnter={() => setHov(true)}
+            onMouseLeave={() => setHov(false)}
+            style={{
+              display: "block",
+              borderRadius: 12,
+              overflow: "hidden",
+              transition: "all .2s",
+              boxShadow: hov ? `0 4px 24px ${v.color}18` : "none",
+            }}
+          >
+            {/* Thumbnail */}
+            <div
+              style={{
+                height: 158,
+                background: hov ? `${v.color}22` : "var(--bg2)",
+                border: `1px solid ${hov ? v.color + "44" : "var(--border)"}`,
+                borderRadius: "12px 12px 0 0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+                transition: "all .2s",
+              }}
+            >
+              <span style={{ fontSize: 56, color: v.color, opacity: 0.3 }}>
+                {v.thumb}
+              </span>
+              {/* Play button */}
+              <div
+                style={{
+                  position: "absolute",
+                  width: 44,
+                  height: 44,
+                  borderRadius: "50%",
+                  background: "rgba(26,23,20,0.8)",
+                  backdropFilter: "blur(4px)",
+                  border: `1px solid ${v.color}55`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 18,
+                  color: v.color,
+                  transform: hov ? "scale(1.1)" : "scale(1)",
+                  transition: "transform .2s",
+                }}
+              >
+                ▶
+              </div>
+              {/* Duration badge */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 8,
+                  right: 8,
+                  background: "rgba(26,23,20,0.85)",
+                  borderRadius: 5,
+                  padding: "2px 7px",
+                  fontSize: 11,
+                  fontFamily: "var(--mono)",
+                  color: "var(--text2)",
+                }}
+              >
+                {v.duration}
+              </div>
+              {v.new && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 8,
+                    left: 8,
+                    background: "var(--accent)",
+                    borderRadius: 5,
+                    padding: "2px 8px",
+                    fontSize: 10,
+                    fontWeight: 700,
+                    color: "#1A1714",
+                  }}
+                >
+                  NEW
+                </div>
+              )}
+            </div>
+            {/* Info */}
+            <div
+              style={{
+                padding: "12px 14px",
+                background: "var(--bg2)",
+                border: `1px solid ${hov ? v.color + "44" : "var(--border)"}`,
+                borderTop: "none",
+                borderRadius: "0 0 12px 12px",
+                transition: "all .2s",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 10.5,
+                  color: v.color,
+                  fontWeight: 600,
+                  marginBottom: 5,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.05em",
+                }}
+              >
+                {v.cat}
+              </div>
+              <div
+                style={{
+                  fontSize: 14,
+                  fontWeight: 600,
+                  color: "var(--text-head)",
+                  lineHeight: 1.4,
+                  marginBottom: 6,
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+              >
+                {v.title}
+              </div>
+              <div style={{ fontSize: 12, color: "var(--text2)" }}>
+                {v.views} views
+              </div>
+            </div>
+          </a>
+        );
+      }
+
+      function App() {
+        const [cat, setCat] = useState("All");
+        const filtered =
+          cat === "All" ? VIDEOS : VIDEOS.filter((v) => v.cat === cat);
+        return (
+          <>
+            <NavBar />
+            <main
+              style={{
+                maxWidth: 1100,
+                margin: "0 auto",
+                padding: "48px 24px 60px",
+                animation: "fadeInUp .35s ease",
+              }}
+            >
+              <div style={{ marginBottom: 36 }}>
+                <h1
+                  style={{
+                    fontSize: 36,
+                    fontWeight: 700,
+                    color: "var(--text-head)",
+                    letterSpacing: "-0.5px",
+                    marginBottom: 10,
+                  }}
+                >
+                  Videos
+                </h1>
+                <p
+                  style={{
+                    fontSize: 15,
+                    color: "var(--text2)",
+                    maxWidth: 480,
+                    lineHeight: 1.75,
+                  }}
+                >
+                  Watch curated video courses and explainers to accelerate your
+                  learning path.
+                </p>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  gap: 8,
+                  marginBottom: 28,
+                  flexWrap: "wrap",
+                }}
+              >
+                {CATS.map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => setCat(c)}
+                    style={{
+                      padding: "6px 16px",
+                      borderRadius: 20,
+                      fontSize: 13,
+                      fontWeight: 500,
+                      cursor: "pointer",
+                      fontFamily: "var(--font)",
+                      background: cat === c ? "var(--accent)" : "var(--bg2)",
+                      color: cat === c ? "#1A1714" : "var(--text2)",
+                      border: `1px solid ${cat === c ? "var(--accent)" : "var(--border)"}`,
+                      transition: "all .15s",
+                    }}
+                  >
+                    {c}
+                  </button>
+                ))}
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))",
+                  gap: 16,
+                }}
+              >
+                {filtered.map((v) => (
+                  <VideoCard key={v.id} v={v} />
+                ))}
+              </div>
+            </main>
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

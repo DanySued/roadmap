@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Best Practices — roadmap.dev</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Geist+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+      integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+      integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+      integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #1a1714;
+        --bg2: #211c18;
+        --bg3: #2a2420;
+        --bg4: #302a25;
+        --border: #3d3028;
+        --border2: #4a3a2e;
+        --text: #d4ccc4;
+        --text2: #8a7f76;
+        --text-head: #ede8e2;
+        --accent: #cf7b4b;
+        --green: #9dc499;
+        --font: "Lora", Georgia, serif;
+        --mono: "Geist Mono", monospace;
+      }
+      html {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.75;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--bg4);
+        border-radius: 3px;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState } = React;
+
+      const PRACTICES = [
+        {
+          id: "api-design",
+          title: "API Design",
+          icon: "◈",
+          color: "#CF7B4B",
+          topics: [
+            "RESTful conventions",
+            "Versioning",
+            "Error handling",
+            "Authentication",
+            "Rate limiting",
+            "Documentation",
+          ],
+          articles: 12,
+          updated: "Jan 2024",
+        },
+        {
+          id: "code-review",
+          title: "Code Review",
+          icon: "◉",
+          color: "#9DC499",
+          topics: [
+            "What to look for",
+            "Giving feedback",
+            "Receiving feedback",
+            "PR size",
+            "Automated checks",
+            "Team culture",
+          ],
+          articles: 8,
+          updated: "Feb 2024",
+        },
+        {
+          id: "frontend-performance",
+          title: "Frontend Performance",
+          icon: "◆",
+          color: "#D4CCC4",
+          topics: [
+            "Core Web Vitals",
+            "Image optimization",
+            "Bundle size",
+            "Lazy loading",
+            "Caching strategies",
+            "Critical CSS",
+          ],
+          articles: 15,
+          updated: "Mar 2024",
+        },
+        {
+          id: "backend-performance",
+          title: "Backend Performance",
+          icon: "◉",
+          color: "#CF7B4B",
+          topics: [
+            "Database indexing",
+            "Caching layers",
+            "Async processing",
+            "Load balancing",
+            "Profiling",
+            "Query optimization",
+          ],
+          articles: 11,
+          updated: "Feb 2024",
+        },
+        {
+          id: "aws-security",
+          title: "AWS Security",
+          icon: "⬡",
+          color: "#8A5230",
+          topics: [
+            "IAM best practices",
+            "VPC setup",
+            "Encryption",
+            "Monitoring",
+            "Incident response",
+            "Compliance",
+          ],
+          articles: 9,
+          updated: "Jan 2024",
+        },
+        {
+          id: "docker",
+          title: "Docker Best Practices",
+          icon: "⬡",
+          color: "#9DC499",
+          topics: [
+            "Image size",
+            "Multi-stage builds",
+            "Security scanning",
+            "Compose patterns",
+            "Secrets management",
+            "Logging",
+          ],
+          articles: 7,
+          updated: "Mar 2024",
+        },
+        {
+          id: "react-patterns",
+          title: "React Patterns",
+          icon: "◉",
+          color: "#CF7B4B",
+          topics: [
+            "Component design",
+            "State management",
+            "Performance",
+            "Testing",
+            "Error boundaries",
+            "Accessibility",
+          ],
+          articles: 14,
+          updated: "Apr 2024",
+        },
+        {
+          id: "accessibility",
+          title: "Accessibility",
+          icon: "◈",
+          color: "#D4CCC4",
+          topics: [
+            "WCAG guidelines",
+            "Screen readers",
+            "Keyboard nav",
+            "Color contrast",
+            "ARIA labels",
+            "Testing tools",
+          ],
+          articles: 10,
+          updated: "Mar 2024",
+        },
+      ];
+
+      const NAV = [
+        { label: "Roadmaps", href: "roadmap.html" },
+        { label: "Best Practices", href: "best-practices.html" },
+        { label: "Guides", href: "guides.html" },
+        { label: "Videos", href: "videos.html" },
+      ];
+
+      function NavBar() {
+        return (
+          <nav
+            style={{
+              position: "sticky",
+              top: 0,
+              zIndex: 100,
+              background: "rgba(26,23,20,0.9)",
+              backdropFilter: "blur(12px)",
+              borderBottom: "1px solid var(--border)",
+            }}
+          >
+            <div
+              style={{
+                maxWidth: 1100,
+                margin: "0 auto",
+                padding: "0 24px",
+                height: 56,
+                display: "flex",
+                alignItems: "center",
+                gap: 4,
+              }}
+            >
+              <a
+                href="roadmap.html"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  marginRight: 20,
+                  flexShrink: 0,
+                }}
+              >
+                <div
+                  style={{
+                    width: 30,
+                    height: 30,
+                    background: "var(--accent)",
+                    borderRadius: 7,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 14,
+                    fontWeight: 800,
+                    color: "#1A1714",
+                  }}
+                >
+                  R
+                </div>
+                <span
+                  style={{
+                    fontWeight: 700,
+                    fontSize: 16,
+                    color: "var(--text-head)",
+                  }}
+                >
+                  roadmap.dev
+                </span>
+              </a>
+              {NAV.map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  style={{
+                    padding: "6px 12px",
+                    borderRadius: 6,
+                    fontSize: 13.5,
+                    fontWeight: 500,
+                    color:
+                      l.href === "best-practices.html"
+                        ? "var(--accent)"
+                        : "var(--text2)",
+                    background:
+                      l.href === "best-practices.html"
+                        ? "rgba(207,123,75,0.1)"
+                        : "transparent",
+                    transition: "all .15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (l.href !== "best-practices.html") {
+                      e.target.style.color = "var(--text)";
+                      e.target.style.background = "var(--bg2)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (l.href !== "best-practices.html") {
+                      e.target.style.color = "var(--text2)";
+                      e.target.style.background = "transparent";
+                    }
+                  }}
+                >
+                  {l.label}
+                </a>
+              ))}
+              <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
+                <a
+                  href="auth.html"
+                  style={{
+                    padding: "6px 14px",
+                    borderRadius: 8,
+                    fontSize: 13,
+                    border: "1px solid var(--border)",
+                    color: "var(--text2)",
+                    background: "var(--bg2)",
+                  }}
+                >
+                  Login
+                </a>
+                <a
+                  href="auth.html?mode=signup"
+                  style={{
+                    padding: "6px 14px",
+                    borderRadius: 8,
+                    fontSize: 13,
+                    background: "var(--accent)",
+                    color: "#1A1714",
+                    fontWeight: 700,
+                  }}
+                >
+                  Sign up
+                </a>
+              </div>
+            </div>
+          </nav>
+        );
+      }
+
+      function Card({ p }) {
+        const [hov, setHov] = useState(false);
+        return (
+          <a
+            href={`roadmap-detail.html?id=${p.id}&type=practice`}
+            onMouseEnter={() => setHov(true)}
+            onMouseLeave={() => setHov(false)}
+            style={{
+              display: "block",
+              background: hov ? "var(--bg3)" : "var(--bg2)",
+              border: `1px solid ${hov ? p.color + "55" : "var(--border)"}`,
+              borderRadius: 14,
+              padding: "24px",
+              transition: "all .2s",
+              boxShadow: hov ? `0 4px 24px ${p.color}18` : "none",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                marginBottom: 16,
+              }}
+            >
+              <div
+                style={{
+                  width: 46,
+                  height: 46,
+                  background: `${p.color}18`,
+                  borderRadius: 12,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 22,
+                  color: p.color,
+                }}
+              >
+                {p.icon}
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontSize: 11, color: "var(--text2)" }}>
+                  {p.articles} articles
+                </div>
+                <div
+                  style={{ fontSize: 11, color: "var(--text2)", marginTop: 2 }}
+                >
+                  Updated {p.updated}
+                </div>
+              </div>
+            </div>
+            <h3
+              style={{
+                fontSize: 16,
+                fontWeight: 700,
+                color: "var(--text-head)",
+                marginBottom: 12,
+              }}
+            >
+              {p.title}
+            </h3>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              {p.topics.map((t) => (
+                <span
+                  key={t}
+                  style={{
+                    fontSize: 11,
+                    padding: "2px 8px",
+                    borderRadius: 20,
+                    background: "var(--bg3)",
+                    border: "1px solid var(--border)",
+                    color: "var(--text2)",
+                  }}
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+            <div
+              style={{
+                marginTop: 16,
+                fontSize: 12,
+                color: p.color,
+                fontWeight: 500,
+                opacity: hov ? 1 : 0,
+                transition: "opacity .15s",
+              }}
+            >
+              Explore →
+            </div>
+          </a>
+        );
+      }
+
+      function App() {
+        return (
+          <>
+            <NavBar />
+            <main
+              style={{
+                maxWidth: 1100,
+                margin: "0 auto",
+                padding: "48px 24px 60px",
+                animation: "fadeInUp .35s ease",
+              }}
+            >
+              <div style={{ marginBottom: 40 }}>
+                <h1
+                  style={{
+                    fontSize: 36,
+                    fontWeight: 700,
+                    color: "var(--text-head)",
+                    letterSpacing: "-0.5px",
+                    marginBottom: 10,
+                  }}
+                >
+                  Best Practices
+                </h1>
+                <p
+                  style={{
+                    fontSize: 15,
+                    color: "var(--text2)",
+                    maxWidth: 520,
+                    lineHeight: 1.75,
+                  }}
+                >
+                  Opinionated, community-curated guides on how to do things the
+                  right way. No fluff — just patterns that work.
+                </p>
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))",
+                  gap: 14,
+                }}
+              >
+                {PRACTICES.map((p) => (
+                  <Card key={p.id} p={p} />
+                ))}
+              </div>
+            </main>
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frontend Roadmap — roadmap.dev</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #1A1714; --bg2: #211C18; --bg3: #2A2420; --bg4: #302A25;
+    --border: #3D3028; --border2: #4a3a2e;
+    --text: #D4CCC4; --text2: #8A7F76; --text-head: #EDE8E2;
+    --accent: #CF7B4B; --accent2: #8A5230;
+    --green: #9DC499;
+    --font: 'Lora', Georgia, serif; --mono: 'Geist Mono', monospace;
+  }
+  html { font-family: var(--font); background: var(--bg); color: var(--text); }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+  @keyframes fadeInUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState } = React;
+
+/* ── DATA ── */
+const SECTIONS = [
+  {
+    title: "Internet Fundamentals",
+    color: "#CF7B4B",
+    items: [
+      { id:"how-works", label:"How does the internet work?", status:"done" },
+      { id:"http",      label:"What is HTTP?",               status:"done" },
+      { id:"browsers",  label:"How Browsers Work",           status:"done" },
+      { id:"dns",       label:"DNS and how it works",        status:"learning" },
+      { id:"domain",    label:"What is a Domain Name?",      status:"none" },
+      { id:"hosting",   label:"What is Hosting?",            status:"none" },
+    ],
+  },
+  {
+    title: "HTML",
+    color: "#CF7B4B",
+    items: [
+      { id:"html-basics",  label:"Learn the Basics",          status:"done" },
+      { id:"semantic",     label:"Semantic HTML",              status:"done" },
+      { id:"forms",        label:"Forms & Validation",         status:"learning" },
+      { id:"conventions",  label:"Conventions & Best Practices", status:"none" },
+      { id:"accessibility",label:"Accessibility",              status:"none" },
+      { id:"seo-basics",   label:"SEO Basics",                 status:"none" },
+    ],
+  },
+  {
+    title: "CSS",
+    color: "#8A5230",
+    items: [
+      { id:"css-basics",   label:"Learn the Basics",          status:"done" },
+      { id:"layouts",      label:"Making Layouts",             status:"done" },
+      { id:"responsive",   label:"Responsive Design",          status:"learning" },
+      { id:"flexbox",      label:"Flexbox",                    status:"done" },
+      { id:"grid",         label:"CSS Grid",                   status:"learning" },
+      { id:"animations",   label:"Animations",                 status:"none" },
+    ],
+  },
+  {
+    title: "JavaScript",
+    color: "#D4CCC4",
+    items: [
+      { id:"js-basics",    label:"Learn the Basics",          status:"done" },
+      { id:"dom",          label:"DOM Manipulation",           status:"done" },
+      { id:"fetch",        label:"Fetch API / Ajax",           status:"learning" },
+      { id:"es6",          label:"ES6+ Syntax",                status:"done" },
+      { id:"async",        label:"Async / Await",              status:"learning" },
+      { id:"modules",      label:"JavaScript Modules",         status:"none" },
+    ],
+  },
+  {
+    title: "Version Control",
+    color: "#9DC499",
+    items: [
+      { id:"git-basics",   label:"Git Basics",                status:"done" },
+      { id:"github",       label:"GitHub / GitLab",            status:"done" },
+      { id:"branching",    label:"Branching Strategies",       status:"learning" },
+    ],
+  },
+  {
+    title: "Package Managers",
+    color: "#CF7B4B",
+    items: [
+      { id:"npm",   label:"npm",   status:"done" },
+      { id:"yarn",  label:"Yarn",  status:"none" },
+      { id:"pnpm",  label:"pnpm",  status:"none" },
+    ],
+  },
+  {
+    title: "Frameworks",
+    color: "#CF7B4B",
+    items: [
+      { id:"react",   label:"React",   status:"learning" },
+      { id:"vue",     label:"Vue",     status:"none" },
+      { id:"angular", label:"Angular", status:"none" },
+      { id:"svelte",  label:"Svelte",  status:"none" },
+    ],
+  },
+  {
+    title: "CSS Architecture",
+    color: "#8A5230",
+    items: [
+      { id:"tailwind",  label:"Tailwind CSS",   status:"learning" },
+      { id:"css-modules",label:"CSS Modules",   status:"none" },
+      { id:"sass",      label:"Sass / SCSS",    status:"none" },
+    ],
+  },
+  {
+    title: "Build Tools",
+    color: "#8A7F76",
+    items: [
+      { id:"vite",    label:"Vite",           status:"none" },
+      { id:"webpack", label:"Webpack",        status:"none" },
+      { id:"esbuild", label:"esbuild",        status:"none" },
+    ],
+  },
+  {
+    title: "Testing",
+    color: "#9DC499",
+    items: [
+      { id:"jest",       label:"Jest",            status:"none" },
+      { id:"vitest",     label:"Vitest",          status:"none" },
+      { id:"playwright", label:"Playwright",      status:"none" },
+      { id:"cypress",    label:"Cypress",         status:"none" },
+    ],
+  },
+  {
+    title: "TypeScript",
+    color: "#CF7B4B",
+    items: [
+      { id:"ts-basics",  label:"Learn the Basics",   status:"none" },
+      { id:"ts-advanced",label:"Advanced Types",      status:"none" },
+    ],
+  },
+  {
+    title: "Web Security",
+    color: "#8A5230",
+    items: [
+      { id:"cors",   label:"CORS",           status:"none" },
+      { id:"https",  label:"HTTPS",          status:"learning" },
+      { id:"csp",    label:"Content Security Policy", status:"none" },
+      { id:"owasp",  label:"OWASP Top 10",   status:"none" },
+    ],
+  },
+];
+
+const STATUS_CONFIG = {
+  done:     { label:"Done",     color:"#9DC499", bg:"rgba(157,196,153,0.12)", border:"rgba(157,196,153,0.3)" },
+  learning: { label:"In Progress", color:"#CF7B4B", bg:"rgba(207,123,75,0.12)", border:"rgba(207,123,75,0.3)" },
+  none:     { label:"Not started", color:"#8A7F76", bg:"transparent", border:"var(--border)" },
+};
+
+/* ── COMPONENTS ── */
+function NavBar() {
+  return (
+    <nav style={{
+      position:"sticky", top:0, zIndex:100,
+      background:"rgba(26,23,20,0.9)", backdropFilter:"blur(12px)",
+      borderBottom:"1px solid var(--border)",
+    }}>
+      <div style={{ maxWidth:1100, margin:"0 auto", padding:"0 24px", height:56, display:"flex", alignItems:"center", gap:20 }}>
+        <a href="roadmap.html" style={{ display:"flex", alignItems:"center", gap:10 }}>
+          <div style={{ width:30, height:30, background:"var(--accent)", borderRadius:7, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:800, color:"#1A1714" }}>R</div>
+          <span style={{ fontWeight:700, fontSize:16, color:"var(--text-head)" }}>roadmap.dev</span>
+        </a>
+        <span style={{ color:"var(--border2)", fontSize:18 }}>/</span>
+        <span style={{ fontSize:14, color:"var(--text2)" }}>Frontend</span>
+        <div style={{ marginLeft:"auto", display:"flex", gap:8 }}>
+          <a href="auth.html" style={{
+            padding:"6px 14px", borderRadius:8, fontSize:13, fontWeight:500,
+            background:"var(--bg2)", border:"1px solid var(--border)",
+            color:"var(--text2)", transition:"all .15s",
+          }}
+          onMouseEnter={e => { e.currentTarget.style.color="var(--text)"; e.currentTarget.style.borderColor="var(--border2)"; }}
+          onMouseLeave={e => { e.currentTarget.style.color="var(--text2)"; e.currentTarget.style.borderColor="var(--border)"; }}
+          >Sign in to track progress</a>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+function ProgressBar({ sections, statuses }) {
+  const all = sections.flatMap(s => s.items);
+  const done = all.filter(i => (statuses[i.id] || i.status) === "done").length;
+  const learning = all.filter(i => (statuses[i.id] || i.status) === "learning").length;
+  const pct = Math.round((done / all.length) * 100);
+  return (
+    <div style={{ background:"var(--bg2)", border:"1px solid var(--border)", borderRadius:12, padding:"18px 24px", marginBottom:32 }}>
+      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:10 }}>
+        <span style={{ fontSize:13.5, fontWeight:600, color:"var(--text-head)" }}>Your Progress</span>
+        <span style={{ fontSize:13, color:"var(--accent)", fontWeight:700 }}>{pct}% complete</span>
+      </div>
+      <div style={{ height:6, background:"var(--bg4)", borderRadius:3, overflow:"hidden", marginBottom:10 }}>
+        <div style={{ height:"100%", width:`${pct}%`, background:"var(--accent)", borderRadius:3, transition:"width .4s" }} />
+      </div>
+      <div style={{ display:"flex", gap:20 }}>
+        {[
+          { color:"#9DC499", label:`${done} done` },
+          { color:"#CF7B4B", label:`${learning} in progress` },
+          { color:"var(--text2)", label:`${all.length - done - learning} not started` },
+        ].map(s => (
+          <div key={s.label} style={{ display:"flex", alignItems:"center", gap:6, fontSize:12, color:"var(--text2)" }}>
+            <div style={{ width:8, height:8, borderRadius:2, background:s.color }} />
+            {s.label}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TopicItem({ item, status, onCycle }) {
+  const cfg = STATUS_CONFIG[status];
+  const [hov, setHov] = useState(false);
+  return (
+    <div
+      onClick={onCycle}
+      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+      style={{
+        display:"flex", alignItems:"center", gap:12, padding:"10px 14px",
+        background: hov ? "var(--bg3)" : cfg.bg,
+        border:`1px solid ${hov ? cfg.border : cfg.border}`,
+        borderRadius:9, cursor:"pointer", transition:"all .15s",
+        userSelect:"none",
+      }}
+    >
+      <div style={{
+        width:18, height:18, borderRadius:5, flexShrink:0,
+        border:`1.5px solid ${cfg.color}`,
+        background: status === "done" ? cfg.color : "transparent",
+        display:"flex", alignItems:"center", justifyContent:"center",
+        fontSize:10, color:"#1A1714", fontWeight:700,
+      }}>
+        {status === "done" ? "✓" : status === "learning" ? <div style={{ width:8, height:8, borderRadius:2, background:cfg.color }} /> : ""}
+      </div>
+      <span style={{ fontSize:13.5, color: status === "none" ? "var(--text2)" : "var(--text-head)", flex:1, lineHeight:1.4 }}>{item.label}</span>
+      <span style={{
+        fontSize:10.5, padding:"2px 7px", borderRadius:20, fontWeight:500,
+        color: cfg.color, background: cfg.bg, border:`1px solid ${cfg.border}`,
+        opacity: hov ? 1 : status !== "none" ? 1 : 0, transition:"opacity .15s",
+      }}>{cfg.label}</span>
+    </div>
+  );
+}
+
+function RoadmapSection({ section, statuses, onCycle }) {
+  const [open, setOpen] = useState(true);
+  const items = section.items;
+  const doneCount = items.filter(i => (statuses[i.id] || i.status) === "done").length;
+
+  return (
+    <div style={{ marginBottom:16 }}>
+      <div
+        onClick={() => setOpen(o => !o)}
+        style={{
+          display:"flex", alignItems:"center", gap:14, padding:"14px 18px",
+          background:"var(--bg2)", border:`1px solid var(--border)`,
+          borderRadius: open ? "12px 12px 0 0" : 12,
+          cursor:"pointer", transition:"all .15s",
+          borderBottomColor: open ? "transparent" : "var(--border)",
+        }}
+      >
+        <div style={{
+          width:10, height:10, borderRadius:3,
+          background: section.color, flexShrink:0,
+        }} />
+        <span style={{ fontWeight:700, fontSize:15, color:"var(--text-head)", flex:1 }}>{section.title}</span>
+        <span style={{ fontSize:12, color:"var(--text2)" }}>{doneCount}/{items.length}</span>
+        <span style={{ color:"var(--text2)", fontSize:14, transition:"transform .2s", transform: open ? "rotate(90deg)" : "none" }}>›</span>
+      </div>
+      {open && (
+        <div style={{
+          background:"var(--bg2)", border:"1px solid var(--border)", borderTop:"none",
+          borderRadius:"0 0 12px 12px", padding:"8px 12px 12px",
+          display:"flex", flexDirection:"column", gap:6,
+        }}>
+          {items.map(item => (
+            <TopicItem
+              key={item.id} item={item}
+              status={statuses[item.id] || item.status}
+              onCycle={() => onCycle(item.id)}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function App() {
+  const [statuses, setStatuses] = useState(() => {
+    const saved = localStorage.getItem("fe_roadmap_statuses");
+    return saved ? JSON.parse(saved) : {};
+  });
+
+  const cycle = (id) => {
+    const cur = statuses[id] || SECTIONS.flatMap(s=>s.items).find(i=>i.id===id)?.status || "none";
+    const next = { none:"learning", learning:"done", done:"none" }[cur];
+    const updated = { ...statuses, [id]: next };
+    setStatuses(updated);
+    localStorage.setItem("fe_roadmap_statuses", JSON.stringify(updated));
+  };
+
+  return (
+    <>
+      <NavBar />
+      <div style={{ maxWidth:860, margin:"0 auto", padding:"40px 24px 60px" }}>
+
+        {/* Header */}
+        <div style={{ marginBottom:32, animation:"fadeInUp .3s ease" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:12 }}>
+            <div style={{ width:44, height:44, background:"rgba(207,123,75,0.15)", borderRadius:12, display:"flex", alignItems:"center", justifyContent:"center", fontSize:22, color:"var(--accent)" }}>◈</div>
+            <div>
+              <h1 style={{ fontSize:28, fontWeight:700, color:"var(--text-head)", letterSpacing:"-0.5px" }}>Frontend Developer</h1>
+              <p style={{ fontSize:13, color:"var(--text2)", marginTop:2 }}>Step by step guide to becoming a modern frontend developer</p>
+            </div>
+          </div>
+          <div style={{ display:"flex", gap:10, marginTop:16 }}>
+            {[
+              { label:"Role-based", color:"var(--accent)" },
+              { label:"Beginner-friendly", color:"var(--green)" },
+              { label:"Updated 2024", color:"var(--text2)" },
+            ].map(t => (
+              <span key={t.label} style={{
+                fontSize:11.5, padding:"3px 10px", borderRadius:20,
+                border:"1px solid var(--border)", color:t.color,
+                background:"var(--bg2)",
+              }}>{t.label}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Progress bar */}
+        <ProgressBar sections={SECTIONS} statuses={statuses} />
+
+        {/* Tip */}
+        <div style={{
+          background:"rgba(207,123,75,0.06)", border:"1px solid rgba(207,123,75,0.2)",
+          borderLeft:"3px solid var(--accent)", borderRadius:"0 9px 9px 0",
+          padding:"12px 16px", marginBottom:28, fontSize:13, color:"var(--text2)", lineHeight:1.65,
+        }}>
+          <strong style={{ color:"var(--accent)" }}>Tip:</strong> Click any topic to cycle through its status — <em>not started → in progress → done</em>. Progress is saved in your browser.
+        </div>
+
+        {/* Sections */}
+        <div style={{ animation:"fadeInUp .4s ease" }}>
+          {SECTIONS.map(s => (
+            <RoadmapSection key={s.title} section={s} statuses={statuses} onCycle={cycle} />
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

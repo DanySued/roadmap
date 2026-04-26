@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guides — roadmap.dev</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Geist+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+      integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+      integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+      integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #1a1714;
+        --bg2: #211c18;
+        --bg3: #2a2420;
+        --bg4: #302a25;
+        --border: #3d3028;
+        --border2: #4a3a2e;
+        --text: #d4ccc4;
+        --text2: #8a7f76;
+        --text-head: #ede8e2;
+        --accent: #cf7b4b;
+        --green: #9dc499;
+        --font: "Lora", Georgia, serif;
+        --mono: "Geist Mono", monospace;
+      }
+      html {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.75;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--bg4);
+        border-radius: 3px;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState } = React;
+
+      const CATEGORIES = [
+        "All",
+        "Frontend",
+        "Backend",
+        "DevOps",
+        "Career",
+        "Tools",
+      ];
+
+      const GUIDES = [
+        {
+          id: 1,
+          title: "A Beginner's Guide to HTTP and the Web",
+          cat: "Frontend",
+          read: "8 min",
+          date: "Apr 2024",
+          color: "#CF7B4B",
+          icon: "◈",
+          featured: true,
+          desc: "Learn how data travels across the internet, what HTTP methods mean, and how browsers communicate with servers.",
+        },
+        {
+          id: 2,
+          title: "Git Branching Strategies for Teams",
+          cat: "Tools",
+          read: "10 min",
+          date: "Mar 2024",
+          color: "#9DC499",
+          icon: "◉",
+          featured: true,
+          desc: "Understand Git Flow, Trunk-Based Development and GitHub Flow — and how to pick the right one for your team.",
+        },
+        {
+          id: 3,
+          title: "How to Get Your First Developer Job",
+          cat: "Career",
+          read: "14 min",
+          date: "Mar 2024",
+          color: "#D4CCC4",
+          icon: "◆",
+          featured: true,
+          desc: "A practical breakdown of resume writing, portfolio building, and interview preparation for new developers.",
+        },
+        {
+          id: 4,
+          title: "REST vs GraphQL: Which Should You Use?",
+          cat: "Backend",
+          read: "7 min",
+          date: "Feb 2024",
+          color: "#CF7B4B",
+          icon: "⬡",
+          desc: "A side-by-side comparison of REST and GraphQL with real-world tradeoffs and when to use each.",
+        },
+        {
+          id: 5,
+          title: "CSS Grid vs Flexbox: A Complete Guide",
+          cat: "Frontend",
+          read: "12 min",
+          date: "Feb 2024",
+          color: "#8A5230",
+          icon: "◈",
+          desc: "Visual examples and practical rules to know when to reach for Grid versus Flexbox in your layouts.",
+        },
+        {
+          id: 6,
+          title: "Docker for Developers: Getting Started",
+          cat: "DevOps",
+          read: "9 min",
+          date: "Jan 2024",
+          color: "#9DC499",
+          icon: "⬡",
+          desc: "Set up Docker, build your first image, and containerize a Node.js app step by step.",
+        },
+        {
+          id: 7,
+          title: "Understanding Async JavaScript",
+          cat: "Frontend",
+          read: "11 min",
+          date: "Jan 2024",
+          color: "#CF7B4B",
+          icon: "◉",
+          desc: "Callbacks, Promises and async/await explained with practical examples and common pitfalls.",
+        },
+        {
+          id: 8,
+          title: "Designing a Scalable Database Schema",
+          cat: "Backend",
+          read: "13 min",
+          date: "Dec 2023",
+          color: "#D4CCC4",
+          icon: "◆",
+          desc: "Principles for designing relational schemas that survive growth — normalization, indexing and relationships.",
+        },
+        {
+          id: 9,
+          title: "CI/CD Pipelines from Scratch",
+          cat: "DevOps",
+          read: "15 min",
+          date: "Dec 2023",
+          color: "#8A5230",
+          icon: "⬡",
+          desc: "Build a complete CI/CD pipeline with GitHub Actions — run tests, build Docker images and deploy automatically.",
+        },
+        {
+          id: 10,
+          title: "Salary Negotiation for Developers",
+          cat: "Career",
+          read: "6 min",
+          date: "Nov 2023",
+          color: "#9DC499",
+          icon: "◈",
+          desc: "Scripts, tactics and mindset shifts to help you negotiate a better compensation package with confidence.",
+        },
+        {
+          id: 11,
+          title: "TypeScript: From JavaScript to Typed Code",
+          cat: "Frontend",
+          read: "10 min",
+          date: "Nov 2023",
+          color: "#CF7B4B",
+          icon: "◉",
+          desc: "Migrate an existing JavaScript codebase to TypeScript incrementally, with real examples.",
+        },
+        {
+          id: 12,
+          title: "Kubernetes for Application Developers",
+          cat: "DevOps",
+          read: "16 min",
+          date: "Oct 2023",
+          color: "#D4CCC4",
+          icon: "⬡",
+          desc: "Skip the ops deep-dive — focus on what a developer needs to know to deploy and manage apps in k8s.",
+        },
+      ];
+
+      const NAV = [
+        { label: "Roadmaps", href: "roadmap.html" },
+        { label: "Best Practices", href: "best-practices.html" },
+        { label: "Guides", href: "guides.html" },
+        { label: "Videos", href: "videos.html" },
+      ];
+
+      function NavBar() {
+        return (
+          <nav
+            style={{
+              position: "sticky",
+              top: 0,
+              zIndex: 100,
+              background: "rgba(26,23,20,0.9)",
+              backdropFilter: "blur(12px)",
+              borderBottom: "1px solid var(--border)",
+            }}
+          >
+            <div
+              style={{
+                maxWidth: 1100,
+                margin: "0 auto",
+                padding: "0 24px",
+                height: 56,
+                display: "flex",
+                alignItems: "center",
+                gap: 4,
+              }}
+            >
+              <a
+                href="roadmap.html"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  marginRight: 20,
+                  flexShrink: 0,
+                }}
+              >
+                <div
+                  style={{
+                    width: 30,
+                    height: 30,
+                    background: "var(--accent)",
+                    borderRadius: 7,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 14,
+                    fontWeight: 800,
+                    color: "#1A1714",
+                  }}
+                >
+                  R
+                </div>
+                <span
+                  style={{
+                    fontWeight: 700,
+                    fontSize: 16,
+                    color: "var(--text-head)",
+                  }}
+                >
+                  roadmap.dev
+                </span>
+              </a>
+              {NAV.map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  style={{
+                    padding: "6px 12px",
+                    borderRadius: 6,
+                    fontSize: 13.5,
+                    fontWeight: 500,
+                    color:
+                      l.href === "guides.html"
+                        ? "var(--accent)"
+                        : "var(--text2)",
+                    background:
+                      l.href === "guides.html"
+                        ? "rgba(207,123,75,0.1)"
+                        : "transparent",
+                    transition: "all .15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (l.href !== "guides.html") {
+                      e.target.style.color = "var(--text)";
+                      e.target.style.background = "var(--bg2)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (l.href !== "guides.html") {
+                      e.target.style.color = "var(--text2)";
+                      e.target.style.background = "transparent";
+                    }
+                  }}
+                >
+                  {l.label}
+                </a>
+              ))}
+              <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
+                <a
+                  href="auth.html"
+                  style={{
+                    padding: "6px 14px",
+                    borderRadius: 8,
+                    fontSize: 13,
+                    border: "1px solid var(--border)",
+                    color: "var(--text2)",
+                    background: "var(--bg2)",
+                  }}
+                >
+                  Login
+                </a>
+                <a
+                  href="auth.html?mode=signup"
+                  style={{
+                    padding: "6px 14px",
+                    borderRadius: 8,
+                    fontSize: 13,
+                    background: "var(--accent)",
+                    color: "#1A1714",
+                    fontWeight: 700,
+                  }}
+                >
+                  Sign up
+                </a>
+              </div>
+            </div>
+          </nav>
+        );
+      }
+
+      function App() {
+        const [cat, setCat] = useState("All");
+        const featured = GUIDES.filter((g) => g.featured);
+        const filtered = (
+          cat === "All" ? GUIDES : GUIDES.filter((g) => g.cat === cat)
+        ).filter((g) => !g.featured);
+
+        return (
+          <>
+            <NavBar />
+            <main
+              style={{
+                maxWidth: 1100,
+                margin: "0 auto",
+                padding: "48px 24px 60px",
+                animation: "fadeInUp .35s ease",
+              }}
+            >
+              <div style={{ marginBottom: 36 }}>
+                <h1
+                  style={{
+                    fontSize: 36,
+                    fontWeight: 700,
+                    color: "var(--text-head)",
+                    letterSpacing: "-0.5px",
+                    marginBottom: 10,
+                  }}
+                >
+                  Guides
+                </h1>
+                <p
+                  style={{
+                    fontSize: 15,
+                    color: "var(--text2)",
+                    maxWidth: 480,
+                    lineHeight: 1.75,
+                  }}
+                >
+                  In-depth articles written by practitioners. Learn concepts,
+                  patterns and workflows that matter.
+                </p>
+              </div>
+
+              {/* Featured */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3,1fr)",
+                  gap: 14,
+                  marginBottom: 40,
+                }}
+              >
+                {featured.map((g) => {
+                  const [hov, setHov] = useState(false);
+                  return (
+                    <a
+                      key={g.id}
+                      href="guide-detail.html"
+                      onMouseEnter={() => setHov(true)}
+                      onMouseLeave={() => setHov(false)}
+                      style={{
+                        display: "block",
+                        background: hov ? "var(--bg3)" : "var(--bg2)",
+                        border: `1px solid ${hov ? g.color + "55" : "var(--border)"}`,
+                        borderRadius: 14,
+                        padding: "24px",
+                        transition: "all .2s",
+                        position: "relative",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <div
+                        style={{
+                          position: "absolute",
+                          right: -10,
+                          bottom: -10,
+                          fontSize: 80,
+                          color: g.color,
+                          opacity: 0.06,
+                          lineHeight: 1,
+                        }}
+                      >
+                        {g.icon}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: 11,
+                          color: g.color,
+                          fontWeight: 600,
+                          marginBottom: 8,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.05em",
+                        }}
+                      >
+                        Featured · {g.cat}
+                      </div>
+                      <h3
+                        style={{
+                          fontSize: 16,
+                          fontWeight: 700,
+                          color: "var(--text-head)",
+                          marginBottom: 10,
+                          lineHeight: 1.4,
+                        }}
+                      >
+                        {g.title}
+                      </h3>
+                      <p
+                        style={{
+                          fontSize: 13,
+                          color: "var(--text2)",
+                          lineHeight: 1.65,
+                          marginBottom: 14,
+                          display: "-webkit-box",
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {g.desc}
+                      </p>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          fontSize: 12,
+                          color: "var(--text2)",
+                        }}
+                      >
+                        <span>{g.read} read</span>
+                        <span>{g.date}</span>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+
+              {/* Filter */}
+              <div
+                style={{
+                  display: "flex",
+                  gap: 8,
+                  marginBottom: 24,
+                  flexWrap: "wrap",
+                }}
+              >
+                {CATEGORIES.map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => setCat(c)}
+                    style={{
+                      padding: "6px 16px",
+                      borderRadius: 20,
+                      fontSize: 13,
+                      fontWeight: 500,
+                      cursor: "pointer",
+                      background: cat === c ? "var(--accent)" : "var(--bg2)",
+                      color: cat === c ? "#1A1714" : "var(--text2)",
+                      border: `1px solid ${cat === c ? "var(--accent)" : "var(--border)"}`,
+                      transition: "all .15s",
+                      fontFamily: "var(--font)",
+                    }}
+                  >
+                    {c}
+                  </button>
+                ))}
+              </div>
+
+              {/* List */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                {filtered.map((g) => {
+                  const [hov, setHov] = useState(false);
+                  return (
+                    <a
+                      key={g.id}
+                      href="guide-detail.html"
+                      onMouseEnter={() => setHov(true)}
+                      onMouseLeave={() => setHov(false)}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 16,
+                        padding: "16px 18px",
+                        background: hov ? "var(--bg2)" : "transparent",
+                        borderRadius: 10,
+                        transition: "background .15s",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 36,
+                          height: 36,
+                          background: `${g.color}18`,
+                          borderRadius: 9,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: 16,
+                          color: g.color,
+                          flexShrink: 0,
+                        }}
+                      >
+                        {g.icon}
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div
+                          style={{
+                            fontWeight: 600,
+                            fontSize: 14.5,
+                            color: "var(--text-head)",
+                            marginBottom: 2,
+                          }}
+                        >
+                          {g.title}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: 12.5,
+                            color: "var(--text2)",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {g.desc}
+                        </div>
+                      </div>
+                      <div style={{ textAlign: "right", flexShrink: 0 }}>
+                        <div
+                          style={{
+                            fontSize: 11.5,
+                            color: g.color,
+                            fontWeight: 500,
+                            marginBottom: 2,
+                          }}
+                        >
+                          {g.cat}
+                        </div>
+                        <div style={{ fontSize: 11, color: "var(--text2)" }}>
+                          {g.read} · {g.date}
+                        </div>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            </main>
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

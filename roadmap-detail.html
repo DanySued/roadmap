@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap — roadmap.dev</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--bg:#1A1714;--bg2:#211C18;--bg3:#2A2420;--bg4:#302A25;--border:#3D3028;--border2:#4a3a2e;--text:#D4CCC4;--text2:#8A7F76;--text-head:#EDE8E2;--accent:#CF7B4B;--green:#9DC499;--font:'Lora',Georgia,serif;--mono:'Geist Mono',monospace;}
+  html{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.75;}
+  a{color:inherit;text-decoration:none;}
+  ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:var(--bg);} ::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px;}
+  @keyframes fadeInUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+/* ── ALL ROADMAP DATA ── */
+const ROADMAP_DATA = {
+  backend: {
+    title:"Backend Developer", icon:"◉", color:"#9DC499", tag:"Role-based",
+    desc:"Step by step guide to becoming a modern backend developer in 2024.",
+    sections:[
+      { title:"Internet & OS Basics", color:"#CF7B4B", items:[{id:"internet",label:"How the internet works",status:"none"},{id:"os",label:"OS & Terminal basics",status:"none"},{id:"process",label:"Processes, Threads & Concurrency",status:"none"}]},
+      { title:"Language", color:"#9DC499", items:[{id:"lang-pick",label:"Pick a Language (Python/Go/JS/Java)",status:"none"},{id:"lang-basics",label:"Learn the basics",status:"none"},{id:"pkg-mgr",label:"Package managers",status:"none"}]},
+      { title:"Version Control", color:"#CF7B4B", items:[{id:"git",label:"Git basics",status:"none"},{id:"vcs-hosting",label:"GitHub / GitLab",status:"none"}]},
+      { title:"Databases", color:"#D4CCC4", items:[{id:"rdb",label:"Relational Databases (PostgreSQL)",status:"none"},{id:"nosql",label:"NoSQL (MongoDB / Redis)",status:"none"},{id:"orm",label:"ORMs",status:"none"},{id:"n1",label:"N+1 Problem",status:"none"},{id:"db-idx",label:"Database Indexing",status:"none"}]},
+      { title:"APIs", color:"#CF7B4B", items:[{id:"rest",label:"REST",status:"none"},{id:"json-api",label:"JSON APIs",status:"none"},{id:"auth-api",label:"Authentication (JWT / OAuth)",status:"none"},{id:"graphql",label:"GraphQL",status:"none"}]},
+      { title:"Caching", color:"#8A5230", items:[{id:"cdn",label:"CDN",status:"none"},{id:"redis-cache",label:"Redis",status:"none"},{id:"server-cache",label:"Server-side caching",status:"none"}]},
+      { title:"Testing", color:"#9DC499", items:[{id:"unit",label:"Unit Testing",status:"none"},{id:"integration",label:"Integration Testing",status:"none"},{id:"e2e",label:"E2E Testing",status:"none"}]},
+      { title:"CI/CD & Deployment", color:"#CF7B4B", items:[{id:"cicd",label:"CI/CD pipelines",status:"none"},{id:"docker-be",label:"Docker",status:"none"},{id:"k8s-be",label:"Kubernetes",status:"none"},{id:"cloud",label:"Cloud (AWS / GCP / Azure)",status:"none"}]},
+    ],
+  },
+  devops: {
+    title:"DevOps Engineer", icon:"⬡", color:"#CF7B4B", tag:"Role-based",
+    desc:"Step by step guide to becoming a DevOps, SRE or any other Ops role.",
+    sections:[
+      { title:"OS & Networking", color:"#CF7B4B", items:[{id:"linux",label:"Linux fundamentals",status:"none"},{id:"networking",label:"Networking basics",status:"none"},{id:"ssh",label:"SSH & secure access",status:"none"}]},
+      { title:"Scripting", color:"#9DC499", items:[{id:"bash",label:"Bash scripting",status:"none"},{id:"python-ops",label:"Python for Ops",status:"none"}]},
+      { title:"Version Control", color:"#D4CCC4", items:[{id:"git-ops",label:"Git",status:"none"},{id:"gitops",label:"GitOps principles",status:"none"}]},
+      { title:"Containers", color:"#CF7B4B", items:[{id:"docker-ops",label:"Docker",status:"none"},{id:"k8s",label:"Kubernetes",status:"none"},{id:"helm",label:"Helm",status:"none"}]},
+      { title:"CI/CD", color:"#8A5230", items:[{id:"github-actions",label:"GitHub Actions",status:"none"},{id:"jenkins",label:"Jenkins",status:"none"},{id:"gitlab-ci",label:"GitLab CI",status:"none"}]},
+      { title:"Infrastructure as Code", color:"#9DC499", items:[{id:"terraform",label:"Terraform",status:"none"},{id:"ansible",label:"Ansible",status:"none"},{id:"pulumi",label:"Pulumi",status:"none"}]},
+      { title:"Cloud Providers", color:"#CF7B4B", items:[{id:"aws-ops",label:"AWS",status:"none"},{id:"gcp",label:"GCP",status:"none"},{id:"azure",label:"Azure",status:"none"}]},
+      { title:"Monitoring & Observability", color:"#D4CCC4", items:[{id:"prometheus",label:"Prometheus",status:"none"},{id:"grafana",label:"Grafana",status:"none"},{id:"elk",label:"ELK Stack",status:"none"},{id:"tracing",label:"Distributed Tracing",status:"none"}]},
+    ],
+  },
+  react: {
+    title:"React", icon:"◉", color:"#CF7B4B", tag:"Skill-based",
+    desc:"Step by step guide to become a modern React developer.",
+    sections:[
+      { title:"JavaScript Fundamentals", color:"#CF7B4B", items:[{id:"js-re",label:"JS refresher (ES6+)",status:"none"},{id:"closures",label:"Closures & Scope",status:"none"},{id:"promises",label:"Promises & async/await",status:"none"}]},
+      { title:"React Basics", color:"#9DC499", items:[{id:"jsx",label:"JSX",status:"none"},{id:"components",label:"Components & Props",status:"none"},{id:"state",label:"State & Lifecycle",status:"none"},{id:"events",label:"Handling Events",status:"none"}]},
+      { title:"Hooks", color:"#CF7B4B", items:[{id:"usestate",label:"useState",status:"none"},{id:"useeffect",label:"useEffect",status:"none"},{id:"usecontext",label:"useContext",status:"none"},{id:"custom-hooks",label:"Custom Hooks",status:"none"},{id:"usememo",label:"useMemo & useCallback",status:"none"}]},
+      { title:"State Management", color:"#8A5230", items:[{id:"context-api",label:"Context API",status:"none"},{id:"redux",label:"Redux / Redux Toolkit",status:"none"},{id:"zustand",label:"Zustand",status:"none"},{id:"jotai",label:"Jotai / Recoil",status:"none"}]},
+      { title:"Routing", color:"#D4CCC4", items:[{id:"react-router",label:"React Router",status:"none"},{id:"tanstack-router",label:"TanStack Router",status:"none"}]},
+      { title:"Data Fetching", color:"#CF7B4B", items:[{id:"react-query",label:"TanStack Query",status:"none"},{id:"swr",label:"SWR",status:"none"},{id:"axios",label:"Axios",status:"none"}]},
+      { title:"Styling", color:"#9DC499", items:[{id:"css-in-js",label:"CSS-in-JS",status:"none"},{id:"tailwind-react",label:"Tailwind CSS",status:"none"},{id:"shadcn",label:"shadcn/ui",status:"none"}]},
+      { title:"Testing', color:'#8A5230", items:[{id:"testing-library",label:"Testing Library",status:"none"},{id:"vitest-react",label:"Vitest",status:"none"},{id:"msw",label:"Mock Service Worker",status:"none"}]},
+    ],
+  },
+  python: {
+    title:"Python", icon:"◆", color:"#D4CCC4", tag:"Skill-based",
+    desc:"Step by step guide to learn Python programming in 2024.",
+    sections:[
+      { title:"Fundamentals", color:"#CF7B4B", items:[{id:"py-syntax",label:"Syntax & Data Types",status:"none"},{id:"py-control",label:"Control Flow",status:"none"},{id:"py-functions",label:"Functions",status:"none"},{id:"py-oop",label:"OOP concepts",status:"none"}]},
+      { title:"Advanced Python", color:"#9DC499", items:[{id:"decorators",label:"Decorators",status:"none"},{id:"generators",label:"Generators & Iterators",status:"none"},{id:"context-managers",label:"Context Managers",status:"none"},{id:"async-py",label:"Async Python",status:"none"}]},
+      { title:"Ecosystem", color:"#D4CCC4", items:[{id:"pip",label:"pip & virtual environments",status:"none"},{id:"testing-py",label:"pytest",status:"none"},{id:"type-hints",label:"Type hints & mypy",status:"none"}]},
+      { title:"Web Frameworks", color:"#CF7B4B", items:[{id:"fastapi",label:"FastAPI",status:"none"},{id:"django",label:"Django",status:"none"},{id:"flask",label:"Flask",status:"none"}]},
+      { title:"Data & ML", color:"#8A5230", items:[{id:"numpy",label:"NumPy",status:"none"},{id:"pandas",label:"Pandas",status:"none"},{id:"matplotlib",label:"Matplotlib",status:"none"},{id:"sklearn",label:"scikit-learn",status:"none"}]},
+    ],
+  },
+  nodejs: {
+    title:"Node.js", icon:"◈", color:"#9DC499", tag:"Skill-based",
+    desc:"Step by step guide to learn Node.js.",
+    sections:[
+      { title:"Node.js Basics", color:"#9DC499", items:[{id:"node-arch",label:"Node.js Architecture",status:"none"},{id:"modules-node",label:"CommonJS & ES Modules",status:"none"},{id:"npm-node",label:"npm & package.json",status:"none"}]},
+      { title:"Core Modules", color:"#CF7B4B", items:[{id:"fs",label:"fs (file system)",status:"none"},{id:"path",label:"path",status:"none"},{id:"http-node",label:"http / https",status:"none"},{id:"events-node",label:"EventEmitter",status:"none"},{id:"streams",label:"Streams & Buffers",status:"none"}]},
+      { title:"Frameworks", color:"#D4CCC4", items:[{id:"express",label:"Express.js",status:"none"},{id:"fastify",label:"Fastify",status:"none"},{id:"hono",label:"Hono",status:"none"}]},
+      { title:"Databases', color:'#8A5230", items:[{id:"pg-node",label:"PostgreSQL (pg)",status:"none"},{id:"mongo-node",label:"MongoDB (Mongoose)",status:"none"},{id:"prisma",label:"Prisma ORM",status:"none"}]},
+      { title:"Auth & Security", color:"#CF7B4B", items:[{id:"jwt-node",label:"JWT",status:"none"},{id:"passport",label:"Passport.js",status:"none"},{id:"helmet",label:"Helmet.js",status:"none"}]},
+      { title:"Testing', color:'#9DC499", items:[{id:"jest-node",label:"Jest",status:"none"},{id:"supertest",label:"Supertest",status:"none"}]},
+    ],
+  },
+};
+
+// Generate simple data for remaining roadmaps
+const SIMPLE_ROADMAPS = ["fullstack","android","ios","ai-data-scientist","blockchain","qa","software-architect","cyber","ux","vue","angular","typescript","sql","docker","kubernetes","graphql","aws","linux"];
+SIMPLE_ROADMAPS.forEach(id => {
+  if (!ROADMAP_DATA[id]) {
+    const labels = {
+      fullstack:"Full Stack Developer", android:"Android Developer", ios:"iOS Developer",
+      "ai-data-scientist":"AI & Data Scientist", blockchain:"Blockchain Developer",
+      qa:"QA Engineer", "software-architect":"Software Architect",
+      cyber:"Cyber Security Expert", ux:"UX Designer", vue:"Vue.js", angular:"Angular",
+      typescript:"TypeScript", sql:"SQL", docker:"Docker", kubernetes:"Kubernetes",
+      graphql:"GraphQL", aws:"AWS", linux:"Linux",
+    };
+    const icons = { fullstack:"◈", android:"◉", ios:"◈", "ai-data-scientist":"◆", blockchain:"⬡", qa:"◉", "software-architect":"◈", cyber:"◆", ux:"◈", vue:"◉", angular:"◉", typescript:"◈", sql:"◉", docker:"⬡", kubernetes:"⬡", graphql:"◆", aws:"◈", linux:"◉" };
+    const colors = { fullstack:"#D4CCC4", android:"#9DC499", ios:"#CF7B4B", "ai-data-scientist":"#CF7B4B", blockchain:"#8A5230", qa:"#9DC499", "software-architect":"#D4CCC4", cyber:"#CF7B4B", ux:"#8A7F76", vue:"#9DC499", angular:"#8A5230", typescript:"#CF7B4B", sql:"#CF7B4B", docker:"#9DC499", kubernetes:"#D4CCC4", graphql:"#CF7B4B", aws:"#8A5230", linux:"#9DC499" };
+    const tags = ["fullstack","android","ios","ai-data-scientist","blockchain","qa","software-architect","cyber","ux"].includes(id) ? "Role-based" : "Skill-based";
+
+    ROADMAP_DATA[id] = {
+      title: labels[id] || id, icon: icons[id] || "◈", color: colors[id] || "#CF7B4B", tag: tags,
+      desc: `Step by step guide to becoming a ${labels[id] || id} in 2024.`,
+      sections:[
+        { title:"Fundamentals", color:"#CF7B4B", items:[{id:"f1",label:"Core concepts & basics",status:"none"},{id:"f2",label:"Tools & environment setup",status:"none"},{id:"f3",label:"Industry standards",status:"none"}]},
+        { title:"Core Skills", color:"#9DC499", items:[{id:"c1",label:"Essential workflows",status:"none"},{id:"c2",label:"Common patterns",status:"none"},{id:"c3",label:"Best practices",status:"none"},{id:"c4",label:"Debugging & troubleshooting",status:"none"}]},
+        { title:"Intermediate", color:"#D4CCC4", items:[{id:"i1",label:"Advanced techniques",status:"none"},{id:"i2",label:"Performance optimization",status:"none"},{id:"i3",label:"Security considerations",status:"none"}]},
+        { title:"Ecosystem & Tools", color:"#8A5230", items:[{id:"e1",label:"Popular libraries & frameworks",status:"none"},{id:"e2",label:"Testing strategies",status:"none"},{id:"e3",label:"CI/CD integration",status:"none"}]},
+        { title:"Real-world Practice", color:"#CF7B4B", items:[{id:"r1",label:"Build portfolio projects",status:"none"},{id:"r2",label:"Open source contributions",status:"none"},{id:"r3",label:"Interview preparation",status:"none"}]},
+      ],
+    };
+  }
+});
+
+/* Best practice data */
+const PRACTICE_DATA = {
+  "api-design": {
+    title:"API Design Best Practices", icon:"◈", color:"#CF7B4B", tag:"Best Practice",
+    desc:"Opinionated guidelines for designing APIs that developers love to use.",
+    sections:[
+      { title:"REST Fundamentals", color:"#CF7B4B", items:[{id:"resources",label:"Resource naming conventions",status:"none"},{id:"methods",label:"HTTP methods (GET/POST/PUT/DELETE)",status:"none"},{id:"status-codes",label:"Status codes",status:"none"}]},
+      { title:"Versioning", color:"#9DC499", items:[{id:"url-versioning",label:"URL versioning (/v1/)",status:"none"},{id:"header-versioning",label:"Header versioning",status:"none"},{id:"deprecation",label:"Deprecation strategy",status:"none"}]},
+      { title:"Auth & Security", color:"#8A5230", items:[{id:"api-auth",label:"Authentication (API keys / OAuth)",status:"none"},{id:"rate-limiting",label:"Rate limiting",status:"none"},{id:"cors-api",label:"CORS",status:"none"}]},
+      { title:"Documentation", color:"#D4CCC4", items:[{id:"openapi",label:"OpenAPI / Swagger",status:"none"},{id:"postman",label:"Postman collections",status:"none"},{id:"changelog",label:"Changelog & migration guides",status:"none"}]},
+    ],
+  },
+};
+
+const STATUS_CONFIG = {
+  done:     { label:"Done",        color:"#9DC499", bg:"rgba(157,196,153,0.12)", border:"rgba(157,196,153,0.3)" },
+  learning: { label:"In Progress", color:"#CF7B4B", bg:"rgba(207,123,75,0.12)",  border:"rgba(207,123,75,0.3)"  },
+  none:     { label:"Not started", color:"#8A7F76", bg:"transparent",            border:"var(--border)"         },
+};
+
+function NavBar({ title }) {
+  return (
+    <nav style={{position:"sticky",top:0,zIndex:100,background:"rgba(26,23,20,0.9)",backdropFilter:"blur(12px)",borderBottom:"1px solid var(--border)"}}>
+      <div style={{maxWidth:900,margin:"0 auto",padding:"0 24px",height:56,display:"flex",alignItems:"center",gap:12}}>
+        <a href="roadmap.html" style={{display:"flex",alignItems:"center",gap:10}}>
+          <div style={{width:30,height:30,background:"var(--accent)",borderRadius:7,display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:800,color:"#1A1714"}}>R</div>
+          <span style={{fontWeight:700,fontSize:16,color:"var(--text-head)"}}>roadmap.dev</span>
+        </a>
+        <span style={{color:"var(--border2)",fontSize:18}}>/</span>
+        <span style={{fontSize:13.5,color:"var(--text2)"}}>{title}</span>
+        <div style={{marginLeft:"auto",display:"flex",gap:8}}>
+          <a href="auth.html" style={{padding:"6px 14px",borderRadius:8,fontSize:13,border:"1px solid var(--border)",color:"var(--text2)",background:"var(--bg2)"}}>Sign in to track</a>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+function ProgressBar({ sections, statuses }) {
+  const all = sections.flatMap(s=>s.items);
+  const done = all.filter(i=>(statuses[i.id]||i.status)==="done").length;
+  const learning = all.filter(i=>(statuses[i.id]||i.status)==="learning").length;
+  const pct = Math.round((done/all.length)*100);
+  return (
+    <div style={{background:"var(--bg2)",border:"1px solid var(--border)",borderRadius:12,padding:"18px 24px",marginBottom:28}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
+        <span style={{fontSize:13.5,fontWeight:600,color:"var(--text-head)"}}>Your Progress</span>
+        <span style={{fontSize:13,color:"var(--accent)",fontWeight:700}}>{pct}% complete</span>
+      </div>
+      <div style={{height:6,background:"var(--bg4)",borderRadius:3,overflow:"hidden",marginBottom:10}}>
+        <div style={{height:"100%",width:`${pct}%`,background:"var(--accent)",borderRadius:3,transition:"width .4s"}}/>
+      </div>
+      <div style={{display:"flex",gap:20}}>
+        {[{color:"#9DC499",label:`${done} done`},{color:"#CF7B4B",label:`${learning} in progress`},{color:"var(--text2)",label:`${all.length-done-learning} not started`}].map(s=>(
+          <div key={s.label} style={{display:"flex",alignItems:"center",gap:6,fontSize:12,color:"var(--text2)"}}>
+            <div style={{width:8,height:8,borderRadius:2,background:s.color}}/>{s.label}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TopicItem({ item, status, onCycle }) {
+  const cfg = STATUS_CONFIG[status];
+  const [hov,setHov]=useState(false);
+  return (
+    <div onClick={onCycle} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)} style={{
+      display:"flex",alignItems:"center",gap:12,padding:"10px 14px",
+      background:hov?"var(--bg3)":cfg.bg, border:`1px solid ${cfg.border}`,
+      borderRadius:9,cursor:"pointer",transition:"all .15s",userSelect:"none",
+    }}>
+      <div style={{width:18,height:18,borderRadius:5,flexShrink:0,border:`1.5px solid ${cfg.color}`,background:status==="done"?cfg.color:"transparent",display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,color:"#1A1714",fontWeight:700}}>
+        {status==="done"?"✓":status==="learning"?<div style={{width:8,height:8,borderRadius:2,background:cfg.color}}/>:""}
+      </div>
+      <span style={{fontSize:13.5,color:status==="none"?"var(--text2)":"var(--text-head)",flex:1,lineHeight:1.4}}>{item.label}</span>
+      <span style={{fontSize:10.5,padding:"2px 7px",borderRadius:20,fontWeight:500,color:cfg.color,background:cfg.bg,border:`1px solid ${cfg.border}`,opacity:hov||status!=="none"?1:0,transition:"opacity .15s"}}>{cfg.label}</span>
+    </div>
+  );
+}
+
+function RoadmapSection({ section, statuses, onCycle }) {
+  const [open,setOpen]=useState(true);
+  const doneCount = section.items.filter(i=>(statuses[i.id]||i.status)==="done").length;
+  return (
+    <div style={{marginBottom:12}}>
+      <div onClick={()=>setOpen(o=>!o)} style={{
+        display:"flex",alignItems:"center",gap:14,padding:"13px 18px",
+        background:"var(--bg2)",border:"1px solid var(--border)",
+        borderRadius:open?"12px 12px 0 0":12,cursor:"pointer",
+        borderBottomColor:open?"transparent":"var(--border)",transition:"all .15s",
+      }}>
+        <div style={{width:10,height:10,borderRadius:3,background:section.color,flexShrink:0}}/>
+        <span style={{fontWeight:700,fontSize:15,color:"var(--text-head)",flex:1}}>{section.title}</span>
+        <span style={{fontSize:12,color:"var(--text2)"}}>{doneCount}/{section.items.length}</span>
+        <span style={{color:"var(--text2)",fontSize:14,transition:"transform .2s",transform:open?"rotate(90deg)":"none"}}>›</span>
+      </div>
+      {open && (
+        <div style={{background:"var(--bg2)",border:"1px solid var(--border)",borderTop:"none",borderRadius:"0 0 12px 12px",padding:"8px 12px 12px",display:"flex",flexDirection:"column",gap:6}}>
+          {section.items.map(item=>(
+            <TopicItem key={item.id} item={item} status={statuses[item.id]||item.status} onCycle={()=>onCycle(item.id)}/>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function App() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id") || "backend";
+  const type = params.get("type");
+
+  // Check localStorage for custom roadmaps
+  const customRoadmaps = JSON.parse(localStorage.getItem("custom_roadmaps") || "[]");
+  const customMatch = customRoadmaps.find(r => r.id === id);
+  const data = customMatch
+    ? { title: customMatch.title, icon: customMatch.icon, color: customMatch.color, tag: "Custom", desc: customMatch.desc, sections: customMatch.sections || [] }
+    : type === "practice"
+      ? (PRACTICE_DATA[id] || PRACTICE_DATA["api-design"])
+      : (ROADMAP_DATA[id] || ROADMAP_DATA["backend"]);
+  const storageKey = `roadmap_${id}_statuses`;
+
+  const [statuses,setStatuses]=useState(()=>{
+    const saved=localStorage.getItem(storageKey);
+    return saved?JSON.parse(saved):{};
+  });
+
+  useEffect(()=>{ document.title = `${data.title} — roadmap.dev`; },[data.title]);
+
+  const cycle=(itemId)=>{
+    const cur=statuses[itemId]||data.sections.flatMap(s=>s.items).find(i=>i.id===itemId)?.status||"none";
+    const next={none:"learning",learning:"done",done:"none"}[cur];
+    const updated={...statuses,[itemId]:next};
+    setStatuses(updated);
+    localStorage.setItem(storageKey,JSON.stringify(updated));
+  };
+
+  return (
+    <>
+      <NavBar title={data.title}/>
+      <div style={{maxWidth:860,margin:"0 auto",padding:"40px 24px 60px",animation:"fadeInUp .3s ease"}}>
+        {/* Header */}
+        <div style={{marginBottom:28}}>
+          <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:14}}>
+            <div style={{width:48,height:48,background:`${data.color}18`,borderRadius:12,display:"flex",alignItems:"center",justifyContent:"center",fontSize:24,color:data.color}}>{data.icon}</div>
+            <div>
+              <h1 style={{fontSize:26,fontWeight:700,color:"var(--text-head)",letterSpacing:"-0.4px"}}>{data.title}</h1>
+              <p style={{fontSize:13,color:"var(--text2)",marginTop:2}}>{data.desc}</p>
+            </div>
+          </div>
+          <div style={{display:"flex",gap:8}}>
+            {[{label:data.tag,color:"var(--accent)"},{label:"Updated 2024",color:"var(--text2)"},{label:"Community driven",color:"var(--green)"}].map(t=>(
+              <span key={t.label} style={{fontSize:11.5,padding:"3px 10px",borderRadius:20,border:"1px solid var(--border)",color:t.color,background:"var(--bg2)"}}>{t.label}</span>
+            ))}
+          </div>
+        </div>
+
+        <ProgressBar sections={data.sections} statuses={statuses}/>
+
+        <div style={{background:"rgba(207,123,75,0.06)",border:"1px solid rgba(207,123,75,0.2)",borderLeft:"3px solid var(--accent)",borderRadius:"0 9px 9px 0",padding:"11px 16px",marginBottom:24,fontSize:13,color:"var(--text2)",lineHeight:1.65}}>
+          <strong style={{color:"var(--accent)"}}>Tip:</strong> Click any topic to cycle its status — <em>not started → in progress → done</em>. Saved automatically.
+        </div>
+
+        {data.sections.map(s=>(
+          <RoadmapSection key={s.title} section={s} statuses={statuses} onCycle={cycle}/>
+        ))}
+
+        {/* Back */}
+        <div style={{marginTop:40,paddingTop:24,borderTop:"1px solid var(--border)"}}>
+          <a href="roadmap.html" style={{fontSize:13.5,color:"var(--text2)",display:"inline-flex",alignItems:"center",gap:8,transition:"color .15s"}}
+          onMouseEnter={e=>e.currentTarget.style.color="var(--accent)"}
+          onMouseLeave={e=>e.currentTarget.style.color="var(--text2)"}
+          >← Back to all roadmaps</a>
+        </div>
+      </div>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
