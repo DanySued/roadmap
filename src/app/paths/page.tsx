@@ -16,7 +16,7 @@ export default function PathsPage() {
         {/* Hero header */}
         <section
           style={{
-            paddingTop: 80,
+            paddingTop: 96,
             paddingBottom: 48,
             borderBottom: "1px solid var(--fp-border)",
           }}

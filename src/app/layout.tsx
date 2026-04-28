@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Instrument_Serif } from "next/font/google";
 import "./globals.css";
+import AnnouncementBanner from "@/components/sections/AnnouncementBanner";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -29,7 +30,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${dmSans.variable} ${instrumentSerif.variable}`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <AnnouncementBanner />
+        {children}
+      </body>
     </html>
   );
 }

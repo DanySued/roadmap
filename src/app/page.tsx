@@ -1,6 +1,5 @@
 import Nav from "@/components/sections/Nav";
 import Hero from "@/components/sections/Hero";
-import AnnouncementBanner from "@/components/sections/AnnouncementBanner";
 import Problem from "@/components/sections/Problem";
 import FeatureCarousel from "@/components/sections/FeatureCarousel";
 import BrainOptimized from "@/components/sections/BrainOptimized";
@@ -12,7 +11,6 @@ import Footer from "@/components/sections/Footer";
 export default function Home() {
   return (
     <>
-      <AnnouncementBanner />
       <Nav />
       <main>
         <Hero />

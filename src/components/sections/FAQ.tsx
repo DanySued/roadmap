@@ -29,7 +29,7 @@ export default function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="fp-section" style={{ backgroundColor: "var(--fp-black)" }}>
+    <section className="fp-section" style={{ backgroundColor: "var(--fp-black)" }} id="faq">
       <div className="fp-container max-w-3xl">
         <p className="fp-eyebrow">FAQ</p>
         <h2

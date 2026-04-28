@@ -6,8 +6,8 @@ import { Dumbbell } from "lucide-react";
 
 const NAV_ITEMS = [
   { label: "Paths", href: "/paths" },
-  { label: "Guides", href: "#guides" },
-  { label: "Videos", href: "#videos" },
+  { label: "Guides", href: "/paths" },
+  { label: "Videos", href: "/paths" },
 ] as const;
 
 export default function Nav() {
@@ -16,9 +16,10 @@ export default function Nav() {
 
   useEffect(() => {
     const onScroll = () => {
-      const next = window.scrollY > 40;
+      const next = window.scrollY > 10;
       setScrolled((prev) => (prev === next ? prev : next));
     };
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);

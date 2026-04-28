@@ -1,10 +1,30 @@
 import Link from "next/link";
 
-const links = {
-  Paths: ["Strength Training", "Running", "Yoga", "CrossFit"],
-  Goals: ["Weight Loss", "Muscle Building", "Endurance", "Flexibility"],
-  Resources: ["Best Practices", "Guides", "Videos", "FAQ"],
-  Project: ["About", "Changelog", "GitHub", "Privacy"],
+const links: Record<string, { label: string; href: string }[]> = {
+  Paths: [
+    { label: "Strength Training", href: "/paths/strength-training" },
+    { label: "Running", href: "/paths/running" },
+    { label: "Yoga", href: "/paths/yoga" },
+    { label: "CrossFit", href: "/paths/crossfit" },
+  ],
+  Goals: [
+    { label: "Weight Loss", href: "/paths/weight-loss" },
+    { label: "Muscle Building", href: "/paths/muscle-building" },
+    { label: "Endurance", href: "/paths/cardio-endurance" },
+    { label: "Flexibility", href: "/paths/flexibility" },
+  ],
+  Resources: [
+    { label: "Best Practices", href: "/paths" },
+    { label: "Guides", href: "/paths" },
+    { label: "Videos", href: "/paths" },
+    { label: "FAQ", href: "/#faq" },
+  ],
+  Project: [
+    { label: "About", href: "/#learn" },
+    { label: "Changelog", href: "/paths" },
+    { label: "GitHub", href: "https://github.com/DanySued/roadmap" },
+    { label: "Privacy", href: "#" },
+  ],
 };
 
 export default function Footer() {
@@ -56,13 +76,14 @@ export default function Footer() {
                 </p>
                 <ul className="flex flex-col gap-3">
                   {items.map((item) => (
-                    <li key={item}>
+                    <li key={item.label}>
                       <Link
-                        href="/paths"
+                        href={item.href}
                         className="text-sm transition-opacity hover:opacity-100"
                         style={{ color: "var(--fp-text-muted)" }}
+                        {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                       >
-                        {item}
+                        {item.label}
                       </Link>
                     </li>
                   ))}
