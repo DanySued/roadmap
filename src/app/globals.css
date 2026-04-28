@@ -163,11 +163,6 @@
   color: var(--fp-green);
 }
 
-/* ns- aliases so copied components still work */
-.ns-container { max-width: var(--fp-container); margin-inline: auto; padding-inline: var(--fp-container-px); }
-.ns-section   { padding-block: var(--fp-section-py); }
-.ns-eyebrow   { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.25rem; color: var(--fp-green); }
-
 /* Marquee animation */
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -175,4 +170,10 @@
 }
 .animate-marquee {
   animation: marquee 24s linear infinite;
+}
+
+/* Toast slide-in animation */
+@keyframes fp-slide-in {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
