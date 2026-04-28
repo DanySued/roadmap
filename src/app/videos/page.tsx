@@ -15,6 +15,7 @@ const VIDEOS = [
     level: "Beginner",
     color: "#aaa8ff",
     gradient: "linear-gradient(135deg, #1a1730 0%, #2d2850 100%)",
+    href: "https://www.youtube.com/results?search_query=full+body+strength+workout+beginner",
   },
   {
     id: "5k-plan-overview",
@@ -24,6 +25,7 @@ const VIDEOS = [
     level: "Beginner",
     color: "#7f9ef8",
     gradient: "linear-gradient(135deg, #111830 0%, #1a2850 100%)",
+    href: "https://www.youtube.com/results?search_query=couch+to+5k+training+plan+week+1",
   },
   {
     id: "morning-yoga",
@@ -33,6 +35,7 @@ const VIDEOS = [
     level: "All Levels",
     color: "#c1cff8",
     gradient: "linear-gradient(135deg, #151830 0%, #1e2245 100%)",
+    href: "https://www.youtube.com/results?search_query=morning+yoga+flow+yoga+with+adriene",
   },
   {
     id: "crossfit-fundamentals",
@@ -42,6 +45,7 @@ const VIDEOS = [
     level: "Beginner",
     color: "#fffba5",
     gradient: "linear-gradient(135deg, #1a1a10 0%, #2b2b18 100%)",
+    href: "https://www.youtube.com/results?search_query=crossfit+fundamentals+movements+beginners",
   },
   {
     id: "nutrition-101",
@@ -51,6 +55,7 @@ const VIDEOS = [
     level: "All Levels",
     color: "#7f9ef8",
     gradient: "linear-gradient(135deg, #0f1525 0%, #18213a 100%)",
+    href: "https://www.youtube.com/results?search_query=macros+explained+nutrition+for+beginners",
   },
   {
     id: "core-series",
@@ -60,6 +65,7 @@ const VIDEOS = [
     level: "Intermediate",
     color: "#aaa8ff",
     gradient: "linear-gradient(135deg, #1a1730 0%, #2d2850 100%)",
+    href: "https://www.youtube.com/results?search_query=core+strength+workout+series+athlean+x",
   },
   {
     id: "recovery-stretching",
@@ -69,6 +75,7 @@ const VIDEOS = [
     level: "All Levels",
     color: "#c1cff8",
     gradient: "linear-gradient(135deg, #151830 0%, #1e2245 100%)",
+    href: "https://www.youtube.com/results?search_query=post+workout+stretching+recovery+routine",
   },
   {
     id: "marathon-week1",
@@ -78,6 +85,7 @@ const VIDEOS = [
     level: "Intermediate",
     color: "#7f9ef8",
     gradient: "linear-gradient(135deg, #111830 0%, #1a2850 100%)",
+    href: "https://www.youtube.com/results?search_query=beginner+marathon+training+plan+week+by+week",
   },
   {
     id: "pilates-beginners",
@@ -87,6 +95,7 @@ const VIDEOS = [
     level: "Beginner",
     color: "#fad0f3",
     gradient: "linear-gradient(135deg, #1a1020 0%, #2b1838 100%)",
+    href: "https://www.youtube.com/results?search_query=pilates+for+beginners+full+workout",
   },
   {
     id: "boxing-basics",
@@ -96,6 +105,7 @@ const VIDEOS = [
     level: "Beginner",
     color: "#7f9ef8",
     gradient: "linear-gradient(135deg, #111830 0%, #1a2850 100%)",
+    href: "https://www.youtube.com/results?search_query=boxing+fundamentals+stance+jab+cross+beginner",
   },
   {
     id: "hiit-20min",
@@ -105,6 +115,7 @@ const VIDEOS = [
     level: "Intermediate",
     color: "#fad0f3",
     gradient: "linear-gradient(135deg, #1a1020 0%, #2b1838 100%)",
+    href: "https://www.youtube.com/results?search_query=20+minute+hiit+workout+no+equipment",
   },
   {
     id: "flexibility-mobility",
@@ -114,6 +125,7 @@ const VIDEOS = [
     level: "All Levels",
     color: "#fffba5",
     gradient: "linear-gradient(135deg, #1a1a10 0%, #2b2b18 100%)",
+    href: "https://www.youtube.com/results?search_query=full+body+flexibility+and+mobility+routine",
   },
 ];
 
@@ -201,8 +213,14 @@ export default function VideosPage() {
               {VIDEOS.map((video) => {
                 const levelStyle = LEVEL_COLORS[video.level] ?? LEVEL_COLORS["All Levels"];
                 return (
-                  <article
+                  <Link
                     key={video.id}
+                    href={video.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ textDecoration: "none" }}
+                  >
+                  <article
                     style={{
                       background: "var(--fp-surface)",
                       border: "1px solid var(--fp-border)",
@@ -321,6 +339,7 @@ export default function VideosPage() {
                       </h3>
                     </div>
                   </article>
+                  </Link>
                 );
               })}
             </div>
