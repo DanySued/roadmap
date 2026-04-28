@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Search } from "lucide-react";
 import { PATHS, ALL_PATHS, CATEGORY_LABELS, type PathCategory } from "@/lib/data/paths";
 import PathCard from "./PathCard";
@@ -8,23 +8,18 @@ import PathCard from "./PathCard";
 export default function PathGrid() {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<PathCategory | "all">("all");
-  const [searchRef, setSearchRef] = useState<HTMLInputElement | null>(null);
-
-  // ⌘K / Ctrl+K to focus search
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        searchRef?.focus();
-      }
-    },
-    [searchRef]
-  );
+  const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+    };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleKeyDown]);
+  }, []);
 
   const q = query.toLowerCase();
 
@@ -61,11 +56,8 @@ export default function PathGrid() {
         }}
       >
         <div style={{ position: "relative", flex: "1 1 260px", maxWidth: 440 }}>
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
+          <Search
+            size={16}
             style={{
               position: "absolute",
               left: 14,
@@ -73,12 +65,9 @@ export default function PathGrid() {
               transform: "translateY(-50%)",
               color: "var(--fp-text-muted)",
             }}
-          >
-            <circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" strokeWidth="1.5" />
-            <path d="M10.5 10.5L14 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
+          />
           <input
-            ref={(el) => setSearchRef(el)}
+            ref={searchRef}
             type="text"
             placeholder="Search paths…"
             value={query}
