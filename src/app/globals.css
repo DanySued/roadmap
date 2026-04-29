@@ -115,6 +115,34 @@
   --fp-container-px: 1.5rem;
 }
 
+/* Light mode overrides */
+:root.light {
+  --background: #f5f4f1;
+  --foreground: rgba(10,10,15,0.85);
+  --card: #ffffff;
+  --card-foreground: rgba(10,10,15,0.85);
+  --popover: #ffffff;
+  --popover-foreground: rgba(10,10,15,0.85);
+  --muted: #ebe9f0;
+  --muted-foreground: rgba(10,10,15,0.50);
+  --secondary: #ebe9f0;
+  --secondary-foreground: rgba(10,10,15,0.85);
+  --border: rgba(0,0,0,0.08);
+  --input: rgba(0,0,0,0.08);
+
+  --fp-black:      #f5f4f1;
+  --fp-surface:    #ffffff;
+  --fp-surface-2:  #ebe9f0;
+  --fp-white:      #0d0c0d;
+  --fp-accent:     #6b69cc;
+  --fp-accent-2:   #4a48a0;
+  --fp-green:      #5a78d8;
+  --fp-text:       rgba(10,10,15,0.85);
+  --fp-text-muted: rgba(10,10,15,0.50);
+  --fp-border:     rgba(0,0,0,0.08);
+  --fp-border-2:   rgba(0,0,0,0.14);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Dumbbell, LayoutDashboard, LogOut, ChevronDown } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
+import ThemeToggle from "./ThemeToggle";
 
 const NAV_ITEMS = [
   { label: "Paths", href: "/paths" },
@@ -95,6 +96,7 @@ export default function Nav() {
 
         {/* Desktop CTA — auth-aware */}
         <div className="hidden md:flex items-center gap-3">
+          <ThemeToggle />
           {!isLoading && (
             user ? (
               /* Logged-in: avatar dropdown */
@@ -245,12 +247,13 @@ export default function Nav() {
         <div
           className="md:hidden border-t"
           style={{
-            backgroundColor: "rgba(3,2,3,0.97)",
+            backgroundColor: "var(--fp-black)",
             backdropFilter: "blur(12px)",
             borderColor: "var(--fp-border)",
           }}
         >
           <div className="fp-container py-6 flex flex-col gap-5">
+            <ThemeToggle />
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.label}
