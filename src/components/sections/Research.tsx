@@ -20,7 +20,7 @@ export default function Research() {
   return (
     <section className="fp-section" style={{ backgroundColor: "var(--fp-surface)" }}>
       <div className="fp-container">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           <div>
             <p className="fp-eyebrow">What users say</p>
             <h2 style={{ fontSize: "clamp(2.25rem, 4.8vw, 3rem)", color: "var(--fp-white)" }}>
@@ -37,7 +37,7 @@ export default function Research() {
               just a clear sequence of steps you can actually follow.
             </p>
 
-            <div className="flex gap-8 mt-12">
+            <div className="flex flex-wrap gap-6 sm:gap-8 mt-10 sm:mt-12">
               {[
                 { value: "500K+", label: "Active users" },
                 { value: "24+", label: "Training paths" },

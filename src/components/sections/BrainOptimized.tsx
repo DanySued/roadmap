@@ -53,7 +53,7 @@ export default function BrainOptimized() {
           </span>
         </h2>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           {/* Tabs */}
           <div>
             <div className="flex flex-col gap-3 mb-12">
@@ -75,7 +75,7 @@ export default function BrainOptimized() {
 
             {/* Stat */}
             <div
-              className="inline-flex items-baseline gap-3 px-6 py-4 rounded-2xl"
+              className="flex flex-wrap items-baseline gap-3 px-6 py-4 rounded-2xl"
               style={{ backgroundColor: "var(--fp-surface)" }}
             >
               <span
@@ -119,7 +119,7 @@ export default function BrainOptimized() {
                   { label: "Strength phase", pct: 0 },
                 ].map(({ label, pct }) => (
                   <div key={label} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <span style={{ fontSize: 12, color: pct === 100 ? "var(--fp-green)" : "var(--fp-text-muted)", width: 180, flexShrink: 0 }}>
+                    <span style={{ fontSize: 12, color: pct === 100 ? "var(--fp-green)" : "var(--fp-text-muted)", width: "45%", minWidth: 120, flexShrink: 0 }}>
                       {pct === 100 ? "✓ " : ""}{label}
                     </span>
                     <div style={{ flex: 1, height: 4, background: "var(--fp-border)", borderRadius: 4 }}>

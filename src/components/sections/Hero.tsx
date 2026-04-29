@@ -13,8 +13,8 @@ const headlineBase: React.CSSProperties = {
 export default function Hero() {
   return (
     <section
-      className="relative flex flex-col justify-end pb-20 overflow-hidden"
-      style={{ backgroundColor: "var(--fp-black)", minHeight: "calc(100vh - 108px)" }}
+      className="relative flex flex-col justify-end pb-12 sm:pb-20 overflow-hidden"
+      style={{ backgroundColor: "var(--fp-black)", minHeight: "clamp(520px, calc(100vh - 64px), 900px)" }}
     >
       <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 60% at 60% 40%, rgba(207,123,75,0.08) 0%, rgba(26,23,20,0.95) 70%)" }} />
       <div className="absolute -top-24 -right-24 w-[600px] h-[600px] rounded-full opacity-15" style={{ background: "radial-gradient(circle, var(--fp-accent) 0%, transparent 70%)" }} />

@@ -8,7 +8,7 @@ export default function Problem() {
   return (
     <section className="fp-section" style={{ backgroundColor: "var(--fp-surface)" }} id="learn">
       <div className="fp-container">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left: text */}
           <div>
             <p className="fp-eyebrow">The problem</p>
@@ -42,12 +42,12 @@ export default function Problem() {
           </div>
 
           {/* Right: visual card */}
-          <div className="relative">
+          <div className="relative mt-4 lg:mt-0">
             <div
               className="rounded-3xl overflow-hidden aspect-[4/5]"
               style={{ backgroundColor: "var(--fp-black)", border: "1px solid var(--fp-border)" }}
             >
-              <div className="w-full h-full flex items-center justify-center p-12">
+              <div className="w-full h-full flex items-center justify-center p-6 sm:p-12">
                 <div className="relative w-full max-w-xs">
                   {/* Path progression visualization */}
                   {[
@@ -78,7 +78,7 @@ export default function Problem() {
 
             {/* Floating card */}
             <div
-              className="absolute -bottom-6 -left-6 rounded-2xl p-5 shadow-xl max-w-[200px]"
+              className="absolute bottom-3 left-3 sm:-bottom-6 sm:-left-6 rounded-2xl p-5 shadow-xl max-w-[200px]"
               style={{ backgroundColor: "var(--fp-surface)", border: "1px solid var(--fp-border-2)", color: "var(--fp-text)" }}
             >
               <p className="text-xs mb-1" style={{ color: "var(--fp-text-muted)" }}>Completion</p>

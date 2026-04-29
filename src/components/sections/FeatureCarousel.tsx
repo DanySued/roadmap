@@ -30,7 +30,7 @@ const features = [
 export default function FeatureCarousel() {
   return (
     <section
-      className="py-24 overflow-hidden"
+      className="py-16 sm:py-24"
       style={{ backgroundColor: "var(--fp-surface)" }}
       id="features"
     >
@@ -44,23 +44,16 @@ export default function FeatureCarousel() {
         </h2>
       </div>
 
-      {/* Horizontal scroll cards */}
-      <div
-        className="flex gap-5 overflow-x-auto pb-4 px-6 snap-x snap-mandatory"
-        style={{
-          paddingLeft: "max(1.5rem, calc((100vw - 90rem) / 2 + 1.5rem))",
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-        }}
-      >
+      {/* Responsive bento grid */}
+      <div className="fp-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {features.map((f) => (
           <div
             key={f.tag}
-            className="flex-none w-72 snap-start rounded-2xl p-7 flex flex-col justify-between"
+            className="rounded-2xl p-7 flex flex-col justify-between"
             style={{
               backgroundColor: "var(--fp-black)",
               border: "1px solid var(--fp-border)",
-              minHeight: "340px",
+              minHeight: "280px",
             }}
           >
             <div>
@@ -91,5 +84,6 @@ export default function FeatureCarousel() {
 
       </div>
     </section>
+
   );
 }
