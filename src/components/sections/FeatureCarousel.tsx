@@ -89,37 +89,6 @@ export default function FeatureCarousel() {
           </div>
         ))}
 
-        {/* CTA card */}
-        <div
-          className="flex-none w-72 snap-start rounded-2xl overflow-hidden flex items-end p-7"
-          style={{
-            background: "linear-gradient(160deg, rgba(170,168,255,0.35) 0%, var(--fp-black) 70%)",
-            border: "1px solid var(--fp-border)",
-            minHeight: "340px",
-          }}
-        >
-          <div>
-            <p
-              className="text-xs font-semibold uppercase tracking-widest mb-3"
-              style={{ color: "rgba(255,255,255,0.5)" }}
-            >
-              Ready to start?
-            </p>
-            <p
-              className="text-2xl font-light mb-4"
-              style={{ fontFamily: "var(--font-instrument-serif)", color: "var(--fp-white)" }}
-            >
-              Find your path
-            </p>
-            <Link
-              href="/paths"
-              className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl transition-opacity hover:opacity-80"
-              style={{ backgroundColor: "var(--fp-accent)", color: "var(--fp-black)" }}
-            >
-              Browse paths
-            </Link>
-          </div>
-        </div>
       </div>
     </section>
   );
