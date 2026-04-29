@@ -16,10 +16,10 @@ export default function Hero() {
       className="relative flex flex-col justify-end pb-12 sm:pb-20 overflow-hidden"
       style={{ backgroundColor: "var(--fp-black)", minHeight: "clamp(520px, calc(100vh - 64px), 900px)" }}
     >
-      <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 60% at 60% 40%, rgba(207,123,75,0.08) 0%, rgba(26,23,20,0.95) 70%)" }} />
-      <div className="absolute -top-24 -right-24 w-[600px] h-[600px] rounded-full opacity-15" style={{ background: "radial-gradient(circle, var(--fp-accent) 0%, transparent 70%)" }} />
-      <div className="absolute bottom-0 -left-12 w-[400px] h-[400px] rounded-full opacity-10" style={{ background: "radial-gradient(circle, var(--fp-green) 0%, transparent 70%)" }} />
-      <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:flex items-center justify-center opacity-20">
+      <div className="hero-deco absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 60% at 60% 40%, rgba(207,123,75,0.08) 0%, rgba(26,23,20,0.95) 70%)" }} />
+      <div className="hero-deco absolute -top-24 -right-24 w-[600px] h-[600px] rounded-full opacity-15" style={{ background: "radial-gradient(circle, var(--fp-accent) 0%, transparent 70%)" }} />
+      <div className="hero-deco absolute bottom-0 -left-12 w-[400px] h-[400px] rounded-full opacity-10" style={{ background: "radial-gradient(circle, var(--fp-green) 0%, transparent 70%)" }} />
+      <div className="hero-deco absolute right-0 top-0 bottom-0 w-1/2 hidden lg:flex items-center justify-center opacity-20">
         <div className="w-64 h-64 rounded-full" style={{ background: "radial-gradient(circle at 40% 40%, rgba(207,123,75,0.25) 0%, rgba(42,36,32,0.5) 60%, transparent 100%)", boxShadow: "0 0 120px 40px rgba(207,123,75,0.08)" }} />
       </div>
 

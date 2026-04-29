@@ -182,6 +182,8 @@
   padding-block: var(--fp-section-py);
 }
 
+:root.light .hero-deco { display: none; }
+
 @media (max-width: 640px) {
   :root {
     --fp-section-py: 3rem;
