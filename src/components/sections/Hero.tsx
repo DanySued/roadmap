@@ -35,7 +35,7 @@ export default function Hero() {
           Progress with clarity.
         </span>
 
-        <p className="mb-10 max-w-md leading-relaxed" style={{ color: "rgba(212,204,196,0.75)", fontSize: "0.9375rem" }}>
+        <p className="mb-10 max-w-md leading-relaxed text-stone-500 dark:text-[rgba(212,204,196,0.75)]" style={{ fontSize: "0.9375rem" }}>
           24+ curated training paths — from strength to marathon, yoga to CrossFit.
           Each path breaks your goal into progressive stages you can actually follow.
         </p>
