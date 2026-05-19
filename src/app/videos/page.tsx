@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Nav from "@/components/sections/Nav";
 import Footer from "@/components/sections/Footer";
 import Link from "next/link";
 import { Play, Clock, ArrowRight } from "lucide-react";
-
+import { fadeUp, stagger, EASE_OUT } from "@/lib/motion";
 
 const VIDEOS = [
   {
@@ -91,7 +92,7 @@ const VIDEOS = [
   {
     id: "pilates-beginners",
     title: "Pilates for Beginners",
-    category: "Pilates",
+    category: "Yoga",
     duration: "20 min",
     level: "Beginner",
     color: "#fad0f3",
@@ -101,7 +102,7 @@ const VIDEOS = [
   {
     id: "boxing-basics",
     title: "Boxing Basics: Stance & Jab",
-    category: "Boxing",
+    category: "CrossFit",
     duration: "35 min",
     level: "Beginner",
     color: "#7f9ef8",
@@ -121,7 +122,7 @@ const VIDEOS = [
   {
     id: "flexibility-mobility",
     title: "Flexibility & Mobility Deep Dive",
-    category: "Flexibility",
+    category: "Yoga",
     duration: "28 min",
     level: "All Levels",
     color: "#fffba5",
@@ -150,220 +151,260 @@ export default function VideosPage() {
         {/* Hero */}
         <section style={{ paddingTop: 96, paddingBottom: 56, borderBottom: "1px solid var(--fp-border)" }}>
           <div className="fp-container">
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-              <div
+            <motion.div
+              variants={stagger(0.1)}
+              initial="hidden"
+              animate="visible"
+            >
+              <motion.div
+                variants={fadeUp}
+                style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}
+              >
+                <div
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 10,
+                    background: "rgba(127,158,248,0.12)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Play size={20} color="#7f9ef8" />
+                </div>
+                <p className="fp-eyebrow" style={{ marginBottom: 0 }}>Video Library</p>
+              </motion.div>
+
+              <motion.h1
+                variants={fadeUp}
                 style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 10,
-                  background: "rgba(127,158,248,0.12)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  fontSize: "clamp(2.25rem, 5vw, 3.5rem)",
+                  color: "var(--fp-white)",
+                  maxWidth: 640,
+                  marginBottom: 16,
                 }}
               >
-                <Play size={20} color="#7f9ef8" />
-              </div>
-              <p className="fp-eyebrow" style={{ marginBottom: 0 }}>Video Library</p>
-            </div>
-            <h1
-              style={{
-                fontSize: "clamp(2.25rem, 5vw, 3.5rem)",
-                color: "var(--fp-white)",
-                maxWidth: 640,
-                marginBottom: 16,
-              }}
-            >
-              Watch, learn,{" "}
-              <span style={{ fontStyle: "italic" }}>and move.</span>
-            </h1>
-            <p style={{ fontSize: 16, color: "var(--fp-text-muted)", maxWidth: 520, lineHeight: 1.65 }}>
-              Guided workouts, training walkthroughs, and technique breakdowns — all
-              organized by path so you know exactly what to watch next.
-            </p>
+                Watch, learn,{" "}
+                <span style={{ fontStyle: "italic" }}>and move.</span>
+              </motion.h1>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 32 }}>
-              {CATEGORIES.map((cat) => {
-                const isActive = activeCategory === cat;
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => setActiveCategory(cat)}
-                    style={{
-                      padding: "6px 14px",
-                      background: isActive ? "var(--fp-accent)" : "var(--fp-surface)",
-                      color: isActive ? "var(--fp-black)" : "var(--fp-text-muted)",
-                      border: `1px solid ${isActive ? "var(--fp-accent)" : "var(--fp-border)"}`,
-                      borderRadius: 20,
-                      fontSize: 13,
-                      fontWeight: 600,
-                      cursor: "pointer",
-                      fontFamily: "var(--font-dm-sans), sans-serif",
-                      transition: "background 0.15s, color 0.15s, border-color 0.15s",
-                    }}
-                  >
-                    {cat}
-                  </button>
-                );
-              })}
-            </div>
+              <motion.p
+                variants={fadeUp}
+                style={{ fontSize: 16, color: "var(--fp-text-muted)", maxWidth: 520, lineHeight: 1.65 }}
+              >
+                Guided workouts, training walkthroughs, and technique breakdowns — all
+                organized by path so you know exactly what to watch next.
+              </motion.p>
+
+              {/* Filter buttons */}
+              <motion.div
+                variants={fadeUp}
+                style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 32 }}
+              >
+                {CATEGORIES.map((cat) => {
+                  const isActive = activeCategory === cat;
+                  return (
+                    <motion.button
+                      key={cat}
+                      onClick={() => setActiveCategory(cat)}
+                      style={{
+                        position: "relative",
+                        padding: "8px 14px",
+                        borderRadius: 8,
+                        fontSize: 13,
+                        fontWeight: 500,
+                        border: "1px solid transparent",
+                        background: "transparent",
+                        color: isActive ? "var(--fp-accent)" : "var(--fp-text-muted)",
+                        cursor: "pointer",
+                        fontFamily: "var(--font-dm-sans), sans-serif",
+                        zIndex: 0,
+                      }}
+                      whileHover={{ color: isActive ? "var(--fp-accent)" : "var(--fp-text)" }}
+                      whileTap={{ scale: 0.96 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      {isActive && (
+                        <motion.span
+                          layoutId="video-tab-pill"
+                          style={{
+                            position: "absolute",
+                            inset: 0,
+                            borderRadius: 8,
+                            background: "rgba(170,168,255,0.1)",
+                            border: "1px solid rgba(170,168,255,0.28)",
+                            zIndex: -1,
+                          }}
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                      {cat}
+                    </motion.button>
+                  );
+                })}
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
         {/* Video Grid */}
         <section style={{ paddingTop: 56, paddingBottom: 96 }}>
           <div className="fp-container">
-            <div
+            <motion.div
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
                 gap: 20,
               }}
             >
-              {filtered.map((video) => {
-                const levelStyle = LEVEL_COLORS[video.level] ?? LEVEL_COLORS["All Levels"];
-                return (
-                  <Link
-                    key={video.id}
-                    href={video.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ textDecoration: "none" }}
-                  >
-                  <article
-                    style={{
-                      background: "var(--fp-surface)",
-                      border: "1px solid var(--fp-border)",
-                      borderRadius: 16,
-                      overflow: "hidden",
-                      cursor: "pointer",
-                      transition: "border-color 0.2s, transform 0.2s",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = "var(--fp-border-2)";
-                      e.currentTarget.style.transform = "translateY(-3px)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = "var(--fp-border)";
-                      e.currentTarget.style.transform = "translateY(0)";
-                    }}
-                  >
-                    {/* Thumbnail */}
-                    <div
+              <AnimatePresence mode="sync">
+                {filtered.map((video, i) => {
+                  const levelStyle = LEVEL_COLORS[video.level] ?? LEVEL_COLORS["All Levels"];
+                  return (
+                    <motion.div
+                      key={video.id}
+                      initial={{ opacity: 0, y: 16, scale: 0.96 }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        transition: {
+                          duration: 0.35,
+                          delay: Math.min(i * 0.05, 0.3),
+                          ease: EASE_OUT,
+                        },
+                      }}
+                      exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.18 } }}
+                      whileHover={{
+                        y: -6,
+                        borderColor: "var(--fp-border-2)",
+                        boxShadow: "0 16px 48px rgba(0,0,0,0.4)",
+                      }}
+                      transition={{ duration: 0.22, ease: EASE_OUT }}
                       style={{
-                        height: 180,
-                        background: video.gradient,
-                        position: "relative",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
+                        background: "var(--fp-surface)",
+                        border: "1px solid var(--fp-border)",
+                        borderRadius: 16,
+                        overflow: "hidden",
                       }}
                     >
-                      {/* Subtle glow */}
-                      <div
-                        style={{
-                          position: "absolute",
-                          inset: 0,
-                          background: `radial-gradient(circle at 40% 40%, ${video.color}20 0%, transparent 65%)`,
-                        }}
-                      />
-                      {/* Play button */}
-                      <div
-                        style={{
-                          width: 52,
-                          height: 52,
-                          borderRadius: "50%",
-                          background: "rgba(255,255,255,0.12)",
-                          border: "1px solid rgba(255,255,255,0.2)",
-                          backdropFilter: "blur(8px)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          position: "relative",
-                          zIndex: 1,
-                        }}
+                      <Link
+                        href={video.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ textDecoration: "none", display: "block" }}
                       >
-                        <Play size={20} color="white" fill="white" style={{ marginLeft: 2 }} />
-                      </div>
-                      {/* Duration badge */}
-                      <div
-                        style={{
-                          position: "absolute",
-                          bottom: 10,
-                          right: 10,
-                          padding: "3px 8px",
-                          background: "rgba(0,0,0,0.6)",
-                          borderRadius: 6,
-                          fontSize: 12,
-                          fontWeight: 600,
-                          color: "white",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 4,
-                        }}
-                      >
-                        <Clock size={11} />
-                        {video.duration}
-                      </div>
-                    </div>
+                        {/* Thumbnail */}
+                        <div
+                          style={{
+                            height: 180,
+                            background: video.gradient,
+                            position: "relative",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <div
+                            style={{
+                              position: "absolute",
+                              inset: 0,
+                              background: `radial-gradient(circle at 40% 40%, ${video.color}20 0%, transparent 65%)`,
+                            }}
+                          />
+                          <motion.div
+                            style={{
+                              width: 52,
+                              height: 52,
+                              borderRadius: "50%",
+                              background: "rgba(255,255,255,0.12)",
+                              border: "1px solid rgba(255,255,255,0.2)",
+                              backdropFilter: "blur(8px)",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              position: "relative",
+                              zIndex: 1,
+                            }}
+                            whileHover={{ scale: 1.12, background: "rgba(255,255,255,0.22)" }}
+                            transition={{ duration: 0.18 }}
+                          >
+                            <Play size={20} color="white" fill="white" style={{ marginLeft: 2 }} />
+                          </motion.div>
+                          <div
+                            style={{
+                              position: "absolute",
+                              bottom: 10,
+                              right: 10,
+                              padding: "3px 8px",
+                              background: "rgba(0,0,0,0.6)",
+                              borderRadius: 6,
+                              fontSize: 12,
+                              fontWeight: 600,
+                              color: "white",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 4,
+                            }}
+                          >
+                            <Clock size={11} />
+                            {video.duration}
+                          </div>
+                        </div>
 
-                    {/* Info */}
-                    <div style={{ padding: "20px" }}>
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-                        <span
-                          style={{
-                            padding: "3px 9px",
-                            background: `${video.color}18`,
-                            color: video.color,
-                            borderRadius: 20,
-                            fontSize: 11,
-                            fontWeight: 600,
-                          }}
-                        >
-                          {video.category}
-                        </span>
-                        <span
-                          style={{
-                            padding: "3px 9px",
-                            background: levelStyle.bg,
-                            color: levelStyle.text,
-                            borderRadius: 20,
-                            fontSize: 11,
-                            fontWeight: 600,
-                          }}
-                        >
-                          {video.level}
-                        </span>
-                      </div>
-                      <h3
-                        style={{
-                          fontSize: 15,
-                          fontWeight: 700,
-                          color: "var(--fp-white)",
-                          lineHeight: 1.35,
-                          fontFamily: "var(--font-dm-sans), sans-serif",
-                          letterSpacing: "-0.1px",
-                        }}
-                      >
-                        {video.title}
-                      </h3>
-                    </div>
-                  </article>
-                  </Link>
-                );
-              })}
-            </div>
+                        {/* Info */}
+                        <div style={{ padding: "20px" }}>
+                          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+                            <span
+                              style={{
+                                padding: "3px 9px",
+                                background: `${video.color}18`,
+                                color: video.color,
+                                borderRadius: 20,
+                                fontSize: 11,
+                                fontWeight: 600,
+                              }}
+                            >
+                              {video.category}
+                            </span>
+                            <span
+                              style={{
+                                padding: "3px 9px",
+                                background: levelStyle.bg,
+                                color: levelStyle.text,
+                                borderRadius: 20,
+                                fontSize: 11,
+                                fontWeight: 600,
+                              }}
+                            >
+                              {video.level}
+                            </span>
+                          </div>
+                          <h3
+                            style={{
+                              fontSize: 15,
+                              fontWeight: 700,
+                              color: "var(--fp-white)",
+                              lineHeight: 1.35,
+                              fontFamily: "var(--font-dm-sans), sans-serif",
+                              letterSpacing: "-0.1px",
+                            }}
+                          >
+                            {video.title}
+                          </h3>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </motion.div>
           </div>
         </section>
 
         {/* CTA */}
-        <section
-          style={{
-            paddingBlock: "5rem",
-            borderTop: "1px solid var(--fp-border)",
-            textAlign: "center",
-          }}
-        >
+        <section style={{ paddingBlock: "5rem", borderTop: "1px solid var(--fp-border)", textAlign: "center" }}>
           <div className="fp-container">
             <h2 style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)", color: "var(--fp-white)", marginBottom: 12 }}>
               Follow along with a full path.
