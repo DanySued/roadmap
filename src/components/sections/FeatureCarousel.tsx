@@ -1,4 +1,7 @@
-import Link from "next/link";
+"use client";
+
+import { motion } from "framer-motion";
+import { fadeUp, stagger, EASE_OUT } from "@/lib/motion";
 
 const features = [
   {
@@ -34,27 +37,53 @@ export default function FeatureCarousel() {
       style={{ backgroundColor: "var(--fp-surface)" }}
       id="features"
     >
-      <div className="fp-container mb-12">
-        <p className="fp-eyebrow">How it works</p>
-        <h2 style={{ fontSize: "clamp(2.25rem, 4.8vw, 3rem)", color: "var(--fp-white)" }}>
+      <motion.div
+        className="fp-container mb-12"
+        variants={stagger(0.1)}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+      >
+        <motion.p className="fp-eyebrow" variants={fadeUp}>How it works</motion.p>
+        <motion.h2
+          style={{ fontSize: "clamp(2.25rem, 4.8vw, 3rem)", color: "var(--fp-white)" }}
+          variants={fadeUp}
+        >
           Built for{" "}
           <span style={{ fontStyle: "italic", color: "var(--fp-accent)" }}>
             real progress
           </span>
-        </h2>
-      </div>
+        </motion.h2>
+      </motion.div>
 
-      {/* Responsive bento grid */}
-      <div className="fp-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <motion.div
+        className="fp-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+        variants={stagger(0.08, 0.15)}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-60px" }}
+      >
         {features.map((f) => (
-          <div
+          <motion.div
             key={f.tag}
-            className="rounded-2xl p-7 flex flex-col justify-between"
+            variants={fadeUp}
             style={{
-              backgroundColor: "var(--fp-black)",
+              background: "var(--fp-black)",
               border: "1px solid var(--fp-border)",
-              minHeight: "280px",
+              borderRadius: 16,
+              padding: 28,
+              minHeight: 280,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              cursor: "default",
             }}
+            whileHover={{
+              y: -6,
+              borderColor: "var(--fp-border-2)",
+              boxShadow: `0 16px 48px rgba(0,0,0,0.4)`,
+            }}
+            transition={{ duration: 0.22, ease: EASE_OUT }}
           >
             <div>
               <span
@@ -74,16 +103,17 @@ export default function FeatureCarousel() {
               </p>
             </div>
 
-            {/* Color accent dot */}
-            <div
-              className="mt-8 w-10 h-10 rounded-full opacity-80"
+            {/* Animated accent dot */}
+            <motion.div
+              className="mt-8 w-10 h-10 rounded-full"
               style={{ backgroundColor: f.accent }}
+              whileHover={{ scale: 1.25, opacity: 1 }}
+              animate={{ opacity: 0.8 }}
+              transition={{ type: "spring", stiffness: 300, damping: 18 }}
             />
-          </div>
+          </motion.div>
         ))}
-
-      </div>
+      </motion.div>
     </section>
-
   );
 }

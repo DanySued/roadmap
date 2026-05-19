@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { fadeUp, stagger, EASE_OUT } from "@/lib/motion";
 
 const faqs = [
   {
@@ -31,52 +33,74 @@ export default function FAQ() {
   return (
     <section className="fp-section" style={{ backgroundColor: "var(--fp-black)" }} id="faq">
       <div className="fp-container max-w-3xl">
-        <p className="fp-eyebrow">FAQ</p>
-        <h2
-          className="mb-14"
-          style={{ fontSize: "clamp(2.25rem, 4.8vw, 3rem)", color: "var(--fp-white)" }}
+        <motion.div
+          variants={stagger(0.09)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
         >
-          Answers to
-          <br />
-          <span style={{ fontStyle: "italic" }}>good questions.</span>
-        </h2>
+          <motion.p className="fp-eyebrow" variants={fadeUp}>FAQ</motion.p>
+          <motion.h2
+            className="mb-14"
+            style={{ fontSize: "clamp(2.25rem, 4.8vw, 3rem)", color: "var(--fp-white)" }}
+            variants={fadeUp}
+          >
+            Answers to
+            <br />
+            <span style={{ fontStyle: "italic" }}>good questions.</span>
+          </motion.h2>
+        </motion.div>
 
-        <div className="flex flex-col">
+        <motion.div
+          className="flex flex-col"
+          variants={stagger(0.07, 0.2)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+        >
           {faqs.map((item, i) => (
-            <div key={i} style={{ borderTop: "1px solid var(--fp-border)" }}>
+            <motion.div key={i} style={{ borderTop: "1px solid var(--fp-border)" }} variants={fadeUp}>
               <button
-                className="w-full flex items-center justify-between py-6 text-left gap-8 group"
+                className="w-full flex items-center justify-between py-6 text-left gap-8"
                 onClick={() => setOpen(open === i ? null : i)}
               >
-                <span
+                <motion.span
                   className="text-base font-medium"
-                  style={{ color: "var(--fp-text)" }}
+                  animate={{ color: open === i ? "var(--fp-white)" : "var(--fp-text)" }}
+                  transition={{ duration: 0.2 }}
                 >
                   {item.q}
-                </span>
-                <span
-                  className="text-xl shrink-0 transition-transform duration-200"
-                  style={{
-                    color: "var(--fp-text-muted)",
-                    transform: open === i ? "rotate(45deg)" : "rotate(0deg)",
-                  }}
+                </motion.span>
+                <motion.span
+                  className="text-xl shrink-0"
+                  style={{ color: "var(--fp-text-muted)", display: "block" }}
+                  animate={{ rotate: open === i ? 45 : 0 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 22 }}
                 >
                   +
-                </span>
+                </motion.span>
               </button>
 
-              {open === i && (
-                <p
-                  className="pb-6 text-sm leading-relaxed"
-                  style={{ color: "var(--fp-text-muted)" }}
-                >
-                  {item.a}
-                </p>
-              )}
-            </div>
+              <AnimatePresence initial={false}>
+                {open === i && (
+                  <motion.div
+                    key="answer"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ height: { duration: 0.32, ease: EASE_OUT }, opacity: { duration: 0.22 } }}
+                    style={{ overflow: "hidden" }}
+                  >
+                    <p className="pb-6 text-sm leading-relaxed" style={{ color: "var(--fp-text-muted)" }}>
+                      {item.a}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           ))}
           <div style={{ borderTop: "1px solid var(--fp-border)" }} />
-        </div>
+        </motion.div>
       </div>
     </section>
   );

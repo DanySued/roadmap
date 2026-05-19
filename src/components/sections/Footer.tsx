@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { fadeUp, stagger, EASE_OUT } from "@/lib/motion";
 
 const links: Record<string, { label: string; href: string }[]> = {
   Paths: [
@@ -27,16 +31,22 @@ const links: Record<string, { label: string; href: string }[]> = {
   ],
 };
 
+const MotionLink = motion(Link);
+
 export default function Footer() {
   return (
     <footer style={{ backgroundColor: "var(--fp-surface)" }}>
       {/* CTA band */}
-      <div
+      <motion.div
         className="fp-section"
         style={{ borderBottom: "1px solid var(--fp-border)" }}
+        variants={stagger(0.1)}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
       >
         <div className="fp-container flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
-          <div>
+          <motion.div variants={fadeUp}>
             <h2
               className="mb-3"
               style={{ fontSize: "clamp(2rem, 3.5vw, 2.5rem)", lineHeight: 1.1, color: "var(--fp-white)" }}
@@ -50,42 +60,52 @@ export default function Footer() {
             <p className="text-sm" style={{ color: "var(--fp-text-muted)" }}>
               24+ structured training paths. Free, no account required.
             </p>
-          </div>
+          </motion.div>
 
-          <Link
-            href="/paths"
-            className="inline-flex items-center px-8 py-4 rounded-xl font-semibold transition-all duration-200 hover:opacity-90 shrink-0"
-            style={{ backgroundColor: "var(--fp-accent)", color: "var(--fp-black)" }}
-          >
-            Browse Paths
-          </Link>
+          <motion.div variants={fadeUp}>
+            <MotionLink
+              href="/paths"
+              className="inline-flex items-center px-8 py-4 rounded-xl font-semibold shrink-0"
+              style={{ backgroundColor: "var(--fp-accent)", color: "var(--fp-black)" }}
+              whileHover={{ scale: 1.04, boxShadow: "0 0 28px rgba(170,168,255,0.35)" }}
+              whileTap={{ scale: 0.96 }}
+              transition={{ duration: 0.15, ease: EASE_OUT }}
+            >
+              Browse Paths
+            </MotionLink>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Links */}
-      <div style={{ paddingBlock: "3rem" }}>
+      <motion.div
+        style={{ paddingBlock: "3rem" }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6, ease: EASE_OUT }}
+      >
         <div className="fp-container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-16">
             {Object.entries(links).map(([group, items]) => (
               <div key={group}>
-                <p
-                  className="text-xs font-semibold uppercase tracking-widest mb-5"
-                  style={{ color: "var(--fp-text-muted)" }}
-                >
+                <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: "var(--fp-text-muted)" }}>
                   {group}
                 </p>
                 <ul className="flex flex-col gap-3">
                   {items.map((item) => (
                     <li key={item.label}>
-                      <Link
+                      <MotionLink
                         href={item.href}
-                        className="text-sm transition-opacity hover:opacity-100"
+                        className="text-sm"
                         style={{ color: "var(--fp-text-muted)" }}
+                        whileHover={{ color: "var(--fp-white)", x: 2 }}
+                        transition={{ duration: 0.15 }}
                         target={item.href.startsWith("http") ? "_blank" : undefined}
                         rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
                       >
                         {item.label}
-                      </Link>
+                      </MotionLink>
                     </li>
                   ))}
                 </ul>
@@ -105,16 +125,13 @@ export default function Footer() {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Large display wordmark */}
-      <div
-        className="fp-container pb-6 overflow-hidden"
-        style={{ borderTop: "1px solid var(--fp-border)" }}
-      >
-        <Link
+      <div className="fp-container pb-6 overflow-hidden" style={{ borderTop: "1px solid var(--fp-border)" }}>
+        <MotionLink
           href="/"
-          className="block leading-none hover:opacity-70 transition-opacity"
+          className="block leading-none"
           style={{
             fontFamily: "var(--font-instrument-serif)",
             fontStyle: "italic",
@@ -122,9 +139,11 @@ export default function Footer() {
             color: "var(--fp-white)",
             letterSpacing: "-0.02em",
           }}
+          whileHover={{ opacity: 0.5 }}
+          transition={{ duration: 0.2 }}
         >
           fitpath
-        </Link>
+        </MotionLink>
       </div>
     </footer>
   );

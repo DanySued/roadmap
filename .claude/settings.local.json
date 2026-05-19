@@ -12,7 +12,10 @@
       "PowerShell(Get-Command *)",
       "Bash(node *)",
       "Bash(rm -f about.html auth.html best-practices.html changelog.html create-path.html create-roadmap.html forgot-password.html frontend-roadmap.html guide-detail.html guides.html path.html path-detail.html privacy.html roadmap.html roadmap-detail.html terms.html test-buttons.html video-detail.html videos.html server.js shared.js test-all-buttons.sh ALL_PAGES.md BUTTONS.md BUTTONS_STATUS.txt DESIGN_SYSTEM.md QUICK_START.txt TESTING.md server.log)",
-      "Bash(ls *.html *.js *.sh)"
+      "Bash(ls *.html *.js *.sh)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_click"
     ]
   },
   "hooks": {
