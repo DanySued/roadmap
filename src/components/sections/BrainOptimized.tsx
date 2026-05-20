@@ -14,6 +14,7 @@ const tabs = [
     body: "Ordered stages from foundations to advanced. Complete each task, check it off, move forward.",
     stat: { value: "3×", label: "better adherence with structured paths" },
     accent: "var(--fp-accent)",
+    accentRaw: "#aaa8ff",
   },
   {
     id: "track",
@@ -23,6 +24,7 @@ const tabs = [
     body: "No account needed. Progress lives locally and waits exactly where you left off.",
     stat: { value: "87%", label: "of users complete more stages with tracking" },
     accent: "var(--fp-green)",
+    accentRaw: "#7f9ef8",
   },
   {
     id: "celebrate",
@@ -32,6 +34,7 @@ const tabs = [
     body: "Every task triggers a celebration. Small wins are the difference between week 3 and week 8.",
     stat: { value: "2.1×", label: "more likely to finish the full path" },
     accent: "#bc8cff",
+    accentRaw: "#bc8cff",
   },
 ];
 
@@ -111,20 +114,18 @@ export default function BrainOptimized() {
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
-                    {/* Icon container */}
                     <motion.span
                       style={{
                         width: 32,
                         height: 32,
                         borderRadius: 8,
-                        background: isActive ? `${t.accent === "var(--fp-accent)" ? "#aaa8ff" : t.accent === "var(--fp-green)" ? "#7f9ef8" : "#bc8cff"}18` : "rgba(255,255,255,0.05)",
-                        border: `1px solid ${isActive ? (t.accent === "var(--fp-accent)" ? "#aaa8ff" : t.accent === "var(--fp-green)" ? "#7f9ef8" : "#bc8cff") + "30" : "rgba(255,255,255,0.08)"}`,
+                        background: isActive ? `${t.accentRaw}18` : "rgba(255,255,255,0.05)",
+                        border: `1px solid ${isActive ? t.accentRaw + "30" : "rgba(255,255,255,0.08)"}`,
                         color: isActive ? t.accent : "var(--fp-text-muted)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         flexShrink: 0,
-                        transition: "all 0.2s ease",
                       }}
                       animate={{ scale: isActive ? 1.05 : 1 }}
                       transition={{ type: "spring", stiffness: 400, damping: 20 }}

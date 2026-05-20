@@ -109,10 +109,8 @@ export default function FeatureCarousel() {
                   marginBottom: 20,
                   flexShrink: 0,
                 }}
-                variants={{
-                  rest: { scale: 1, rotate: 0 },
-                  hover: { scale: 1.1, rotate: -4 },
-                }}
+                whileHover={{ scale: 1.1, rotate: -4 }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
               >
                 {IconComp && <IconComp size={20} strokeWidth={1.5} />}
               </motion.div>

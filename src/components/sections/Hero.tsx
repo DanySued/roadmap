@@ -40,7 +40,7 @@ export default function Hero() {
       {/* Background orbs */}
       <div className="hero-deco absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 40%, rgba(170,168,255,0.07) 0%, rgba(3,2,3,0.95) 70%)" }} />
       <div className="hero-deco hero-drift-left absolute -top-24 -right-24 w-[600px] h-[600px] rounded-full opacity-10" style={{ background: "radial-gradient(circle, var(--fp-accent) 0%, transparent 70%)" }} />
-      <div className="hero-deco hero-drift-right absolute bottom-0 -left-12 w-[400px] h-[400px] rounded-full opacity-08" style={{ background: "radial-gradient(circle, var(--fp-green) 0%, transparent 70%)" }} />
+      <div className="hero-deco hero-drift-right absolute bottom-0 -left-12 w-[400px] h-[400px] rounded-full opacity-[0.08]" style={{ background: "radial-gradient(circle, var(--fp-green) 0%, transparent 70%)" }} />
 
       <motion.div
         className="fp-container relative z-10 flex flex-col items-center"
