@@ -12,9 +12,9 @@ const bars = [
 ];
 
 const stats = [
-  { value: "73%", label: "of people abandon fitness goals within 3 months" },
-  { value: "9 in 10", label: "cite \"not knowing what to do next\" as the main reason" },
-  { value: "3×", label: "better results when following a structured progression" },
+  { value: "73%", label: "abandon goals within 3 months" },
+  { value: "9 in 10", label: "cite \"no clear next step\"" },
+  { value: "3×", label: "better results with structured paths" },
 ];
 
 export default function Problem() {
@@ -47,8 +47,7 @@ export default function Problem() {
               style={{ color: "var(--fp-text-muted)", fontSize: "0.9375rem" }}
               variants={fadeUp}
             >
-              Most people quit fitness not because they&apos;re lazy — but because they don&apos;t
-              have a clear path. Random workouts, conflicting advice, no sense of progress.
+              Most people quit not because they&apos;re lazy — but because there&apos;s no clear path.
               Structure beats motivation, every time.
             </motion.p>
 

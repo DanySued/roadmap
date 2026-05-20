@@ -80,8 +80,7 @@ export default function Research() {
               style={{ color: "var(--fp-text-muted)", fontSize: "0.9375rem" }}
               variants={fadeUp}
             >
-              FitPath works because structure works. Not willpower, not motivation —
-              just a clear sequence of steps you can actually follow.
+              Not willpower. Not motivation. Just steps you can follow.
             </motion.p>
 
             <motion.div className="flex flex-wrap gap-6 sm:gap-8 mt-10 sm:mt-12" variants={stagger(0.08, 0.1)}>

@@ -34,26 +34,34 @@ export default function Hero() {
 
   return (
     <section
-      className="relative flex flex-col justify-end pb-12 sm:pb-20 overflow-hidden"
+      className="relative flex flex-col items-center justify-center text-center pb-12 sm:pb-20 overflow-hidden"
       style={{ backgroundColor: "var(--fp-black)", minHeight: "clamp(520px, calc(100vh - 64px), 900px)" }}
     >
       {/* Background orbs */}
-      <div className="hero-deco absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 60% at 60% 40%, rgba(207,123,75,0.08) 0%, rgba(26,23,20,0.95) 70%)" }} />
-      <div className="hero-deco hero-drift-left absolute -top-24 -right-24 w-[600px] h-[600px] rounded-full opacity-15" style={{ background: "radial-gradient(circle, var(--fp-accent) 0%, transparent 70%)" }} />
-      <div className="hero-deco hero-drift-right absolute bottom-0 -left-12 w-[400px] h-[400px] rounded-full opacity-10" style={{ background: "radial-gradient(circle, var(--fp-green) 0%, transparent 70%)" }} />
-      <div className="hero-deco hero-drift-subtle absolute right-0 top-0 bottom-0 w-1/2 hidden lg:flex items-center justify-center opacity-20">
-        <div className="w-64 h-64 rounded-full" style={{ background: "radial-gradient(circle at 40% 40%, rgba(207,123,75,0.25) 0%, rgba(42,36,32,0.5) 60%, transparent 100%)", boxShadow: "0 0 120px 40px rgba(207,123,75,0.08)" }} />
-      </div>
+      <div className="hero-deco absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 40%, rgba(170,168,255,0.07) 0%, rgba(3,2,3,0.95) 70%)" }} />
+      <div className="hero-deco hero-drift-left absolute -top-24 -right-24 w-[600px] h-[600px] rounded-full opacity-10" style={{ background: "radial-gradient(circle, var(--fp-accent) 0%, transparent 70%)" }} />
+      <div className="hero-deco hero-drift-right absolute bottom-0 -left-12 w-[400px] h-[400px] rounded-full opacity-08" style={{ background: "radial-gradient(circle, var(--fp-green) 0%, transparent 70%)" }} />
 
       <motion.div
-        className="fp-container relative z-10"
+        className="fp-container relative z-10 flex flex-col items-center"
         variants={stagger(0.1, 0.1)}
         initial="hidden"
         animate="visible"
       >
-        <motion.p className="fp-eyebrow" variants={fadeUp}>
-          Structured fitness for every goal
-        </motion.p>
+        {/* Eyebrow pill */}
+        <motion.div variants={fadeUp} className="mb-8">
+          <span
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium"
+            style={{
+              background: "rgba(170,168,255,0.08)",
+              border: "1px solid rgba(170,168,255,0.2)",
+              color: "var(--fp-accent)",
+            }}
+          >
+            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--fp-accent)" }} />
+            Structured fitness for every goal
+          </span>
+        </motion.div>
 
         <motion.span className="block" style={headlineBase} variants={fadeUp}>
           Train with purpose.
@@ -63,15 +71,14 @@ export default function Hero() {
         </motion.span>
 
         <motion.p
-          className="mb-10 max-w-md leading-relaxed"
-          style={{ fontSize: "0.9375rem", color: "rgba(212,204,196,0.75)" }}
+          className="mb-10 max-w-sm leading-relaxed"
+          style={{ fontSize: "0.9375rem", color: "rgba(212,204,196,0.65)" }}
           variants={fadeUp}
         >
-          24+ curated training paths — from strength to marathon, yoga to CrossFit.
-          Each path breaks your goal into progressive stages you can actually follow.
+          24+ training paths. Pick your goal, follow the stages, get there.
         </motion.p>
 
-        <motion.div className="flex flex-col sm:flex-row items-start sm:items-center gap-4" variants={fadeUp}>
+        <motion.div className="flex flex-col sm:flex-row items-center gap-4" variants={fadeUp}>
           <MotionLink
             href="/paths"
             className="inline-flex items-center px-8 py-3.5 text-sm font-semibold rounded-xl"
@@ -101,8 +108,16 @@ export default function Hero() {
           </Link>
         </motion.div>
 
+        <motion.p
+          className="mt-6 text-xs"
+          style={{ color: "var(--fp-text-muted)" }}
+          variants={fadeUp}
+        >
+          Free · No account · Progress saved locally
+        </motion.p>
+
         <motion.div
-          className="flex flex-wrap items-center gap-6 mt-16 pt-8"
+          className="flex flex-wrap justify-center items-center gap-6 mt-16 pt-8"
           style={{ borderTop: "1px solid var(--fp-border)" }}
           variants={fadeUp}
         >
@@ -111,7 +126,7 @@ export default function Hero() {
             { label: "Active users", value: "500K+" },
             { label: "Workouts logged", value: "2.5M+" },
           ].map(({ label, value }) => (
-            <div key={label}>
+            <div key={label} className="text-center">
               <p className="font-semibold text-base" style={{ color: "var(--fp-white)" }}>{value}</p>
               <p className="text-xs mt-0.5" style={{ color: "var(--fp-text-muted)" }}>{label}</p>
             </div>

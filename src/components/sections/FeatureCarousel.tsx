@@ -8,16 +8,16 @@ const features = [
   {
     tag: "01",
     icon: "trending-up",
-    title: "Progressive stage design",
-    desc: "Every path breaks your goal into ordered stages — beginner to advanced. No guesswork. You always know exactly what's next.",
+    title: "Progressive stages",
+    desc: "Ordered from beginner to advanced. You always know what's next.",
     accent: "var(--fp-accent)",
     accentRaw: "#aaa8ff",
   },
   {
     tag: "02",
     icon: "check-circle",
-    title: "Task completion tracking",
-    desc: "Check off each stage as you go. Your progress is saved locally and persists across sessions — no account required.",
+    title: "Task tracking",
+    desc: "Check off stages as you go. No account required.",
     accent: "var(--fp-green)",
     accentRaw: "#7f9ef8",
   },
@@ -25,15 +25,15 @@ const features = [
     tag: "03",
     icon: "search",
     title: "Real-time search",
-    desc: "Filter 24+ paths by sport, goal, or skill. ⌘K shortcut opens instant search from anywhere on the paths page.",
+    desc: "Filter 24+ paths by sport or goal. ⌘K from anywhere.",
     accent: "#bc8cff",
     accentRaw: "#bc8cff",
   },
   {
     tag: "04",
     icon: "pencil",
-    title: "Custom path builder",
-    desc: "Don't see what you need? Build your own 4-step training path and share it with your community.",
+    title: "Custom builder",
+    desc: "Build your own 4-step path and share it.",
     accent: "#d4ccc4",
     accentRaw: "#d4ccc4",
   },
@@ -84,7 +84,6 @@ export default function FeatureCarousel() {
                 border: "1px solid var(--fp-border)",
                 borderRadius: 16,
                 padding: 28,
-                minHeight: 280,
                 display: "flex",
                 flexDirection: "column",
                 cursor: "default",
@@ -96,7 +95,6 @@ export default function FeatureCarousel() {
               }}
               transition={{ duration: 0.22, ease: EASE_OUT }}
             >
-              {/* Icon container — bat-library style */}
               <motion.div
                 style={{
                   width: 44,
@@ -110,7 +108,6 @@ export default function FeatureCarousel() {
                   justifyContent: "center",
                   marginBottom: 20,
                   flexShrink: 0,
-                  transition: "transform 0.2s ease",
                 }}
                 variants={{
                   rest: { scale: 1, rotate: 0 },
@@ -120,23 +117,21 @@ export default function FeatureCarousel() {
                 {IconComp && <IconComp size={20} strokeWidth={1.5} />}
               </motion.div>
 
-              <div style={{ flex: 1 }}>
-                <span
-                  className="text-xs font-semibold uppercase tracking-widest mb-3 block"
-                  style={{ color: "var(--fp-text-muted)" }}
-                >
-                  {f.tag}
-                </span>
-                <h3
-                  className="text-xl font-semibold mb-3 leading-snug"
-                  style={{ fontFamily: "var(--font-dm-sans)", color: "var(--fp-white)" }}
-                >
-                  {f.title}
-                </h3>
-                <p className="text-sm leading-relaxed" style={{ color: "var(--fp-text-muted)" }}>
-                  {f.desc}
-                </p>
-              </div>
+              <span
+                className="text-xs font-semibold uppercase tracking-widest mb-3 block"
+                style={{ color: "var(--fp-text-muted)" }}
+              >
+                {f.tag}
+              </span>
+              <h3
+                className="text-lg font-semibold mb-2 leading-snug"
+                style={{ fontFamily: "var(--font-dm-sans)", color: "var(--fp-white)" }}
+              >
+                {f.title}
+              </h3>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--fp-text-muted)" }}>
+                {f.desc}
+              </p>
             </motion.div>
           );
         })}

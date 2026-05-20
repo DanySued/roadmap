@@ -7,23 +7,23 @@ import { fadeUp, stagger, EASE_OUT } from "@/lib/motion";
 const faqs = [
   {
     q: "Do I need to create an account?",
-    a: "No account needed. Your progress is saved locally in your browser using localStorage. It persists between sessions — just don't clear your browser data and your progress will always be there.",
+    a: "No account needed. Progress is saved locally in your browser and persists between sessions.",
   },
   {
     q: "How many training paths are available?",
-    a: "24+ paths across sports (strength, running, yoga, cycling, CrossFit, boxing, and more), goals (weight loss, muscle building, endurance, flexibility), and best practices (recovery, nutrition, sleep). New paths are added regularly.",
+    a: "24+ paths across sports and goals — strength, running, yoga, marathon, CrossFit, and more. New paths added regularly.",
   },
   {
     q: "Can I build my own path?",
-    a: "Yes. The custom path builder lets you create a 4-step structured training path with your own stages and tasks. You can save it locally and share it with your community.",
+    a: "Yes. Create a 4-step structured path with your own stages and tasks, save it locally, and share it.",
   },
   {
     q: "How detailed are the task stages?",
-    a: "Each path has 6–10 progressive tasks with a clear title and a short description of what to actually do. Think of each task as a milestone that moves you from where you are to the next level.",
+    a: "Each path has 6–10 progressive tasks — clear milestones that move you from where you are to the next level.",
   },
   {
     q: "Is FitPath really free?",
-    a: "Yes, completely free. No paywall, no premium tier, no email required. FitPath is a portfolio project built to help people train with structure.",
+    a: "Completely free. No paywall, no premium tier, no email required.",
   },
 ];
 
