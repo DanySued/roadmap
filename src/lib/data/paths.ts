@@ -5,6 +5,7 @@ export type Path = {
   color: string;
   desc: string;
   popular?: boolean;
+  isNew?: boolean;
 };
 
 export type PathCategory = "role" | "skill" | "bestpractices";
@@ -19,8 +20,8 @@ export const PATHS: Record<PathCategory, Path[]> = {
     { id: "crossfit", title: "CrossFit", icon: "flame", color: "#fffba5", desc: "Training foundation for functional fitness and competition" },
     { id: "pilates", title: "Pilates", icon: "target", color: "#aaa8ff", desc: "Core strength and body control through pilates" },
     { id: "swimming", title: "Swimming", icon: "waves", color: "#c1cff8", desc: "Learn proper technique and endurance for swimming" },
-    { id: "boxing", title: "Boxing", icon: "shield", color: "#7f9ef8", desc: "Master stance, technique, and boxing fundamentals" },
-    { id: "martial-arts", title: "Martial Arts", icon: "award", color: "#fad0f3", desc: "Progress through belts and master martial arts discipline" },
+    { id: "boxing", title: "Boxing", icon: "shield", color: "#7f9ef8", desc: "Master stance, technique, and boxing fundamentals", isNew: true },
+    { id: "martial-arts", title: "Martial Arts", icon: "award", color: "#fad0f3", desc: "Progress through belts and master martial arts discipline", isNew: true },
     { id: "pt-certification", title: "Personal Training Cert", icon: "clipboard-list", color: "#aaa8ff", desc: "Become a certified personal trainer and coach" },
     { id: "rehab-therapy", title: "Rehab & Recovery", icon: "heart-pulse", color: "#fffba5", desc: "Learn injury recovery and rehabilitation techniques" },
   ],
@@ -34,7 +35,7 @@ export const PATHS: Record<PathCategory, Path[]> = {
     { id: "5k-training", title: "5K Training", icon: "medal", color: "#aaa8ff", desc: "8-week program to run a strong 5K" },
     { id: "marathon-training", title: "Marathon Training", icon: "trophy", color: "#fffba5", desc: "16-week program to complete your first marathon" },
     { id: "core-strength", title: "Core Strength", icon: "target", color: "#c1cff8", desc: "Build a stronger, more stable core" },
-    { id: "athletic-performance", title: "Athletic Performance", icon: "zap", color: "#aaa8ff", desc: "Enhance speed, power, and athletic ability" },
+    { id: "athletic-performance", title: "Athletic Performance", icon: "zap", color: "#aaa8ff", desc: "Enhance speed, power, and athletic ability", isNew: true },
     { id: "recovery-protocols", title: "Recovery Protocols", icon: "moon", color: "#fad0f3", desc: "Optimize recovery with sleep, stretching, and nutrition" },
     { id: "injury-prevention", title: "Injury Prevention", icon: "shield", color: "#7f9ef8", desc: "Prevent common injuries through smart training" },
   ],

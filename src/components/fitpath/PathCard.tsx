@@ -140,7 +140,17 @@ export default function PathCard({ path }: { path: Path }) {
                 <h3 style={{ fontSize: 15, fontWeight: 600, color: "var(--fp-white)", lineHeight: 1.3, fontFamily: "var(--font-dm-sans), sans-serif" }}>
                   {path.title}
                 </h3>
-                {path.popular && (
+                {path.isNew && (
+                  <motion.span
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 18, delay: 0.1 }}
+                    style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#4ade80", background: "rgba(74,222,128,0.12)", border: "1px solid rgba(74,222,128,0.3)", borderRadius: 4, padding: "1px 6px", flexShrink: 0, display: "inline-block" }}
+                  >
+                    New
+                  </motion.span>
+                )}
+                {path.popular && !path.isNew && (
                   <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--fp-accent)", background: "rgba(207,123,75,0.12)", border: "1px solid rgba(207,123,75,0.25)", borderRadius: 4, padding: "1px 6px", flexShrink: 0 }}>
                     Popular
                   </span>

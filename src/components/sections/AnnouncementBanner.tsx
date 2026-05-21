@@ -1,6 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function AnnouncementBanner() {
+  const pathname = usePathname();
+  if (pathname !== "/") return null;
+
   return (
     <div
       className="w-full py-3 px-4 text-center text-sm font-medium"
