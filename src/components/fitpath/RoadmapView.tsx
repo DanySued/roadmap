@@ -184,8 +184,9 @@ function StageCard({ stage, state, canToggle, onDetails, onToggle }: {
 
   return (
     <div className={`rm-card rm-card-${state}`}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+      <div className="rm-card-meta">
         <span className="rm-card-stage-label">Stage {String(stage.id).padStart(2, "0")}</span>
+        <span className="rm-card-sep" />
         <span className="rm-card-duration">{stage.duration}</span>
       </div>
 
@@ -208,7 +209,7 @@ function StageCard({ stage, state, canToggle, onDetails, onToggle }: {
         )}
         {canToggle ? (
           <button className={`rm-card-action${isDone ? " rm-card-action-undo" : " rm-card-action-complete"}`} onClick={onToggle}>
-            {isDone ? "Undo" : isCurrent ? "Mark complete" : ""}
+            {isDone ? "Undo" : "Mark complete"}
             {!isDone && (
               <svg width={12} height={12} viewBox="0 0 14 14" fill="none">
                 <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
@@ -525,36 +526,40 @@ export default function RoadmapView({ pathId, pathColor, stages, roadmapMeta }: 
         .rm-pin-btn:active { transform: translateY(0) scale(.97); }
         .rm-card {
           width: 100%;
-          background: rgba(14,16,22,.94);
-          border: 1px solid rgba(255,255,255,.09);
-          border-radius: 16px; padding: 16px 18px;
-          backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+          background: rgba(16,18,30,.97);
+          border: 1px solid rgba(255,255,255,.15);
+          border-radius: 18px; padding: 18px 16px 14px;
+          backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+          box-shadow: 0 8px 32px rgba(0,0,0,.5);
+          text-align: center;
           transition: transform .22s cubic-bezier(.2,.7,.2,1), border-color .2s, box-shadow .22s;
         }
-        .rm-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.18); box-shadow: 0 16px 48px rgba(0,0,0,.45); }
+        .rm-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.26); box-shadow: 0 16px 48px rgba(0,0,0,.6); }
         .rm-card-current {
-          border-color: rgba(170,168,255,.45) !important;
-          box-shadow: 0 0 0 1px rgba(170,168,255,.18), 0 12px 40px rgba(170,168,255,.1);
+          border-color: rgba(170,168,255,.55) !important;
+          box-shadow: 0 0 0 1px rgba(170,168,255,.2), 0 12px 40px rgba(170,168,255,.15);
         }
-        .rm-card-current:hover { border-color: rgba(170,168,255,.65) !important; }
-        .rm-card-done { background: rgba(170,168,255,.05); border-color: rgba(170,168,255,.18) !important; }
-        .rm-card-locked { opacity: .5; pointer-events: none; }
-        .rm-card-stage-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.28); }
+        .rm-card-current:hover { border-color: rgba(170,168,255,.75) !important; }
+        .rm-card-done { background: rgba(170,168,255,.07); border-color: rgba(170,168,255,.25) !important; }
+        .rm-card-locked { opacity: .55; pointer-events: none; }
+        .rm-card-meta { display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+        .rm-card-stage-label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.45); }
         .rm-card-current .rm-card-stage-label { color: #aaa8ff; }
-        .rm-card-done .rm-card-stage-label { color: rgba(127,158,248,.7); }
-        .rm-card-duration { font-size: 10px; color: rgba(255,255,255,.3); font-weight: 500; }
-        .rm-card-title { font-size: 13px; font-weight: 600; color: #fff; line-height: 1.35; margin: 0 0 6px; }
-        .rm-card-title-done { text-decoration: line-through; color: rgba(255,255,255,.4); }
-        .rm-card-desc { font-size: 11.5px; color: rgba(255,255,255,.42); line-height: 1.55; margin: 0 0 10px;
-          display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .rm-card-foot { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-        .rm-card-details-btn { font-size: 10px; font-weight: 600; color: rgba(255,255,255,.45); background: rgba(255,255,255,.06); border: none; border-radius: 6px; padding: 4px 9px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: color .15s, background .15s; }
-        .rm-card-details-btn:hover { color: rgba(255,255,255,.85); background: rgba(255,255,255,.1); }
-        .rm-card-action { font-size: 10px; font-weight: 700; border: none; border-radius: 6px; padding: 5px 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; transition: opacity .15s, transform .15s; margin-left: auto; }
-        .rm-card-action:hover { opacity: .88; transform: translateX(1px); }
+        .rm-card-done .rm-card-stage-label { color: rgba(170,168,255,.8); }
+        .rm-card-sep { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,.2); }
+        .rm-card-duration { font-size: 11px; color: rgba(255,255,255,.45); font-weight: 500; }
+        .rm-card-title { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.3; margin: 0 0 8px; }
+        .rm-card-title-done { text-decoration: line-through; color: rgba(255,255,255,.5); }
+        .rm-card-desc { font-size: 12.5px; color: rgba(255,255,255,.62); line-height: 1.6; margin: 0 0 14px;
+          display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .rm-card-foot { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .rm-card-details-btn { font-size: 11px; font-weight: 600; color: rgba(255,255,255,.6); background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: 5px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; transition: color .15s, background .15s, border-color .15s; }
+        .rm-card-details-btn:hover { color: #fff; background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.2); }
+        .rm-card-action { font-size: 11px; font-weight: 700; border: none; border-radius: 8px; padding: 6px 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; transition: opacity .15s, transform .15s; }
+        .rm-card-action:hover { opacity: .88; transform: scale(1.03); }
         .rm-card-action-complete { background: linear-gradient(135deg, ${pathColor}, #aaa8ff); color: #030203; }
-        .rm-card-action-undo { background: rgba(255,255,255,.07); color: rgba(255,255,255,.5); }
-        .rm-card-locked-label { font-size: 10px; color: rgba(255,255,255,.2); margin-left: auto; }
+        .rm-card-action-undo { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.6); }
+        .rm-card-locked-label { font-size: 11px; color: rgba(255,255,255,.3); font-weight: 500; letter-spacing: .04em; }
         .rm-leader { position: absolute; height: 1px; background: rgba(255,255,255,.12); top: 0; }
         .rm-milestone { position: absolute; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: rgba(255,255,255,.25); line-height: 1.35; max-width: 160px; }
         .rm-milestone-done { color: rgba(170,168,255,.65); }
