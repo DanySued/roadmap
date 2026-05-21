@@ -386,7 +386,7 @@ function CelebrationOverlay({ stage, doneCount, total, onDismiss }: {
           <strong style={{ color: "rgba(255,255,255,.75)", fontWeight: 600 }}>{stage.title}</strong> · {stage.duration}
         </p>
         <p style={{ fontSize: 14, color: "rgba(255,255,255,.55)", lineHeight: 1.6, marginBottom: 28, padding: "0 8px" }}>
-          {isFinal ? "You've completed the full marathon journey. Incredible commitment." : variant.sub}
+          {isFinal ? "Every stage. Every week. That's what finishing actually looks like." : variant.sub}
         </p>
 
         <div style={{ padding: "16px 0", borderTop: "1px solid rgba(255,255,255,.07)", display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
