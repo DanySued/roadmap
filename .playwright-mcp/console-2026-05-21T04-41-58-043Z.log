@@ -1,0 +1,6 @@
+[      95ms] [ERROR] Error: <svg> attribute height: Expected length, "auto". @ http://localhost:3001/paths/running:91
+[     253ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[     326ms] [LOG] [HMR] connected @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[     405ms] [WARNING] motion() is deprecated. Use motion.create() instead. @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[   49149ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[   49258ms] [LOG] [Fast Refresh] done in 83ms @ http://localhost:3001/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
