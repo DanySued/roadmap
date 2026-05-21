@@ -150,7 +150,7 @@ export default function PathGrid() {
       {/* Grid */}
       {filteredPaths.length > 0 ? (
         <motion.div
-          style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }}
+          style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))", gap: 20 }}
         >
           <AnimatePresence mode="sync">
             {filteredPaths.map((path, i) => (
