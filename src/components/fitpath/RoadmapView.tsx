@@ -117,9 +117,7 @@ function MapPin({ state, num, color, canAct, onClick }: {
           <path d="M19.8 20v-2.2a3.2 3.2 0 016.4 0V20" fill="none" stroke="rgba(255,255,255,.3)" strokeWidth={1.5} strokeLinecap="round" />
         </>
       ) : (
-        <text x={23} y={24.5} textAnchor="middle"
-          fontFamily="var(--font-dm-sans, DM Sans, sans-serif)" fontSize={11} fontWeight={700}
-          fill={color}>{num}</text>
+        <path d="M17.5 20.2l3.7 3.6 7.4-7.4" stroke={color} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" opacity={0.75} />
       )}
     </svg>
   );
@@ -354,7 +352,11 @@ function CelebrationOverlay({ stage, doneCount, total, onDismiss }: {
         boxShadow: "0 40px 100px rgba(0,0,0,.7), 0 0 0 1px rgba(170,168,255,.08)",
         animation: "rm-celebrate-pop .5s cubic-bezier(.34,1.4,.64,1) forwards",
       }}>
-        <span style={{ position: "absolute", top: 16, right: 18, fontSize: 10, color: "rgba(255,255,255,.25)", letterSpacing: ".06em" }}>tap outside to dismiss</span>
+        <button onClick={onDismiss} style={{ position: "absolute", top: 14, right: 14, width: 32, height: 32, borderRadius: 8, background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.1)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(255,255,255,.45)", transition: "background .15s, color .15s" }}
+          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,.12)"; (e.currentTarget as HTMLButtonElement).style.color = "#fff"; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,.06)"; (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,.45)"; }}>
+          <X size={14} />
+        </button>
 
         {/* Badge */}
         <div style={{ display: "flex", justifyContent: "center", marginBottom: 22 }}>
@@ -735,31 +737,17 @@ export default function RoadmapView({ pathId, pathColor, stages, roadmapMeta }: 
                 const roadHalfPct = ((ROAD_W / 2 + 4) / VB_W) * 100;  // ~2.7%
                 const gap = 5;  // % gap between road edge and card
 
-                // Card placement
+                // Card placement — always below the pin
+                const pinHPct = (58 / VB_H) * 100;   // pin SVG height as % of canvas
+                const cardGapPct = 0.8;
                 let cardStyle: React.CSSProperties;
-                const cardW = "27%";
                 if (isFinish) {
                   cardStyle = { left: `${pL}%`, top: `${pT + 5}%`, transform: "translateX(-50%)", width: "35%" };
-                } else if (side === -1) {
-                  // pin on LEFT → card to the RIGHT
-                  cardStyle = { left: `${pL + roadHalfPct + gap}%`, top: `${pT}%`, transform: "translateY(-50%)", width: cardW };
                 } else {
-                  // pin on RIGHT → card to the LEFT
-                  cardStyle = { right: `${100 - pL + roadHalfPct + gap}%`, top: `${pT}%`, transform: "translateY(-50%)", width: cardW };
+                  cardStyle = { left: `${pL}%`, top: `${pT + pinHPct + cardGapPct}%`, transform: "translateX(-50%)", width: "32%" };
                 }
 
-                // Leader line
-                let leaderStyle: React.CSSProperties | null = null;
-                if (!isFinish) {
-                  const leaderW = gap - 0.5;
-                  if (side === -1) {
-                    leaderStyle = { left: `${pL + roadHalfPct}%`, top: `${pT}%`, width: `${leaderW}%` };
-                  } else {
-                    leaderStyle = { left: `${pL - roadHalfPct - leaderW}%`, top: `${pT}%`, width: `${leaderW}%` };
-                  }
-                }
-
-                // Milestone label placement (opposite side from card)
+                // Milestone label — to the side of the pin (based on which side the pin is on)
                 let msStyle: React.CSSProperties | null = null;
                 if (!isFinish) {
                   const msOff = roadHalfPct + 1.5;
@@ -786,11 +774,6 @@ export default function RoadmapView({ pathId, pathColor, stages, roadmapMeta }: 
                         )
                       }
                     </div>
-
-                    {/* Leader line */}
-                    {leaderStyle && (
-                      <div className="rm-leader" style={{ ...leaderStyle, transform: "translateY(-50%)" }} />
-                    )}
 
                     {/* Card */}
                     <div style={{ position: "absolute", ...cardStyle, pointerEvents: "none" }}>
