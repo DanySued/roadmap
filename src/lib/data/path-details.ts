@@ -4,10 +4,26 @@ export type Task = {
   desc: string;
 };
 
+export type RoadmapLink = { label: string; icon: string };
+
+export type RoadmapStage = {
+  id: number;
+  title: string;
+  desc: string;
+  duration: string;
+  milestone: string;
+  details: string[];
+  links: RoadmapLink[];
+};
+
+export type RoadmapMeta = { value: string; label: string };
+
 export type PathDetail = {
   title: string;
   desc: string;
   tasks: Task[];
+  roadmapMeta?: RoadmapMeta[];
+  roadmapStages?: RoadmapStage[];
 };
 
 export const PATH_DATA: Record<string, PathDetail> = {
@@ -38,6 +54,63 @@ export const PATH_DATA: Record<string, PathDetail> = {
       { id: 5, title: "Complete a half marathon", desc: "Follow a 10–12 week half marathon plan. Focus on easy miles and one long run per week." },
       { id: 6, title: "Build marathon base", desc: "Spend 8–12 weeks building aerobic base with long runs reaching 16–18 miles." },
       { id: 7, title: "Race your marathon", desc: "Complete a 16-week marathon plan, taper properly the last 3 weeks, and execute your race day strategy." },
+    ],
+    roadmapMeta: [
+      { value: "26 wks", label: "Total duration" },
+      { value: "7", label: "Stages" },
+      { value: "Marathon", label: "End goal" },
+      { value: "Intermediate", label: "Difficulty" },
+    ],
+    roadmapStages: [
+      {
+        id: 1, title: "Walk / run intervals", duration: "Weeks 1–3",
+        milestone: "Walk / run intervals",
+        desc: "Alternate 1 min running with 2 min walking for 20 minutes, 3× per week. Don't go faster than a conversational pace.",
+        details: ["20-minute sessions, three non-consecutive days a week", "Stay at a pace where you can hold a conversation", "Rest day or easy walk between every run", "Track how many intervals you finish without breaking pace"],
+        links: [{ label: "Beginner walk/run plan (PDF)", icon: "clipboard-list" }, { label: "Why slow miles work", icon: "book-open" }, { label: "Heart-rate zone primer", icon: "heart-pulse" }],
+      },
+      {
+        id: 2, title: "Build to continuous 5K", duration: "Weeks 4–6",
+        milestone: "Build to continuous 5K",
+        desc: "Gradually extend running intervals until you can run 5K (3.1 miles) without stopping.",
+        details: ["Add 30 seconds to each running interval every other session", "Aim for one continuous 30-minute run by week 6", "Hold off on speed — finishing without walking is the goal"],
+        links: [{ label: "5K base-build plan", icon: "clipboard-list" }, { label: "Form check video", icon: "play" }],
+      },
+      {
+        id: 3, title: "Speed work for 5K", duration: "Weeks 7–9",
+        milestone: "Speed work for 5K",
+        desc: "Include one tempo run and one interval session per week to improve pace and efficiency.",
+        details: ["1× tempo run — 20 minutes at comfortably hard effort", "1× intervals — 6×400m with 90s jog recovery", "Two easy runs and one long run round out the week"],
+        links: [{ label: "Tempo vs threshold explained", icon: "book-open" }, { label: "Track session walkthrough", icon: "play" }, { label: "Pace calculator", icon: "target" }],
+      },
+      {
+        id: 4, title: "Build weekly mileage to 30", duration: "Weeks 10–14",
+        milestone: "Build weekly mileage to 30",
+        desc: "Increase total weekly distance by no more than 10% per week. Add a long run every Sunday.",
+        details: ["Add no more than 10% to your weekly total each week", "Long run on Sunday, shortest run on Monday", "Schedule one cutback week every fourth week"],
+        links: [{ label: "Mileage build calculator", icon: "trending-up" }, { label: "Injury prevention checklist", icon: "shield" }],
+      },
+      {
+        id: 5, title: "Long run progression", duration: "Weeks 15–20",
+        milestone: "Long run progression",
+        desc: "Extend your Sunday long run by 2 miles every fortnight. Practice fueling and hydration on the move.",
+        details: ["Add 2 miles to the long run every other week", "Peak at 18 miles by week 20", "Practice race-day fueling — 30–60g carbs per hour"],
+        links: [{ label: "Long-run fueling guide", icon: "apple" }, { label: "Hydration & electrolytes", icon: "waves" }, { label: "Recovery protocols", icon: "moon" }],
+      },
+      {
+        id: 6, title: "Marathon pace blocks", duration: "Weeks 21–24",
+        milestone: "Marathon pace blocks",
+        desc: "Run 6–10 mile blocks at marathon pace inside your long run. Dial in your race nutrition and kit.",
+        details: ["Sandwich a 6–10 mile block at goal pace inside the long run", "Dress-rehearse race-day kit, shoes, and fuel", "Lock in your goal time and split strategy"],
+        links: [{ label: "Race-day kit checklist", icon: "clipboard-list" }, { label: "Marathon pacing strategy", icon: "target" }],
+      },
+      {
+        id: 7, title: "Taper and race day", duration: "Weeks 25–26",
+        milestone: "Taper and race day",
+        desc: "Cut volume by 30% per week for two weeks. Sharpen with short pace sessions. Show up rested.",
+        details: ["Drop mileage by 30% in week 25, another 50% in race week", "Keep a handful of short pace efforts to stay sharp", "Sleep, hydrate, eat carbs — don't try anything new"],
+        links: [{ label: "Two-week taper plan", icon: "calendar" }, { label: "Race-morning checklist", icon: "trophy" }],
+      },
     ],
   },
 
