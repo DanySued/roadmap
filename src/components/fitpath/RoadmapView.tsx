@@ -45,12 +45,12 @@ const LINK_ICONS: Record<string, React.ComponentType<{ size?: number; strokeWidt
 };
 
 const CELEBRATE = [
-  { head: "You crushed it!", sub: "One stage closer to the finish line." },
-  { head: "Look at you go!", sub: "Every mile compounds. Keep stacking." },
-  { head: "That's the work.", sub: "Discipline beats motivation every time." },
-  { head: "Stage cleared.", sub: "The road keeps opening up for you." },
-  { head: "Phenomenal effort!", sub: "Recovery now, hard work next." },
-  { head: "Eyes up — keep going.", sub: "Closer than you were yesterday." },
+  { head: "One down.", sub: "The first one is always the hardest to believe." },
+  { head: "You showed up.", sub: "That's the whole thing. Nothing else matters more." },
+  { head: "Halfway there.", sub: "The back half is why you trained the front half." },
+  { head: "These are the miles.", sub: "The ones nobody sees are the ones that count." },
+  { head: "Still going.", sub: "Most people quit before they get here. You didn't." },
+  { head: "Almost.", sub: "Race day is close enough to smell it now." },
 ];
 
 function confettiBurst() {
@@ -591,7 +591,7 @@ export default function RoadmapView({ pathId, pathColor, stages, roadmapMeta }: 
               <h1 style={{ fontFamily: "var(--font-dm-sans,DM Sans,sans-serif)", fontSize: "clamp(1.85rem,4vw,2.85rem)", fontWeight: 600, color: "#fff", marginBottom: 10, lineHeight: 1.1, letterSpacing: "-.01em" }}>
                 Running <em style={{ fontFamily: "var(--font-instrument-serif,Georgia,serif)", fontStyle: "italic", fontWeight: 400 }}>roadmap.</em>
               </h1>
-              <p style={{ fontSize: 15, color: "var(--fp-text-muted)", maxWidth: 500, lineHeight: 1.6 }}>Seven progressive stages drawn out like a road — pick up exactly where you left off.</p>
+              <p style={{ fontSize: 15, color: "var(--fp-text-muted)", maxWidth: 500, lineHeight: 1.6 }}>26 weeks. Seven stages. One finish line. Pick up wherever you left off — the road remembers.</p>
             </div>
           </div>
 
@@ -623,7 +623,7 @@ export default function RoadmapView({ pathId, pathColor, stages, roadmapMeta }: 
             <h2 style={{ fontFamily: "var(--font-dm-sans,DM Sans,sans-serif)", fontSize: 26, fontWeight: 600, color: "#fff", margin: 0, letterSpacing: "-.01em" }}>
               Your <em style={{ fontFamily: "var(--font-instrument-serif,Georgia,serif)", fontStyle: "italic", fontWeight: 400, color: "#aaa8ff" }}>road</em> to 26.2.
             </h2>
-            <p style={{ fontSize: 13, color: "var(--fp-text-muted)", margin: "6px 0 0" }}>Tap any pin to log a stage. Your progress lights up the road.</p>
+            <p style={{ fontSize: 13, color: "var(--fp-text-muted)", margin: "6px 0 0" }}>Tap a pin when you finish a stage. Come back when life happens — it saves your place.</p>
           </div>
           <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
             {[["#aaa8ff", "Done"], [pathColor, "Up next"], ["rgba(255,255,255,.15)", "Future"]].map(([c, l]) => (
